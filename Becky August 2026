@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Omaha→Erie">
+<meta name="color-scheme" content="light dark">
+<title>Omaha → Erie, CO — One-Day Drive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-page:#f4f2e9; --bg-nav:#2f3a24; --text-nav:#eef0e4; --tab-inactive:#93a37e;
+    --accent:#c7d94a; --text-on-accent:#26301c;
+    --charge-bg:#3f4a2e; --charge-text:#f4f2e9; --charge-meta:#a8b992;
+    --opt-bg:#e7e3d2; --opt-text:#2f3a24; --opt-meta:#7c7660;
+    --food-bg:#e8dcc8; --food-text:#4a3b22; --food-meta:#8a7550;
+    --dog-bg:#dfe4cd; --dog-text:#2f3a24; --dog-meta:#6d7a52;
+    --shop-bg:#e6d8e0; --shop-text:#4a2f40; --shop-meta:#8a7284;
+    --rust:#a34a26; --rust-text:#fff6ef;
+    --plum:#6b4a5c; --plum-text:#fff6fb;
+    --page-text:#2b2820; --page-meta:#7c7666;
+    --hair:rgba(0,0,0,0.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg-page:#1a1c16; --bg-nav:#12140e; --text-nav:#eef0e4; --tab-inactive:#5f6d4e;
+      --accent:#d9e64f; --text-on-accent:#1f2a17;
+      --charge-bg:#4a5a36; --charge-text:#f0f2e6; --charge-meta:#b9c7a2;
+      --opt-bg:#2a2920; --opt-text:#e7e3d2; --opt-meta:#a39d85;
+      --food-bg:#332918; --food-text:#e8dcc8; --food-meta:#c2a97a;
+      --dog-bg:#212a1a; --dog-text:#cdd8b8; --dog-meta:#93a37e;
+      --shop-bg:#2b2029; --shop-text:#e6d8e0; --shop-meta:#b39aab;
+      --rust:#d1794c; --rust-text:#1a1c16;
+      --plum:#a884a0; --plum-text:#1a1c16;
+      --page-text:#e7e4d8; --page-meta:#9a9484;
+      --hair:rgba(255,255,255,0.08);
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg-page); color:var(--page-text); font-family:'Atkinson Hyperlegible',-apple-system,sans-serif; line-height:1.5; padding-bottom:40px;}
+  a{color:inherit;}
+  header.topnav{position:sticky; top:0; z-index:50; background:var(--bg-nav); padding-top:env(safe-area-inset-top);}
+  .brand{color:var(--text-nav); font-weight:700; font-size:16px; padding:12px 16px 6px; letter-spacing:.02em; text-transform:uppercase;}
+  .brand .sub{display:block; font-weight:400; font-size:11.5px; color:var(--tab-inactive); margin-top:3px; text-transform:none; letter-spacing:0; font-family:'JetBrains Mono',monospace;}
+  nav.tabs{display:flex; overflow-x:auto; scrollbar-width:none; border-top:1px solid rgba(255,255,255,0.08);}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{flex:1 0 auto; touch-action:manipulation; min-height:50px; background:none; border:none; color:var(--tab-inactive); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:.06em; padding:0 14px; border-bottom:3px solid transparent; white-space:nowrap;}
+  .tab-btn.active{color:var(--text-nav); border-bottom-color:var(--accent);}
+  main{max-width:640px; margin:0 auto; padding:0 0 16px;}
+  .tab-panel{display:none;} .tab-panel.active{display:block;}
+  .groupbar{font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--page-meta); background:var(--bg-page); padding:12px 16px 4px;}
+  details.group{margin-bottom:2px;}
+  summary.groupbar{display:flex; align-items:center; cursor:pointer; touch-action:manipulation; min-height:44px; padding:12px 16px; list-style:none;}
+  summary.groupbar::-webkit-details-marker{display:none;}
+  summary.groupbar::after{content:"+"; margin-left:auto; font-size:17px; color:var(--accent); font-family:'Atkinson Hyperlegible',sans-serif; text-transform:none; letter-spacing:0;}
+  details.group[open] summary.groupbar::after{content:"–";}
+  .group-body{padding-top:2px;}
+  .block{padding:14px 16px; margin-bottom:2px;}
+  .block.charge{background:var(--charge-bg); color:var(--charge-text);}
+  .block.opt{background:var(--opt-bg); color:var(--opt-text);}
+  .block.food{background:var(--food-bg); color:var(--food-text);}
+  .block.dog{background:var(--dog-bg); color:var(--dog-text);}
+  .block.shop{background:var(--shop-bg); color:var(--shop-text);}
+  .k{font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em; margin:0 0 5px; opacity:.85;}
+  .block.charge .k{color:var(--charge-meta);} .block.opt .k{color:var(--opt-meta);} .block.food .k{color:var(--food-meta);} .block.dog .k{color:var(--dog-meta);} .block.shop .k{color:var(--shop-meta);}
+  .t{margin:0 0 3px; font-size:15px; font-weight:700;}
+  .m{margin:0; font-size:11.5px; font-family:'JetBrains Mono',monospace;}
+  .block.charge .m{color:var(--charge-meta);} .block.opt .m{color:var(--opt-meta);} .block.food .m{color:var(--food-meta);} .block.dog .m{color:var(--dog-meta);} .block.shop .m{color:var(--shop-meta);}
+  .note{font-size:13px; margin:6px 0 0;}
+  .tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:3px 8px; border-radius:3px; margin:0 6px 6px 0;}
+  .tag.recommended{background:var(--accent); color:var(--text-on-accent);}
+  .tag.heat{background:var(--rust); color:var(--rust-text);}
+  .tag.check{background:var(--plum); color:var(--plum-text);}
+  .maplink{display:inline-flex; align-items:center; gap:4px; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; text-decoration:none; margin-top:6px; touch-action:manipulation; min-height:30px;}
+  .block.charge .maplink{color:var(--accent);} .block.opt .maplink{color:var(--rust);} .block.food .maplink{color:var(--food-text);} .block.dog .maplink{color:var(--dog-text);}
+  details.acc{margin-bottom:2px;}
+  details.acc summary{background:var(--opt-bg); color:var(--opt-text); touch-action:manipulation; min-height:50px; display:flex; align-items:center; gap:8px; padding:13px 16px; font-weight:700; font-size:14.5px; cursor:pointer; list-style:none;}
+  details.acc summary::-webkit-details-marker{display:none;}
+  details.acc summary::after{content:"+"; margin-left:auto; font-size:19px; color:var(--rust); font-weight:400;}
+  details.acc[open] summary::after{content:"–";}
+  details.acc .inner{background:var(--opt-bg); color:var(--opt-text); padding:0 16px 16px;}
+  details.acc .inner p{font-size:13.5px; margin:0 0 8px;}
+  .skip{background:var(--rust); color:var(--rust-text); padding:12px 16px; font-size:13px;}
+  .skip b{font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.04em; font-size:11px; display:block; margin-bottom:4px;}
+  .callout{background:var(--dog-bg); color:var(--dog-text); padding:12px 16px; font-size:13px;}
+  .callout b{font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.04em; font-size:11px; display:block; margin-bottom:4px;}
+  footer{text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--page-meta); padding:20px 16px 8px;}
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="brand">Omaha → Erie, CO
+    <span class="sub">I-80 → I-76 · ~550 mi, one day · solo</span>
+  </div>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="route">Route</button>
+    <button class="tab-btn" data-tab="food">Food</button>
+    <button class="tab-btn" data-tab="stretch">Stretch</button>
+  </nav>
+</header>
+
+<main>
+
+<section id="route" class="tab-panel active">
+
+  <div class="callout"><b>Worth knowing before you leave</b>Late July on the Plains means real afternoon thunderstorm risk along this whole corridor — this week specifically has had an active severe pattern (hail, high winds, isolated tornadoes flagged for parts of western Nebraska/northeast Colorado). It's usually a manageable summer pattern, not a reason to change plans, but check the NWS forecast the morning you leave rather than relying on this. If a warning is ever issued while you're driving, get off the highway and into a sturdy building rather than trying to outdrive it.</div>
+
+  <div class="block opt">
+    <p class="k">Gas</p>
+    <p class="t">No planned fuel stops needed</p>
+    <p class="note">Gas is available at nearly every interstate exit on this route — unlike the EV routing on other trips, this one doesn't need charger planning. Fill up whenever's convenient.</p>
+  </div>
+
+  <div class="groupbar">Omaha → Kearney, NE · ~190 mi</div>
+
+  <details class="acc"><summary><span class="tag recommended">Stretch + photo</span>Great Platte River Road Archway</summary>
+    <div class="inner">
+      <p>A museum literally built as an arch spanning I-80 at Exit 275 — walk across the highway inside it. Oregon Trail and Lincoln Highway history exhibits, plus a hike/bike trail and picnic grounds if you just want to stretch your legs without paying admission.</p>
+      <p>$12 adults / $11 seniors / $6 kids 6-13, open daily 9am-5pm (Sun noon-5pm).</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Great+Platte+River+Road+Archway+Kearney+NE" target="_blank">Open in Maps →</a>
+    </div>
+  </details>
+
+  <details class="acc"><summary><span class="tag" style="background:var(--shop-meta);color:var(--shop-bg);">Shopping</span>Kearney Marketplace</summary>
+    <div class="inner">
+      <p>4.6★ · 32. Multi-vendor shop, genuinely eclectic — vintage items, antiques, toys, decor, and reviewers specifically mention a used golf club shop tucked inside. "Go in with a budget or you'll spend your whole paycheck."</p>
+      <p class="m">Closed Mon/Tue · open 11am-6pm otherwise</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=40.6963955,-99.0827691" target="_blank">Open in Maps →</a>
+    </div>
+  </details>
+
+  <details class="acc"><summary><span class="tag" style="background:var(--shop-meta);color:var(--shop-bg);">Shopping</span>Olde Towne Alchemy</summary>
+    <div class="inner">
+      <p>4.8★ · 128. Crystals, jewelry, tea, herbal goods — resident shop cats. Not vintage exactly, but the kind of independent, off-the-main-drag find worth a quick browse downtown.</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=40.6958943,-99.0815269" target="_blank">Open in Maps →</a>
+    </div>
+  </details>
+
+  <div class="groupbar">Kearney → North Platte, NE · ~290 mi</div>
+
+  <details class="acc"><summary><span class="tag recommended">Photo</span>Golden Spike Tower</summary>
+    <div class="inner">
+      <p>An 8-story tower overlooking Bailey Yard — the world's largest railroad classification rail yard, ~10,000 rail cars a day. Open-air 7th floor deck plus enclosed 8th floor viewing. Open daily, year-round; admission applies (check current pricing, wasn't consistently listed).</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Golden+Spike+Tower+North+Platte+NE" target="_blank">Open in Maps →</a>
+    </div>
+  </details>
+
+  <details class="acc"><summary><span class="tag" style="background:var(--shop-meta);color:var(--shop-bg);">Shopping</span>Grain Bin Antique Town</summary>
+    <div class="inner">
+      <p>4.7★ · 185. The find of this whole route — 21 individual grain bins plus one large building, each stuffed with antiques. One reviewer's exact words: "this is America's best hidden antique and collectors secret." Look up — reviewers say the ceilings are worth it too.</p>
+      <p class="m">Closed Mon/Tue/Sun · open 10:30am-5pm otherwise</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=41.03899,-100.70150749999999" target="_blank">Open in Maps →</a>
+    </div>
+  </details>
+
+  <details class="acc"><summary><span class="tag" style="background:var(--shop-meta);color:var(--shop-bg);">Shopping alt</span>CR Rustic</summary>
+    <div class="inner">
+      <p>4.7★ · 58. 20+ local vendors, antique mall downtown — a reviewer specifically called out the uranium glass selection for collectors. Closed Mon/Sun.</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=41.137155,-100.7625827" target="_blank">Open in Maps →</a>
+    </div>
+  </details>
+
+  <div class="groupbar">North Platte → Ogallala, NE · ~340 mi</div>
+
+  <details class="acc"><summary><span class="tag" style="background:var(--shop-meta);color:var(--shop-bg);">Shopping</span>J Dawg's Junk and Embroidery</summary>
+    <div class="inner">
+      <p>4.3★ · 52. Genuine "random junk/treasures" per reviewers — hand-crafted soaps, signs, one-off finds. A couple of reviews flag brusque customer service, so it's the goods more than the welcome that's the draw here.</p>
+      <p class="m">Closed Sunday</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=41.112089999999995,-101.7099392" target="_blank">Open in Maps →</a>
+    </div>
+  </details>
+
+  <div class="groupbar">Ogallala → Fort Morgan, CO · ~470 mi <span style="opacity:.7;">— crosses into Colorado</span></div>
+
+  <details class="acc"><summary><span class="tag" style="background:var(--shop-meta);color:var(--shop-bg);">Shopping</span>The Olde Planchette Shop</summary>
+    <div class="inner">
+      <p>4.3★ · 95. Vintage records and posters plus a surprisingly deep trading-card/collectibles side — one reviewer called the energy "calming" and said they could spend hours. Closed Sunday afternoon (10am-2pm only).</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=40.2536747,-103.822234" target="_blank">Open in Maps →</a>
+    </div>
+  </details>
+
+  <details class="acc"><summary><span class="tag" style="background:var(--shop-meta);color:var(--shop-bg);">Shopping alt</span>Steiner Mercantile</summary>
+    <div class="inner">
+      <p>Small sample size (only a few reviews) but a 5.0★ average and reviewers call out real vintage finds. Worth a look if Planchette doesn't scratch the itch. Closed Monday.</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=40.251441899999996,-103.80217789999999" target="_blank">Open in Maps →</a>
+    </div>
+  </details>
+
+  <div class="groupbar">Fort Morgan → Erie, CO · ~550 mi <span style="opacity:.7;">— final stretch</span></div>
+
+  <div class="block opt">
+    <p class="k">Arrival</p>
+    <p class="t">Erie</p>
+  </div>
+
+</section>
+
+<section id="food" class="tab-panel">
+
+  <div class="groupbar">Kearney, NE</div>
+  <div class="block food"><p class="k">Coffee + breakfast</p><p class="t">Kitt's Kitchen and Coffee</p><p class="m">4.7★ · 635 · OPEN 6AM-3PM</p><p class="note">In-house roaster with a full breakfast menu — reviewers specifically call out it being worth stopping for even mid-road-trip.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=40.6957986,-99.0799654" target="_blank">Open in Maps →</a></div>
+  <div class="block food"><p class="k">Coffee alt</p><p class="t">Penny Coffee Roasters</p><p class="m">5.0★ · 48 · OPEN 7AM-5PM, CLOSED SUNDAY</p><p class="note">Cozy downtown spot, small-batch, several little rooms for privacy if you want a real break, not just a drive-thru.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=40.6967364,-99.0821858" target="_blank">Open in Maps →</a></div>
+  <div class="block food"><p class="k">Lunch</p><p class="t">The Toasted Goat</p><p class="m">4.8★ · 175 · OPEN 11AM-9PM</p><p class="note">Sandwich shop, house-made bread — reviewers specifically mention it being worth the small detour off the highway.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=40.6991251,-99.0808032" target="_blank">Open in Maps →</a></div>
+
+  <div class="groupbar">North Platte, NE</div>
+  <div class="block food"><p class="k">Coffee + food</p><p class="t">the Espresso Shop | Caravan</p><p class="m">4.8★ · 641 · OPEN 6:30AM-3PM, CLOSED SUNDAY</p><p class="note">Right off I-80 in old town — big charming dining hall, real food menu (avocado toastie, BLT), good vegetarian options.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=41.1363139,-100.7597881" target="_blank">Open in Maps →</a></div>
+  <div class="block food"><p class="k">Coffee alt</p><p class="t">The Coffee Bin</p><p class="m">4.8★ · 284 · OPEN 7AM-5PM</p><p class="note">Coffee shop built into a reused grain bin — sandwiches and smoothies too.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=41.1425865,-100.7395291" target="_blank">Open in Maps →</a></div>
+  <div class="block food"><p class="k">Sit-down option</p><p class="t">North 40 Chophouse</p><p class="m">4.7★ · 486 · OPEN FROM 4PM</p><p class="note">A genuine surprise for the location — one reviewer said it's "the kind of restaurant you'd expect in Omaha or Denver, not off Highway 83." Best if you're doing a real dinner stop, not a quick bite.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=41.138359,-100.7631072" target="_blank">Open in Maps →</a></div>
+
+  <div class="groupbar">Ogallala, NE</div>
+  <div class="block food"><p class="k">Lunch/dinner</p><p class="t">Open Range Grill</p><p class="m">4.5★ · 1,288 · OPEN WED 11AM-9PM</p><p class="note">Locally recommended for the burgers specifically — one reviewer drove an hour just for this place.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=41.1343199,-101.721471" target="_blank">Open in Maps →</a></div>
+
+  <div class="groupbar">Fort Morgan, CO</div>
+  <div class="block food"><p class="k">Coffee</p><p class="t">Barnwood Roasting Co.</p><p class="m">5.0★ · 28 · OPEN 7AM-3PM, CLOSED SUNDAY</p><p class="note">Roasts in-house — reviewers call it hands-down the best coffee in town.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=40.2493071,-103.8016858" target="_blank">Open in Maps →</a></div>
+  <div class="block food"><p class="k">Dinner</p><p class="t">The Flame Steakhouse</p><p class="m">4.7★ · 838 · OPEN WED 5-9PM</p><p class="note">Unassuming from outside (it's next to a gas station), genuinely excellent inside per reviewers. Good option if you want a real sit-down dinner before the final push to Erie.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=40.2530555,-103.8794446" target="_blank">Open in Maps →</a></div>
+
+</section>
+
+<section id="stretch" class="tab-panel">
+
+  <div class="callout"><b>Read this parked, not while driving</b>This is a long single day — 8+ hours of driving with no overnight to break it up. Only the "safe while driving" section below is meant for behind the wheel; everything else is for actual stops. Lean on the food/coffee stops above as your excuse to get out of the car regularly.</div>
+
+  <details class="group" open>
+    <summary class="groupbar">Safe while you're driving</summary>
+    <div class="group-body">
+      <div class="block dog"><p class="k">Drive-safe</p><p class="t">Pelvic tilts</p><p class="note">Rock hips forward and back in the seat, slow and small.</p><p class="m">10 reps</p></div>
+      <div class="block dog"><p class="k">Drive-safe</p><p class="t">Glute squeezes</p><p class="note">Squeeze and hold — wakes up the hips on a long stretch.</p><p class="m">Hold 5 sec × 10</p></div>
+      <div class="block dog"><p class="k">Drive-safe</p><p class="t">Shoulder blade squeezes</p><p class="note">Pull shoulder blades together and down.</p><p class="m">8 reps</p></div>
+      <div class="block dog"><p class="k">Drive-safe</p><p class="t">Chin tucks</p><p class="note">Gently draw your chin straight back — resets forward head posture from hours of watching the road.</p><p class="m">8 reps</p></div>
+      <div class="block dog"><p class="k">Drive-safe</p><p class="t">Wrist circles at the wheel</p><p class="note">One hand at a time, circle the wrist while the other stays on the wheel.</p><p class="m">8 each direction, each hand</p></div>
+      <div class="block dog"><p class="k">Drive-safe</p><p class="t">4–6 breathing</p><p class="note">Inhale 4 counts, exhale 6 — relaxes low-back guarding on a long haul.</p><p class="m">A few rounds</p></div>
+    </div>
+  </details>
+
+  <details class="group">
+    <summary class="groupbar">Setup — once before you leave</summary>
+    <div class="group-body">
+      <div class="block opt"><p class="k">Setup</p><p class="t">Hips level with or just above knees</p><p class="note">Knees bent 20–30° — never locked straight.</p></div>
+      <div class="block opt"><p class="k">Setup</p><p class="t">Tailbone all the way back, recline to 100–110°</p><p class="note">Not bolt upright — 90° loads the discs more than a slight recline does.</p></div>
+      <div class="block opt"><p class="k">Setup</p><p class="t">Lumbar support at belt line</p><p class="note">Fill the low-back curve with built-in support or a rolled towel.</p></div>
+      <div class="block opt"><p class="k">Setup</p><p class="t">Headrest close, not just high</p><p class="note">The back of your head should rest against it in normal posture.</p></div>
+    </div>
+  </details>
+
+  <details class="group">
+    <summary class="groupbar">Red light or fully stopped only</summary>
+    <div class="group-body">
+      <div class="block food"><p class="k">Stopped-only</p><p class="t">Ankle circles</p><p class="note">Lift heel off the floor, circle each ankle.</p><p class="m">8 each direction</p></div>
+      <div class="block food"><p class="k">Stopped-only</p><p class="t">Seated spinal twist</p><p class="note">Hand on the passenger seat back, twist gently from the waist.</p><p class="m">Hold 10 sec each side</p></div>
+    </div>
+  </details>
+
+  <details class="group">
+    <summary class="groupbar">At every stop, 5–10 min</summary>
+    <div class="group-body">
+      <div class="block dog"><p class="k">Stretch</p><p class="t">Standing back extension</p><p class="note">Hands on low back, gently lean back and look up a few inches.</p><p class="m">Hold 3–5 sec × 5</p></div>
+      <div class="block dog"><p class="k">Stretch</p><p class="t">Hip flexor stretch, door-assisted</p><p class="note">Hold the open car door, step one foot back into a soft standing lunge.</p><p class="m">Hold 20–30 sec each side</p></div>
+      <div class="block dog"><p class="k">Stretch</p><p class="t">Hamstring stretch, heel on sill</p><p class="note">Heel on the door sill, knee soft, hinge forward from the hips.</p><p class="m">Hold 20–30 sec each side</p></div>
+      <div class="block dog"><p class="k">Stretch</p><p class="t">Walk it out</p><p class="note">The single best reset for hips, low back, and a restless mind — especially valuable on a one-day push like this. Harmon Park (Kearney) and Cody Park (North Platte) are both real, shaded, walkable stops if you want more than a parking-lot lap.</p><p class="m">5–10 min, every stop</p></div>
+      <div class="block dog"><p class="k">Stretch</p><p class="t">Calf raises</p><p class="note">Hand on the car for balance, rise onto the balls of both feet, lower slowly.</p><p class="m">10–12 slow reps</p></div>
+    </div>
+  </details>
+
+  <details class="group">
+    <summary class="groupbar">For the restless brain</summary>
+    <div class="group-body">
+      <div class="callout"><b>Restlessness playbook</b>On a one-day push with no natural break, set your own cadence — a stop every 1.5–2 hrs even if you don't feel like you need one yet. Change the music genre entirely rather than skipping tracks when focus drifts. Counting mile markers or naming things you see for a minute gives a restless mind something concrete to do without needing a full stop.</div>
+    </div>
+  </details>
+
+</section>
+
+</main>
+
+<footer>Omaha → Erie, CO · one-day drive · July 2026 · follows your phone's light/dark setting</footer>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0, behavior:'instant'});
+  });
+});
+</script>
+
+</body>
+</html>
