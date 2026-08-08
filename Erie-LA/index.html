@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Erie→LA I-40">
+<meta name="color-scheme" content="light dark">
+<title>Erie, CO → Los Angeles — 3-Day Road Trip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-page:#f4f2e9; --bg-nav:#2f3a24; --text-nav:#eef0e4; --tab-inactive:#93a37e;
+    --accent:#c7d94a; --text-on-accent:#26301c;
+    --charge-bg:#3f4a2e; --charge-text:#f4f2e9; --charge-meta:#a8b992;
+    --opt-bg:#e7e3d2; --opt-text:#2f3a24; --opt-meta:#7c7660;
+    --food-bg:#e8dcc8; --food-text:#4a3b22; --food-meta:#8a7550;
+    --dog-bg:#dfe4cd; --dog-text:#2f3a24; --dog-meta:#6d7a52;
+    --shop-bg:#e6d8e0; --shop-text:#4a2f40; --shop-meta:#8a7284;
+    --rust:#a34a26; --rust-text:#fff6ef;
+    --plum:#6b4a5c; --plum-text:#fff6fb;
+    --page-text:#2b2820; --page-meta:#7c7666;
+    --hair:rgba(0,0,0,0.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg-page:#1a1c16; --bg-nav:#12140e; --text-nav:#eef0e4; --tab-inactive:#5f6d4e;
+      --accent:#d9e64f; --text-on-accent:#1f2a17;
+      --charge-bg:#4a5a36; --charge-text:#f0f2e6; --charge-meta:#b9c7a2;
+      --opt-bg:#2a2920; --opt-text:#e7e3d2; --opt-meta:#a39d85;
+      --food-bg:#332918; --food-text:#e8dcc8; --food-meta:#c2a97a;
+      --dog-bg:#212a1a; --dog-text:#cdd8b8; --dog-meta:#93a37e;
+      --shop-bg:#2b2029; --shop-text:#e6d8e0; --shop-meta:#b39aab;
+      --rust:#d1794c; --rust-text:#1a1c16;
+      --plum:#a884a0; --plum-text:#1a1c16;
+      --page-text:#e7e4d8; --page-meta:#9a9484;
+      --hair:rgba(255,255,255,0.08);
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg-page); color:var(--page-text);
+    font-family:'Atkinson Hyperlegible',-apple-system,sans-serif;
+    line-height:1.5; padding-bottom:40px;
+  }
+  a{color:inherit;}
+  header.topnav{position:sticky; top:0; z-index:50; background:var(--bg-nav); padding-top:env(safe-area-inset-top);}
+  .brand{color:var(--text-nav); font-weight:700; font-size:16px; padding:12px 16px 6px; letter-spacing:.02em; text-transform:uppercase;}
+  .brand .sub{display:block; font-weight:400; font-size:11.5px; color:var(--tab-inactive); margin-top:3px; text-transform:none; letter-spacing:0; font-family:'JetBrains Mono',monospace;}
+  nav.tabs{display:flex; overflow-x:auto; scrollbar-width:none; border-top:1px solid rgba(255,255,255,0.08);}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{
+    flex:1 0 auto; touch-action:manipulation; min-height:50px;
+    background:none; border:none; color:var(--tab-inactive);
+    font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500;
+    text-transform:uppercase; letter-spacing:.06em;
+    padding:0 14px; border-bottom:3px solid transparent; white-space:nowrap;
+  }
+  .tab-btn.active{color:var(--text-nav); border-bottom-color:var(--accent);}
+  main{max-width:640px; margin:0 auto; padding:0 0 16px;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+  h2.day-title{
+    font-size:13px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.07em;
+    color:var(--page-text); font-weight:700; background:var(--opt-bg);
+    margin:0; padding:14px 16px 10px; border-bottom:2px solid var(--accent);
+  }
+  h2.day-title .day-sub{display:block; font-family:'Atkinson Hyperlegible',sans-serif; font-size:12.5px; color:var(--opt-meta); font-weight:400; text-transform:none; letter-spacing:0; margin-top:4px;}
+  .groupbar{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--page-meta); background:var(--bg-page); padding:12px 16px 4px;
+  }
+  details.group{margin-bottom:2px;}
+  summary.groupbar{
+    display:flex; align-items:center; cursor:pointer; touch-action:manipulation;
+    min-height:44px; padding:12px 16px; list-style:none;
+  }
+  summary.groupbar::-webkit-details-marker{display:none;}
+  summary.groupbar::after{content:"+"; margin-left:auto; font-size:17px; color:var(--accent); font-family:'Atkinson Hyperlegible',sans-serif; text-transform:none; letter-spacing:0;}
+  details.group[open] summary.groupbar::after{content:"–";}
+  .group-body{padding-top:2px;}
+  .block{padding:14px 16px; margin-bottom:2px;}
+  .block.charge{background:var(--charge-bg); color:var(--charge-text);}
+  .block.opt{background:var(--opt-bg); color:var(--opt-text);}
+  .block.food{background:var(--food-bg); color:var(--food-text);}
+  .block.dog{background:var(--dog-bg); color:var(--dog-text);}
+  .block.shop{background:var(--shop-bg); color:var(--shop-text);}
+  .k{font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em; margin:0 0 5px; opacity:.85;}
+  .block.charge .k{color:var(--charge-meta);}
+  .block.opt .k{color:var(--opt-meta);}
+  .block.food .k{color:var(--food-meta);}
+  .block.dog .k{color:var(--dog-meta);}
+  .block.shop .k{color:var(--shop-meta);}
+  .t{margin:0 0 3px; font-size:15px; font-weight:700;}
+  .m{margin:0; font-size:11.5px; font-family:'JetBrains Mono',monospace;}
+  .block.charge .m{color:var(--charge-meta);}
+  .block.opt .m{color:var(--opt-meta);}
+  .block.food .m{color:var(--food-meta);}
+  .block.dog .m{color:var(--dog-meta);}
+  .block.shop .m{color:var(--shop-meta);}
+  .note{font-size:13px; margin:6px 0 0;}
+  .tag{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:3px 8px; border-radius:3px; margin:0 6px 6px 0;}
+  .tag.recommended{background:var(--accent); color:var(--text-on-accent);}
+  .tag.heat{background:var(--rust); color:var(--rust-text);}
+  .tag.check{background:var(--plum); color:var(--plum-text);}
+  .tag.free{background:var(--dog-meta); color:var(--dog-bg);}
+  .maplink{display:inline-flex; align-items:center; gap:4px; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; text-decoration:none; margin-top:6px; touch-action:manipulation; min-height:30px;}
+  .block.charge .maplink{color:var(--accent);}
+  .block.opt .maplink{color:var(--rust);}
+  .block.food .maplink{color:var(--food-text);}
+  .block.dog .maplink{color:var(--dog-text);}
+  .block.shop .maplink{color:var(--shop-text);}
+  details.acc{margin-bottom:2px;}
+  details.acc summary{
+    background:var(--opt-bg); color:var(--opt-text);
+    touch-action:manipulation; min-height:50px;
+    display:flex; align-items:center; gap:8px; padding:13px 16px;
+    font-weight:700; font-size:14.5px; cursor:pointer; list-style:none;
+  }
+  details.acc summary::-webkit-details-marker{display:none;}
+  details.acc summary::after{content:"+"; margin-left:auto; font-size:19px; color:var(--rust); font-weight:400;}
+  details.acc[open] summary::after{content:"–";}
+  details.acc .inner{background:var(--opt-bg); color:var(--opt-text); padding:0 16px 16px;}
+  details.acc .inner p{font-size:13.5px; margin:0 0 8px;}
+  details.choice summary{background:var(--food-bg); color:var(--food-text); font-weight:700;}
+  details.choice .inner{background:var(--food-bg); color:var(--food-text);}
+  details.choice[open] summary::after{color:var(--food-meta);}
+  .skip{background:var(--rust); color:var(--rust-text); padding:12px 16px; font-size:13px;}
+  .skip .label{font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.04em; font-size:11px; display:block; margin-bottom:4px;}
+  .callout{background:var(--dog-bg); color:var(--dog-text); padding:12px 16px; font-size:13px;}
+  .callout .label{font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.04em; font-size:11px; display:block; margin-bottom:4px;}
+  footer{text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--page-meta); padding:20px 16px 8px;}
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="brand">Erie, CO → Los Angeles
+    <span class="sub">3 days · I-25 / I-40 · Tesla + dog · Day 1 &amp; 2 depart 9am, Day 3 depart 8am</span>
+  </div>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="route">Route</button>
+    <button class="tab-btn" data-tab="petrified">Petrified Forest</button>
+    <button class="tab-btn" data-tab="overnight">Overnight</button>
+    <button class="tab-btn" data-tab="dogs">Dog Walks</button>
+    <button class="tab-btn" data-tab="food">Food</button>
+    <button class="tab-btn" data-tab="stretch">Stretch</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ================= ROUTE ================= -->
+<section id="route" class="tab-panel active">
+
+  <div class="callout"><b class="label">Heads up</b>Arizona doesn't observe Daylight Saving Time. In August it shares clock time with California/Pacific — so once you cross into AZ on Day 2, you gain an hour back versus Colorado/New Mexico time.</div>
+
+  <div class="callout"><b class="label">This guide flexes with you</b>Day 1 and Day 2 endpoints below are baselines, not fixed stops. Charging stops are fixed (you need those regardless), but where you actually stop for the night is your call on the road — see the tiered options at the end of each day, and the full <b>Overnight</b> tab for hotel picks at every realistic stopping point from Albuquerque all the way to Barstow.</div>
+
+  <div class="callout"><b class="label">Monsoon watch — general rules for both Day 1 and Day 2</b>
+  <ul style="margin:6px 0 0; padding-left:18px;">
+    <li>Storms build through the afternoon and typically peak 2–6pm, then clear by evening — an early start and pushing to arrive before mid-afternoon is the single best way to dodge them on any given day.</li>
+    <li>This isn't just an AZ thing — the I-25 stretch through Raton Pass/northern NM sees summer storms too, not only the Flagstaff high country on Day 2.</li>
+    <li>Flash flooding is the real danger, not just rain — washes and low dips flood fast and can undercut the road. Never drive through flowing water; if a wash is running, wait it out.</li>
+    <li>If you hear thunder on an exposed overlook or trail (most of Petrified Forest counts), head back to the car — there's no natural shelter out there.</li>
+    <li>Quick check each morning before you leave: a glance at the NWS forecast or a weather app's radar for the day's route takes 30 seconds and beats guessing.</li>
+  </ul>
+  </div>
+
+  <h2 class="day-title">Day 1 · Monday Aug 10<span class="day-sub">Erie, CO → New Mexico — you decide how far. Baseline ~450 mi to Albuquerque, ~7.5 hrs driving. Depart 9am.</span></h2>
+
+  <div class="callout"><b class="label">Weather</b>Colorado is in a near-record heat stretch — highs near 99–101°F in the Springs/Pueblo corridor, hazy with wildfire smoke, isolated p.m. storms possible. Albuquerque/Gallup: upper 90s, ~20% chance of isolated afternoon storms. Dry heat the whole day — hydrate, and don't leave the dog in the car at any charging stop.</div>
+
+  <div class="callout"><b class="label">Charging note</b>Your car/ABRP can route Superchargers better than a static guide can — charging stops aren't listed here unless they're also an especially good dog-walk stop worth planning around.</div>
+
+  <div class="block dog">
+    <p class="k">Charger + easy walk ★</p>
+    <p class="t">Colorado Springs — Palmer Park</p>
+    <p class="m">Supercharger: Cascade Parking Garage, downtown · Park: ~10–15 min away</p>
+    <p class="note">4.7★, 5,779 reviews. Big regular park with easy walking trails, mature trees, and Pikes Peak views — leashed dogs welcome throughout, not a fenced dog park. Worth timing a charging stop around. Full details in Dog Walks tab.</p>
+    <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Palmer+Park+Colorado+Springs+CO" target="_blank">Open in Maps →</a>
+  </div>
+
+  <div class="block dog">
+    <p class="k">Charger + easy walk ★</p>
+    <p class="t">Santa Fe — Patrick Smith Park</p>
+    <p class="m">Supercharger: Cerrillos Rd · Park: ~10 min away</p>
+    <p class="note">4.6★, 337 reviews. A genuinely lovely regular park at the end of Canyon Road — big grassy field, giant old shade trees, a stream running alongside. Dog-friendly, easy flat walking. Worth planning the Santa Fe charging stop around.</p>
+    <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Patrick+Smith+Park+Santa+Fe+NM" target="_blank">Open in Maps →</a>
+  </div>
+
+  <details class="acc"><summary><span class="tag recommended">Photo</span>Santa Fe Plaza detour</summary>
+    <div class="inner"><p>~10 min off the Supercharger, opposite direction from Patrick Smith Park. Historic plaza, Palace of the Governors, adobe architecture — the classic Santa Fe postcard shot. Pick one or the other if you're short on time, or do both if you're taking it slow today.</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Santa+Fe+Plaza+NM" target="_blank">Open in Maps →</a></div>
+  </details>
+
+  <div class="groupbar">Where to stop tonight — your call</div>
+
+  <details class="acc choice" open><summary><span class="tag recommended">Baseline</span>Albuquerque, NM · ~450 mi</summary>
+    <div class="inner"><p>The natural Day 1 stop — Supercharger right in town, full food/hotel options. Leaves the full Petrified Forest visit plus ~325 mi for Day 2.</p></div>
+  </details>
+  <details class="acc choice"><summary><span class="tag check">Push further</span>Grants, NM · ~500 mi</summary>
+    <div class="inner"><p>~50 mi past Albuquerque. Basic motel options, not much else, but Riverwalk Park (4.4★) is a genuinely nice stretch — shady willows, a small lake with ducks, an easy walking path along the river. Trims Day 2 by close to an hour too.</p></div>
+  </details>
+  <details class="acc choice"><summary><span class="tag check">Push further</span>Gallup, NM · ~540 mi</summary>
+    <div class="inner"><p>Right at tomorrow's first charging stop — Petrified Forest is only ~65 mi from here instead of ~205. If you've got the energy for a ~90-mile-longer Day 1, this sets up the most relaxed possible Day 2.</p></div>
+  </details>
+
+  <div class="groupbar">Full hotel picks for every option · Overnight tab</div>
+
+  <h2 class="day-title">Day 2 · Tuesday Aug 11<span class="day-sub">→ Petrified Forest → Arizona — you decide how far. Plan on a full day either way.</span></h2>
+
+  <div class="callout"><b class="label">Weather — the one to watch</b>Monsoon season is ramping up hard this week, especially over the Mogollon Rim / Flagstaff high country. Expect building afternoon thunderstorms — heavy rain, small hail, lightning, gusty winds possible. <b>Try to be clear of the Flagstaff high country by mid-to-late afternoon</b> rather than pushing a late arrival through storm-prone terrain — budget your park time with that in mind. Albuquerque/Gallup start hot and mostly dry (90s, isolated storm chance); it's the last stretch into Flagstaff where the risk concentrates.</div>
+
+  <div class="block dog">
+    <p class="k">Charger + walk ★</p>
+    <p class="t">Gallup — Red Rock Park</p>
+    <p class="m">Supercharger in town, park ~10 min out · Route 66 Diner nearby for lunch</p>
+    <p class="note">4.4★, 1,421 reviews. Easy, well-marked trails (follow the cairns) below dramatic red sandstone cliffs — a much better stretch than a fenced lot. Less shade/grass than lower-elevation stops since it's high desert (~6,600 ft), so time it for cooler morning hours if you can. Skip if you already stopped overnight in Gallup.</p>
+    <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Red+Rock+Park+Church+Rock+NM" target="_blank">Open in Maps →</a>
+  </div>
+
+  <div class="block opt">
+    <p class="k">Enter</p>
+    <p class="t">Petrified Forest National Park — north entrance</p>
+    <p class="m">Off I-40 exit 311, at the Painted Desert Visitor Center</p>
+    <p class="note">Drive the full 28-mile park road through and exit the <b>south</b> entrance onto US-180 — no backtracking. Full stop-by-stop plan, walks, and photo ops are in the <b>Petrified Forest</b> tab. Plan on a few hours here.</p>
+    <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Painted+Desert+Visitor+Center+Petrified+Forest+National+Park" target="_blank">Open in Maps →</a>
+  </div>
+
+  <div class="block opt">
+    <p class="k">Exit · south entrance</p>
+    <p class="t">Onto US-180 toward Holbrook</p>
+    <p class="m">Rejoin I-40 W at Holbrook toward Winslow/Flagstaff</p>
+    <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Rainbow+Forest+Museum+Petrified+Forest+National+Park" target="_blank">Open in Maps →</a>
+  </div>
+
+  <details class="acc choice"><summary><span class="tag check">Optional detour</span>Winslow, AZ — La Posada Hotel + First Street Park</summary>
+    <div class="inner"><p>Right on US-180/I-40 as you pass Holbrook/Winslow. Historic Fred Harvey railway hotel (4.8★), gorgeous restored grounds, the Turquoise Room restaurant. First Street Park and Gazebo (4.5★) is a few blocks over — a well-maintained walkway under shade trees, one reviewer specifically calls it a nice place to stroll with a dog. Worth a stop only if you're ahead of the storm-timing window — otherwise skip and keep moving toward Flagstaff.</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=La+Posada+Hotel+Winslow+AZ" target="_blank">Open in Maps →</a></div>
+  </details>
+
+  <div class="groupbar">Where to stop tonight — the big lever for Day 3</div>
+
+  <div class="callout"><b class="label">Where is the hottest part of the morning?</b>Needles, CA is the single hottest point on this entire route — it routinely posts the nation's hottest daily temperature and runs consistently hotter than Barstow (average August highs ~103–108°F vs. Barstow's ~97–100°F). Both Needles and Barstow are already climbing fast by 9–10am. The single biggest heat-avoidance move on this whole trip is pushing your Day 2 stop past Kingman and getting <b>through Needles and into the Barstow/Victorville area at night</b>, while it's still 80s–90s instead of 100s+. Do that, and Day 3 is just a short, cool morning hop into LA.</div>
+
+  <details class="acc choice" open><summary><span class="tag recommended">Baseline</span>Flagstaff, AZ · ~325 mi from Albuquerque</summary>
+    <div class="inner"><p>Cool mountain town (~7,000 ft), best food/hotel options of any Day 2 stop, easiest to reach given the park detour. Leaves the full desert crossing for Day 3 — see the 8am-departure plan below.</p></div>
+  </details>
+  <details class="acc choice"><summary><span class="tag check">Push further</span>Williams, AZ · ~355 mi</summary>
+    <div class="inner"><p>~30 mi past Flagstaff, still mountain elevation and cool at night. Cataract Lake County Park (4.5★) has walking paths where locals regularly walk their dogs. Marginal Day 3 savings, but a genuinely nicer small town to overnight in than Kingman.</p></div>
+  </details>
+  <details class="acc choice"><summary><span class="tag check">Push further</span>Kingman, AZ · ~440 mi</summary>
+    <div class="inner"><p>Drops you into the low desert — it'll still be hot at arrival, but overnight lows are more bearable than midday. Canyon Shadows Neighborhood Park (4.6★, real grass and shade trees, quiet) is a few minutes from the Supercharger. Cuts Day 3 roughly in half and means you hit Needles/Barstow first thing rather than mid-morning.</p></div>
+  </details>
+  <details class="acc choice"><summary><span class="tag recommended">Push furthest — best Day 3 payoff ★</span>Needles, CA or Barstow, CA · ~520–600 mi</summary>
+    <div class="inner"><p>This is the move if you want the shortest, easiest Day 3. You'd be driving the Kingman→Needles stretch in the evening/night instead of mid-morning heat — genuinely more pleasant and safer than doing it in triple-digit daytime temps. Needles has a genuine highlight: Jack Smith Park, right on the Colorado River — shaded tables, an easy walk along real sand and water, a proper cooldown after a hot drive. Barstow's Venner Park (4.6★) is solid too, if you'd rather not push quite that far. Arrive late, but Day 3 becomes a short, cool morning hop into LA. Long Day 2 though — be honest with yourself about fatigue after a few hours on your feet at Petrified Forest.</p></div>
+  </details>
+
+  <div class="groupbar">Full hotel picks for every option · Overnight tab</div>
+
+  <h2 class="day-title">Day 3 · Wednesday Aug 12<span class="day-sub">→ Los Angeles, CA. Start point and time depend on where you stopped Day 2.</span></h2>
+
+  <div class="callout"><b class="label">If you stopped in Flagstaff or Williams</b>~480 mi to go — this is the full desert-crossing day. Depart by 8am so the Kingman→Needles→Barstow stretch happens in the morning instead of mid-afternoon. Straight through: Kingman ~10:15am, Needles/Barstow area ~12:30–1pm, LA by mid-afternoon. Being honest — an 8am start won't make the low desert actually cool (it's already climbing by 10am in August), but it gets you through the worst of it 3–4 hours earlier than a later departure would.</div>
+
+  <div class="callout"><b class="label">If you stopped in Kingman</b>~330 mi to go. Skip straight to the Needles/Barstow charging stop below — still worth an early-ish start (8–9am) to clear Needles before late morning, but you've already cut the day meaningfully.</div>
+
+  <div class="callout"><b class="label">If you stopped in Needles or Barstow</b>~150–230 mi to go. You already did the hard part at night — this is a short, easy morning drive. No need to rush an early departure; a normal 8–9am start still gets you into LA before lunch.</div>
+
+  <div class="callout"><b class="label">Weather</b>Flagstaff/Williams start cool and clear (~60–70°F). Kingman/Needles/Barstow: 100–110°F by midday, sunny, dry — Needles runs hottest. LA arrival is mild and pleasant, low-to-mid 80s. AC and hydration matter more than anything else today.</div>
+
+  <div class="block dog">
+    <p class="k">Charger + easy walk ★ · if starting from Flagstaff/Williams</p>
+    <p class="t">Kingman — Canyon Shadows Neighborhood Park</p>
+    <p class="m">Supercharger: 120 W Andy Devine Ave, next to Route 66 Museum · Park a few minutes away</p>
+    <p class="note">4.6★, 149 reviews. Quiet, clean neighborhood park with real grass and maintained shade trees — rare to find actual grass in the desert. Keep it efficient rather than lingering — still climbing toward the day's heat.</p>
+    <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Canyon+Shadows+Neighborhood+Park+Kingman+AZ" target="_blank">Open in Maps →</a>
+  </div>
+
+  <div class="block dog">
+    <p class="k">Charger + easy walk ★ · everyone passes through here or Barstow</p>
+    <p class="t">Needles — Jack Smith Park</p>
+    <p class="m">Supercharger in town · Park is a genuine highlight, not just a pit stop</p>
+    <p class="note">4.6★, 710 reviews. Right on the Colorado River — shaded tables, an easy flat walk along real sand and clean water. A reviewer specifically mentions stopping here to walk their dog by the river. Worth the stop even though Needles is the hottest point on the whole trip — get in, let the dog cool off in the shade, get back on the road. Skip if you already overnighted past here.</p>
+    <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Jack+Smith+Park+Needles+CA" target="_blank">Open in Maps →</a>
+  </div>
+
+  <details class="acc"><summary><span class="tag check">One more option</span>Victorville area</summary>
+    <div class="inner"><p>If you want one more break before LA: Eagle Ranch Park in Victorville (4.5★) — grass and tall shade trees, an easy walk, not a fenced dog park. Not tied to a must-stop charger — only worth it if you're not in a hurry.</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Eagle+Ranch+Park+Victorville+CA" target="_blank">Open in Maps →</a></div>
+  </details>
+
+  <div class="block opt">
+    <p class="k">Arrival</p>
+    <p class="t">Los Angeles</p>
+    <p class="note">Getting through Cajon Pass / I-15 before mid-afternoon should also mean lighter traffic than a typical later arrival — one more reason the earlier/further Day 2 options pay off.</p>
+  </div>
+
+</section>
+
+<!-- ================= PETRIFIED FOREST ================= -->
+<section id="petrified" class="tab-panel">
+
+  <div class="callout"><b class="label">How this park works</b>You enter at the north end (I-40 exit 311, Painted Desert Visitor Center) and exit at the south end (US-180 near Holbrook) via a single 28-mile road — no backtracking, no loop. Everything below is listed in driving order, north to south. Leashed dogs are allowed on every trail and overlook in the park, just not inside buildings. Pick 3–5 stops rather than all of them if you want to keep it to a few hours.</div>
+
+  <div class="skip"><b class="label">Shade reality check</b>This is high desert badlands at ~5,400 ft — there are almost no trees. "Cooler" here means: the two visitor centers (real A/C), the Painted Desert Inn's shaded porch, and the two spots below with an actual covered picnic shelter. Everything else is open sky. Sun shirts/hats and water for both of you matter more than shade-hunting.</div>
+
+  <div class="groupbar">North entrance</div>
+
+  <div class="block opt"><p class="k">Start here · Indoor / A·C</p><p class="t">Painted Desert Visitor Center</p><p class="m">Right at the north entrance off I-40</p><p class="note">Orientation film, restrooms, pay the entrance fee here. Good spot to let the dog stretch in the parking lot shade before you start.</p></div>
+
+  <div class="block dog"><p class="k">Photo · Easy walk</p><p class="t">Tawa Point &amp; Kachina Point overlooks</p><p class="m">Short paved paths right off the road, a few minutes each</p><p class="note">Wide Painted Desert panoramas — striped badlands stretching out below. Minimal walking, no real shade, but quick.</p></div>
+
+  <div class="block opt"><p class="k">Photo ★ · Shaded porch + A/C</p><p class="t">Painted Desert Inn</p><p class="m">Historic Fred Harvey building, National Historic Landmark, 9am–4pm</p><p class="note">The single best photo stop in the park — the view from the inn's overlook is the classic shot. Covered porch and an air-conditioned interior make this the best mid-visit break for both of you. Dogs aren't allowed inside, but the porch and overlook are outside. Ask about the Bark Ranger program if you want to make it official for the dog.</p></div>
+
+  <div class="block dog"><p class="k">Easy walk · 0.3 mi</p><p class="t">Puerco Pueblo</p><p class="m">Mile marker 11 from the north entrance</p><p class="note">Flat paved loop to ancestral Puebloan ruins and petroglyphs. Almost no shade — keep it brief if it's already hot by the time you're here.</p></div>
+
+  <div class="block opt"><p class="k">Photo · No walk needed</p><p class="t">Newspaper Rock overlook</p><p class="m">Roadside pullout, scopes provided</p><p class="note">Dense cluster of petroglyphs viewed from an overlook — quick stop, don't even need to get the dog out.</p></div>
+
+  <div class="groupbar">Middle of the park</div>
+
+  <div class="block dog"><p class="k">Easy walk ★ · 1 mi paved loop · Shaded picnic shelter</p><p class="t">Blue Mesa Trail</p><p class="m">3rd/4th pullout on the Blue Mesa spur road — look for the covered picnic table</p><p class="note">The best all-around stop in the park and one of the only ones with an actual covered picnic shelter at the trailhead. The paved loop descends ~100 ft into a valley of striped blue/purple badland hills, which also means partial relief from direct sun and wind versus the mesa top. Best photo light is morning. Easy grade, dog-friendly, 30–60 min.</p></div>
+
+  <div class="block opt"><p class="k">Photo · No walk needed</p><p class="t">Agate Bridge</p><p class="m">Roadside overlook</p><p class="note">A 110-ft petrified log spanning a small wash, slowly eroding out from under its supports. Quick look from the overlook.</p></div>
+
+  <div class="block dog"><p class="k">Easy walk · 0.8 mi loop</p><p class="t">Crystal Forest</p><p class="m">Paved loop</p><p class="note">Dense, close-up concentration of crystal-flecked petrified wood right along the path. No shade. One of the better photo trails for the wood itself rather than the landscape.</p></div>
+
+  <div class="groupbar">South entrance — Rainbow Forest</div>
+
+  <div class="block opt"><p class="k">Indoor / A·C · good lunch break</p><p class="t">Rainbow Forest Museum &amp; Visitor Center</p><p class="m">At the south entrance</p><p class="note">Fossil and geology exhibits, restrooms, gift shop, A/C. Good spot for a real break before you exit onto US-180.</p></div>
+
+  <div class="block dog"><p class="k">Easy walk · 0.4–0.5 mi paved loop</p><p class="t">Giant Logs Trail</p><p class="m">Right behind the museum</p><p class="note">Shortest, easiest walk in the park and dog-friendly — the largest, most colorful logs in the park, including the 10-ft-wide "Old Faithful." Limited shade but right next to the A/C museum for a break before or after.</p></div>
+
+  <details class="acc choice"><summary><span class="tag check">If you want more walking</span>Long Logs + Agate House</summary>
+    <div class="inner"><p>2.6 mi round trip combined, also from the Rainbow Forest parking lot. Long Logs has one of the densest concentrations of petrified wood in the park; Agate House is a small reconstructed pueblo built from petrified wood. Essentially no shade for the whole loop except one small shelter at the 0.5-mile trail split — only worth it if you're ahead of schedule and it's not yet peak heat.</p></div>
+  </details>
+
+</section>
+
+<!-- ================= OVERNIGHT ================= -->
+<section id="overnight" class="tab-panel">
+
+  <div class="callout"><b class="label">How to use this tab</b>Options are listed in driving order for each day, roughly closest to farthest. Pick on the road based on how you're feeling — every stop below has a real Supercharger nearby (see Route tab) so you're never stuck.</div>
+
+  <div class="groupbar">Day 1 options — New Mexico</div>
+
+  <div class="block opt"><p class="k">Baseline · ~450 mi</p><p class="t">Albuquerque, NM</p><p class="m">Full food/hotel selection, most natural Day 1 stop</p></div>
+  <div class="block opt"><p class="k">Recommended</p><p class="t">Hotel Albuquerque at Old Town</p><p class="m">4.3★ · Old Town area</p><p class="note">Dogs allowed for a $75 fee. Walking distance to Old Town and Sawmill Market restaurants. A few reviews mention inconsistent hot water — worth a quick check at the front desk.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Hotel+Albuquerque+at+Old+Town" target="_blank">Open in Maps →</a></div>
+  <div class="block opt"><p class="k">Boutique / quieter alternative</p><p class="t">The Desert Compass</p><p class="m">5.0★ · Old Town, apartment-style suites</p><p class="note">Reviewers specifically mention bringing dogs and it being relaxing — private courtyards, kitchenettes. Smaller property, book ahead.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=The+Desert+Compass+Albuquerque+NM" target="_blank">Open in Maps →</a></div>
+  <div class="block opt"><p class="k">Reliable budget option</p><p class="t">Holiday Inn Express &amp; Suites Old Town</p><p class="m">4.1★</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Holiday+Inn+Express+Suites+Albuquerque+Historic+Old+Town" target="_blank">Open in Maps →</a></div>
+
+  <div class="block opt"><p class="k">Push further · ~500 mi</p><p class="t">Grants, NM</p><p class="m">Basic motel town — trims tomorrow's drive by ~50 mi</p></div>
+  <div class="block opt"><p class="k">Option</p><p class="t">Days Inn by Wyndham Grants</p><p class="m">3.4★ · reviewers note it's clean and pet-friendly despite a dated exterior</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Days+Inn+by+Wyndham+Grants+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="block opt"><p class="k">Push further · ~540 mi</p><p class="t">Gallup, NM</p><p class="m">Right at Day 2's first charging stop — sets up the shortest possible Day 2</p></div>
+  <div class="block opt"><p class="k">Recommended</p><p class="t">Comfort Suites Gallup East</p><p class="m">4.3★ · Route 66 &amp; I-40</p><p class="note">A reviewer specifically mentions bringing a pet and being warmly welcomed. No EV charging on site, but the Supercharger is close by.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Comfort+Suites+Gallup+East+Route+66+I-40" target="_blank">Open in Maps →</a></div>
+  <div class="block opt"><p class="k">Alternative</p><p class="t">Hampton Inn &amp; Suites Gallup</p><p class="m">3.8★</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Hampton+Inn+Suites+Gallup+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="groupbar">Day 2 options — Arizona (after Petrified Forest)</div>
+
+  <div class="block opt"><p class="k">Baseline · ~325 mi from ABQ</p><p class="t">Flagstaff, AZ</p><p class="m">Cool mountain town, best food/hotel selection of any Day 2 stop</p></div>
+  <div class="block opt"><p class="k">Recommended</p><p class="t">Residence Inn by Marriott Flagstaff</p><p class="m">4.7★ · downtown, walkable to restaurants</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Residence+Inn+by+Marriott+Flagstaff+AZ" target="_blank">Open in Maps →</a></div>
+  <div class="block opt"><p class="k">Alternative</p><p class="t">DoubleTree by Hilton Flagstaff</p><p class="m">4.3★ · sauna, indoor/outdoor hot tub — good if you want a real reset</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=DoubleTree+by+Hilton+Hotel+Flagstaff" target="_blank">Open in Maps →</a></div>
+
+  <div class="block opt"><p class="k">Push further · ~355 mi</p><p class="t">Williams, AZ</p><p class="m">Still mountain elevation, a smaller and arguably nicer overnight than Kingman</p></div>
+  <div class="block opt"><p class="k">Recommended</p><p class="t">Best Western Plus Inn of Williams</p><p class="m">4.6★ · pines, outdoor hot tub/fire pit</p><p class="note">A reviewer specifically had a pet room with no odor issues — good sign for a dog stay.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Best+Western+Plus+Inn+of+Williams+AZ" target="_blank">Open in Maps →</a></div>
+  <div class="block opt"><p class="k">Alternative</p><p class="t">La Quinta Inn &amp; Suites Williams-Grand Canyon Area</p><p class="m">4.4★ · quiet, away from downtown train noise</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=La+Quinta+Inn+Suites+Williams+Grand+Canyon+Area" target="_blank">Open in Maps →</a></div>
+
+  <div class="block opt"><p class="k">Push further · ~440 mi</p><p class="t">Kingman, AZ</p><p class="m">Cuts Day 3 roughly in half — you're already in the low desert here</p></div>
+  <div class="block opt"><p class="k">Recommended</p><p class="t">Best Western Plus King's Inn &amp; Suites</p><p class="m">4.5★ · 2,418 reviews</p><p class="note">Multiple reviewers specifically praise it for traveling with pets — clean pet rooms, friendly staff about it.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Best+Western+Plus+Kings+Inn+Suites+Kingman+AZ" target="_blank">Open in Maps →</a></div>
+  <div class="block opt"><p class="k">Alternative</p><p class="t">La Quinta Inn &amp; Suites Kingman</p><p class="m">4.3★ · pet-friendly chain policy</p><p class="note">One reviewer flagged the designated pet relief area as awkward (rocky terrain) — worth checking at check-in.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=La+Quinta+Inn+Suites+Kingman+AZ" target="_blank">Open in Maps →</a></div>
+
+  <div class="block opt"><p class="k">Push furthest · ~520 mi ★</p><p class="t">Needles, CA</p><p class="m">Best payoff for Day 3 — you'd cross the hottest stretch on this whole route at night instead of morning heat</p></div>
+  <div class="block opt"><p class="k">Recommended</p><p class="t">Hampton Inn Needles Colorado River</p><p class="m">4.6★ · newer property</p><p class="note">Consistently the best-reviewed option in Needles. A couple reviewers mention interior noise carrying between rooms — ask for an end unit if that matters to you.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Hampton+Inn+Needles+Colorado+River" target="_blank">Open in Maps →</a></div>
+  <div class="block opt"><p class="k">Alternative — pet-friendly, budget</p><p class="t">Rio Del Sol Inn</p><p class="m">4.2★ · reviewers specifically call out being pet-friendly and accommodating for cross-country moves with pets</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Rio+Del+Sol+Inn+Needles+CA" target="_blank">Open in Maps →</a></div>
+
+  <div class="block opt"><p class="k">Push furthest · ~600 mi ★</p><p class="t">Barstow, CA</p><p class="m">Even shorter Day 3 than Needles, and Barstow itself runs a few degrees cooler than Needles if you'd rather not push quite that far</p></div>
+  <div class="block opt"><p class="k">Recommended</p><p class="t">Hampton Inn &amp; Suites Barstow</p><p class="m">4.3★ · Lenwood Rd, near outlets and restaurants</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Hampton+Inn+Suites+Barstow+CA" target="_blank">Open in Maps →</a></div>
+
+  <div class="skip"><b class="label">A very long Day 2 either way</b>Needles or Barstow means driving late after a multi-hour park visit and a full desert crossing already behind you. Great for Day 3, but be honest about fatigue — pulling over for an extra charge/rest stop beats pushing through drowsy.</div>
+
+</section>
+
+<!-- ================= DOG WALKS ================= -->
+<section id="dogs" class="tab-panel">
+
+  <div class="callout"><b class="label">The rule</b>Shade + grass over dog parks specifically, paired with charging stops where it happens to line up well — same pattern as your usual trips. Everything below is listed in driving order.</div>
+
+  <div class="groupbar">Day 1 — Colorado</div>
+
+  <div class="block dog"><p class="k">Colorado Springs · near Supercharger ★</p><p class="t">Palmer Park</p><p class="m">4.7★ · 5,779 reviews</p><p class="note">Big regular park, not a fenced dog park — easy walking trails, mature trees, Pikes Peak views, a good taste of local wildlife. Worth the short detour from the charger.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Palmer+Park+Colorado+Springs+CO" target="_blank">Open in Maps →</a></div>
+
+  <div class="block dog"><p class="k">Trinidad, CO · near Supercharger</p><p class="t">Kit Carson Park</p><p class="m">4.5★ · 263 reviews</p><p class="note">Small, well-shaded, historic — reviewers specifically mention it as a nice quick stretch stop with their dog on a long drive. Plenty of shade for a warm day.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Kit+Carson+Park+Trinidad+CO" target="_blank">Open in Maps →</a></div>
+
+  <div class="groupbar">Day 1 — New Mexico</div>
+
+  <div class="block dog"><p class="k">Raton, NM · ~2 mi off I-25</p><p class="t">Climax Canyon Nature Trail</p><p class="m">4.6★ · 80 reviews</p><p class="note">Real hiking trail, not a fenced dog park — reviewers specifically flag it as a great mid-trip stop between Albuquerque and Denver to loosen up the legs. Two loops (~1.4–1.5 mi each), litter-free, usually empty. Skip the "Dog Park" pin behind the Raton McDonald's — it's poorly reviewed (1.8★, no fence, no grass).</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Climax+Canyon+Nature+Trail+Raton+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="block dog"><p class="k">Santa Fe · near Supercharger ★</p><p class="t">Patrick Smith Park</p><p class="m">4.6★ · 337 reviews</p><p class="note">A genuinely lovely regular park at the end of Canyon Road — big grassy field, giant old shade trees, a stream running alongside. Easy flat walking, dog-friendly.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Patrick+Smith+Park+Santa+Fe+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="block dog"><p class="k">Grants, NM</p><p class="t">Riverwalk Park</p><p class="m">4.4★ · 281 reviews</p><p class="note">Shady willows, a small lake with ducks and fishing, an easy walking path along the river with a view of Mount Taylor. Genuinely nice stretch, not just a pit stop. Only relevant if you push past Albuquerque for the night.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Riverwalk+Park+Grants+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="block dog"><p class="k">Gallup, NM · near Supercharger ★</p><p class="t">Red Rock Park</p><p class="m">4.4★ · 1,421 reviews</p><p class="note">Easy, well-marked trails below red sandstone cliffs — a real walk with a view rather than a fenced lot. High desert (~6,600 ft) so less grass/shade than lower stops; better in cooler morning hours.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Red+Rock+Park+Church+Rock+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="groupbar">Day 2 — Petrified Forest to Flagstaff</div>
+
+  <div class="block dog"><p class="k">Petrified Forest NP</p><p class="t">Leashed on every trail — the whole park</p><p class="m">4.9/5 "bones" per BringFido, exceptionally dog-friendly</p><p class="note">Genuinely rare: this park allows leashed dogs on all trails and the full backcountry, not just paved paths. Full stop-by-stop plan in the Petrified Forest tab. Little shade — bring water.</p></div>
+
+  <div class="block dog"><p class="k">Holbrook, AZ · just south of the park</p><p class="t">Lisitzky Park</p><p class="m">4.3★ · 45 reviews</p><p class="note">Quiet neighborhood park with genuinely good shade trees — a reviewer specifically walked their dog here on a 100°F day and noted the sprinklers helped. Shaded picnic tables too.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Lisitzky+Park+Holbrook+AZ" target="_blank">Open in Maps →</a></div>
+
+  <div class="block dog"><p class="k">Winslow, AZ · right off I-40</p><p class="t">First Street Park and Gazebo</p><p class="m">4.5★ · pairs with the optional La Posada detour</p><p class="note">Shade trees, a well-maintained walkway, a gazebo. A reviewer calls it a lovely place for a stroll with a dog. Quick, easy, no real detour needed if you're already stopping in Winslow.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=First+Street+Park+and+Gazebo+Winslow+AZ" target="_blank">Open in Maps →</a></div>
+
+  <div class="block dog"><p class="k">Williams, AZ</p><p class="t">Cataract Lake County Park</p><p class="m">4.5★ · 58 reviews</p><p class="note">Walking paths around a small lake — reviewers note locals regularly walk dogs here. A little out of the way from downtown but worth it if you're overnighting in Williams. Buckskinner Park (4.7★, pines, small lake, more of a hike) is a scenic alternative if you want something longer.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Cataract+Lake+County+Park+Williams+AZ" target="_blank">Open in Maps →</a></div>
+
+  <div class="block dog"><p class="k">Flagstaff · near downtown</p><p class="t">Foxglenn Park</p><p class="m">4.6★ · 738 reviews</p><p class="note">Fields and genuinely good grass under ponderosa pines, easy access right off I-40. A regular park, not a fenced run — easy flat walking.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Foxglenn+Park+Flagstaff+AZ" target="_blank">Open in Maps →</a></div>
+
+  <div class="groupbar">Day 3 — the desert crossing</div>
+
+  <div class="block dog"><p class="k">Kingman, AZ · near Supercharger ★</p><p class="t">Canyon Shadows Neighborhood Park</p><p class="m">4.6★ · 149 reviews</p><p class="note">Quiet, clean, real grass and maintained shade trees — rare to find actual grass in the desert. A calm neighborhood park rather than a fenced lot.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Canyon+Shadows+Neighborhood+Park+Kingman+AZ" target="_blank">Open in Maps →</a></div>
+
+  <div class="block dog"><p class="k">Needles, CA · at Supercharger ★★</p><p class="t">Jack Smith Park</p><p class="m">4.6★ · 710 reviews</p><p class="note">The best stop on the entire desert crossing — right on the Colorado River, shaded tables, real sand and clean water, an easy flat walk. A reviewer specifically stopped here to walk their dog by the river. If you only stop for one break on Day 3, make it this one.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Jack+Smith+Park+Needles+CA" target="_blank">Open in Maps →</a></div>
+
+  <details class="acc"><summary><span class="tag check">If you have extra time</span>Moabi Regional Park, Needles</summary>
+    <div class="inner"><p>4.6★, ~11 min off I-40 via Park Moabi Rd. Colorado River access, sandy beach, dogs allowed, real shade. A genuine cooldown option (literally — you can let the dog wade) if you're not in a rush through Needles.</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Moabi+Regional+Park+Needles+CA" target="_blank">Open in Maps →</a></div>
+  </details>
+
+  <div class="block dog"><p class="k">Barstow, CA</p><p class="t">Venner Park (K Street Park)</p><p class="m">4.6★ · 45 reviews</p><p class="note">Green field, shaded areas, quiet. Restroom quality is inconsistent per reviews — not a dealbreaker for a quick stop.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Venner+Park+K+Street+Park+Barstow+CA" target="_blank">Open in Maps →</a></div>
+
+  <div class="block dog"><p class="k">Victorville, CA · optional, closer to LA</p><p class="t">Eagle Ranch Park</p><p class="m">4.5★ · 349 reviews</p><p class="note">Grass and tall shade trees, easy walking paths — a regular neighborhood park, not a fenced dog park, though plenty of locals bring dogs. Only worth a detour if you're not in a hurry this close to home.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Eagle+Ranch+Park+Victorville+CA" target="_blank">Open in Maps →</a></div>
+
+</section>
+
+<!-- ================= FOOD ================= -->
+<section id="food" class="tab-panel">
+
+  <div class="groupbar">Day 1 — Erie → Albuquerque</div>
+
+  <div class="block food"><p class="k">Lunch/coffee · Santa Fe</p><p class="t">Sagche's Coffee House</p><p class="m">4.7★ · 458 reviews · near the Supercharger</p><p class="note">Guatemalan-influenced menu, reviewers specifically praise the breakfast burritos and fresh-made pastries.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Sagche%27s+Coffee+House+Santa+Fe+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="block food"><p class="k">Coffee alternative · Santa Fe Plaza</p><p class="t">35° North Coffee</p><p class="m">4.5★ · right on the Plaza if you're doing the photo stop</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=35+North+Coffee+Santa+Fe+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="block food"><p class="k">Dinner · Albuquerque ★</p><p class="t">Char</p><p class="m">4.7★ · 333 reviews · open Monday, 5–10pm</p><p class="note">Southwestern steakhouse with a green-chile flight and hot-stone cooking. Several of the well-reviewed Nob Hill spots (Triana, Mesa Provisions, Gather) are closed Mondays/Tuesdays — Char is open and highly rated. Reservation recommended.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Char+Albuquerque+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="block food"><p class="k">Casual alternative · Albuquerque</p><p class="t">Sawmill Market</p><p class="m">4.6★ · food hall, open until 9pm Monday</p><p class="note">Multiple vendors under one roof if you want variety without a reservation. Old Town, walkable from Hotel Albuquerque.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Sawmill+Market+Albuquerque+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="groupbar">Day 2 — Albuquerque → Flagstaff</div>
+
+  <div class="block food"><p class="k">Lunch · Gallup</p><p class="t">Route 66 Diner</p><p class="m">4.5★ · 972 reviews</p><p class="note">Reviewers love the carne adovada stuffed sopapilla and fry bread.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Route+66+Diner+Gallup+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="block food"><p class="k">Lunch alternative · Gallup</p><p class="t">Route 66 Railway Cafe</p><p class="m">4.6★ · 1,274 reviews · watch freight trains go by while you eat</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Route+66+Railway+Cafe+Gallup+NM" target="_blank">Open in Maps →</a></div>
+
+  <div class="block food"><p class="k">Dinner · Flagstaff</p><p class="t">Fat Olives</p><p class="m">4.6★ · 6,172 reviews · featured on Diners, Drive-Ins &amp; Dives</p><p class="note">Extremely popular — expect a 30–40 min wait most nights. Excellent wood-fired pizza.</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Fat+Olives+Flagstaff+AZ" target="_blank">Open in Maps →</a></div>
+
+  <div class="block food"><p class="k">Dinner alternative · Flagstaff</p><p class="t">Sosta</p><p class="m">4.4★ · 190 reviews · shaded patio, relaxed pace, less of a wait than Fat Olives</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Sosta+Flagstaff+AZ" target="_blank">Open in Maps →</a></div>
+
+  <div class="groupbar">Day 3 — Flagstaff → LA</div>
+
+  <div class="block food"><p class="k">Lunch · Kingman</p><p class="t">Mr D'z Route 66 Diner</p><p class="m">Classic Route 66 diner right by the Supercharger/Route 66 Museum</p><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Mr+D%27z+Route+66+Diner+Kingman+AZ" target="_blank">Open in Maps →</a></div>
+
+</section>
+
+<!-- ================= STRETCH ================= -->
+<section id="stretch" class="tab-panel">
+
+  <div class="callout"><b class="label">Read this parked, not while driving</b>The moves below labeled "safe while driving" are fine at speed. Everything else is for a charging stop or red light. Pair breaks with your Supercharger stops — you're already stopping every 1.5–2 hrs on this route, so the rhythm is built in.</div>
+
+  <details class="group" open>
+    <summary class="groupbar">Safe while driving</summary>
+    <div class="group-body">
+      <div class="block dog"><p class="k">In-seat</p><p class="t">Pelvic tilts</p><p class="note">Rock hips forward and back, slow and small.</p><p class="m">10 reps</p></div>
+      <div class="block dog"><p class="k">In-seat</p><p class="t">Shoulder blade squeezes</p><p class="note">Pull shoulder blades together and down.</p><p class="m">8 reps</p></div>
+      <div class="block dog"><p class="k">In-seat</p><p class="t">4–6 breathing</p><p class="note">Inhale 4 counts, exhale 6 — relaxes low-back guarding on the long I-40 stretches.</p><p class="m">A few rounds</p></div>
+    </div>
+  </details>
+
+  <details class="group">
+    <summary class="groupbar">At every charging/dog stop, 5–10 min</summary>
+    <div class="group-body">
+      <div class="block dog"><p class="k">Stretch</p><p class="t">Standing back extension</p><p class="note">Hands on low back, gently lean back and look up a few inches.</p><p class="m">Hold 3–5 sec × 5</p></div>
+      <div class="block dog"><p class="k">Stretch</p><p class="t">Hip flexor stretch, door-assisted</p><p class="note">Hold the open car door, step one foot back into a soft lunge. Back knee gently bent, not locked.</p><p class="m">Hold 20–30 sec each side</p></div>
+      <div class="block dog"><p class="k">Stretch</p><p class="t">Hamstring stretch, heel on sill</p><p class="note">Heel on the door sill, knee soft, hinge forward from the hips with a flat back.</p><p class="m">Hold 20–30 sec each side</p></div>
+      <div class="block dog"><p class="k">Stretch</p><p class="t">Walk it out</p><p class="note">Best reset there is — pair with the dog's walk at every stop.</p><p class="m">5–10 min, every stop</p></div>
+    </div>
+  </details>
+
+  <details class="group">
+    <summary class="groupbar">Self-massage, no gear</summary>
+    <div class="group-body">
+      <div class="block dog"><p class="k">Massage</p><p class="t">Glute release against the car</p><p class="note">Lean your weight into the fleshy part of one glute, small circles.</p><p class="m">30–45 sec each side</p></div>
+      <div class="block dog"><p class="k">Massage</p><p class="t">Low-back release, standing</p><p class="note">Two soft fists either side of the spine, above the hip bones — never on the spine itself.</p><p class="m">30–60 sec</p></div>
+      <div class="block dog"><p class="k">Massage</p><p class="t">Neck &amp; trap squeeze</p><p class="note">Opposite hand reaches across, squeezes and kneads in slow pulses.</p><p class="m">30 sec each side</p></div>
+    </div>
+  </details>
+
+  <p style="font-size:12.5px;color:var(--page-meta);text-align:center;margin:14px 16px 0;">General movement guidance, not a substitute for care from your own PT.</p>
+
+</section>
+
+</main>
+
+<footer>Erie, CO → Los Angeles · I-25/I-40 · 3 days · Aug 10–12, 2026 · follows your phone's light/dark setting</footer>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0, behavior:'instant'});
+  });
+});
+</script>
+
+</body>
+</html>
