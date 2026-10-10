@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#7a4f6d">
+<title>LA → Erie · Oct 10–11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#c1694f;
+    --plum:#7a4f6d;
+    --teal:#78c8b4;
+    --olive:#7d8c5c;
+    --cream:#f8f3ec;
+    --navy:#1e2a3a;
+    --ink:#2c2620;
+    --muted:#6f665c;
+    --line:#e4dbcf;
+    --card:#ffffff;
+    --desc:#4a423a;
+    --heatbg:#fdf0e9;
+    --calloutbg:#f1f3e9;
+    --dosebg:#eef1ea;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --cream:#17191d;
+      --ink:#ece6dc;
+      --muted:#a39a8e;
+      --line:#343a43;
+      --card:#21252b;
+      --desc:#cfc7bb;
+      --heatbg:#33231d;
+      --calloutbg:#252a20;
+      --dosebg:#2c3340;
+      --olive:#a3b37f;
+      --terracotta:#dd8469;
+    }
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font:16px/1.55 "Atkinson Hyperlegible",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    padding-bottom:64px;
+    -webkit-text-size-adjust:100%;
+  }
+  header{
+    background:var(--plum);
+    color:#fff;
+    padding:calc(env(safe-area-inset-top) + 20px) 18px 18px;
+  }
+  header h1{margin:0;font-size:23px;line-height:1.25;letter-spacing:-.2px;}
+  header .sub{margin-top:6px;font-size:14px;opacity:.85;}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;
+    background:var(--navy);
+    box-shadow:0 2px 10px rgba(0,0,0,.18);
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  nav button{
+    flex:1 0 auto;
+    min-height:56px;
+    padding:0 16px;
+    background:none;border:0;
+    color:#a9b4c2;
+    font:inherit;font-size:14px;font-weight:700;
+    letter-spacing:.3px;
+    touch-action:manipulation;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;
+  }
+  nav button.on{color:#fff;border-bottom-color:var(--teal);}
+
+  main{padding:16px 14px 0;}
+  .panel{display:none;}
+  .panel.on{display:block;}
+
+  .day{
+    margin:26px 0 14px;
+    padding:10px 14px;
+    background:var(--plum);
+    color:#fff;
+    border-radius:10px;
+    font-family:var(--mono);
+    font-size:13px;font-weight:700;
+    letter-spacing:.8px;text-transform:uppercase;
+  }
+  .day:first-child{margin-top:0;}
+
+  .heat{
+    background:var(--heatbg);
+    border:1px solid var(--terracotta);
+    border-left:5px solid var(--terracotta);
+    border-radius:10px;
+    padding:13px 14px;
+    margin-bottom:18px;
+  }
+  .heat .label{color:var(--terracotta);display:block;margin-bottom:4px;font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;}
+  .heat p{margin:0;font-size:14.5px;}
+  .heat p + p{margin-top:8px;}
+
+  .town{margin-bottom:26px;}
+  .town > h2{margin:0 0 4px;font-size:19px;letter-spacing:-.2px;}
+  .town > .tz{margin:0 0 12px;font-family:var(--mono);font-size:12px;color:var(--muted);}
+
+  details{
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+    margin-bottom:10px;
+    overflow:hidden;
+  }
+  details[open]{box-shadow:0 1px 6px rgba(0,0,0,.05);}
+  summary{
+    min-height:56px;
+    display:flex;align-items:center;gap:10px;
+    padding:10px 14px;
+    font-weight:700;font-size:15.5px;
+    cursor:pointer;
+    touch-action:manipulation;
+    list-style:none;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary .chev{margin-left:auto;color:var(--muted);font-size:13px;transition:transform .18s;}
+  details[open] summary .chev{transform:rotate(90deg);}
+  .body{padding:0 14px 14px;}
+
+  .tag{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:10.5px;font-weight:700;
+    letter-spacing:.7px;text-transform:uppercase;
+    padding:3px 7px;border-radius:5px;
+    color:#fff;
+    flex:none;
+  }
+  .t-dog{background:#7d8c5c;}
+  .t-coffee{background:#c1694f;}
+  .t-food{background:#c1694f;}
+  .t-note{background:#7a4f6d;}
+  .t-hotel{background:#7a4f6d;}
+  .t-seat{background:#1e2a3a;}
+  .t-move{background:#78c8b4;color:#12332b;}
+  .t-stretch{background:#7d8c5c;}
+  .t-massage{background:#7a4f6d;}
+  .t-watch{background:#c1694f;}
+
+  .card{
+    border:1px solid var(--line);
+    border-left-width:5px;
+    border-radius:10px;
+    padding:12px 13px;
+    margin-bottom:10px;
+    background:var(--card);
+  }
+  .card.charger{background:#1e2a3a;border-color:#78c8b4;color:#e8eef3;}
+  .card.charger .name{color:#fff;}
+  .card.charger .meta{color:#78c8b4;}
+  .card.charger .desc{color:#c3ceda;}
+  .card.dog{border-left-color:var(--olive);}
+  .card.coffee,.card.food{border-left-color:var(--terracotta);}
+  .card.hotel{border-left-color:var(--plum);}
+  .card.closed{opacity:.55;border-left-color:var(--muted);}
+  .card.seat{border-left-color:#1e2a3a;}
+  .card.move{border-left-color:var(--teal);}
+  .card.stretch{border-left-color:var(--olive);}
+  .card.massage{border-left-color:var(--plum);}
+
+  .name{font-weight:700;font-size:16px;margin:0 0 3px;}
+  .meta{font-family:var(--mono);font-size:12px;color:var(--olive);font-weight:500;margin:0 0 5px;}
+  .hours{font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 6px;}
+  .hours strong{color:var(--ink);}
+  .desc{font-size:14.5px;margin:0 0 10px;color:var(--desc);}
+  .flag{font-size:13.5px;margin:0 0 10px;color:var(--terracotta);font-weight:700;}
+  .star{color:var(--terracotta);font-weight:700;}
+  .dose{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:11.5px;font-weight:700;
+    color:var(--ink);
+    background:var(--dosebg);
+    padding:3px 9px;
+    border-radius:20px;
+  }
+
+  a.map{
+    display:flex;align-items:center;justify-content:center;
+    min-height:44px;
+    border-radius:8px;
+    background:#78c8b4;
+    color:#12332b;
+    font-weight:700;font-size:14px;
+    text-decoration:none;
+    touch-action:manipulation;
+  }
+
+  .callout{
+    background:var(--calloutbg);
+    border:1px solid var(--olive);
+    border-radius:10px;
+    padding:12px 13px;
+    margin-bottom:16px;
+    font-size:14.5px;
+  }
+  .callout .label{color:var(--olive);font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;display:block;margin-bottom:4px;}
+  .callout ul{margin:8px 0 0;padding-left:18px;}
+  .callout li{margin-bottom:5px;}
+  .callout a{color:inherit;font-weight:700;}
+
+  .skip{
+    font-size:13.5px;color:var(--muted);
+    padding:10px 12px;
+    border:1px dashed var(--line);
+    border-radius:9px;
+    margin-bottom:10px;
+  }
+  .skip b{color:var(--ink);}
+
+  .wx{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;margin-top:8px;}
+  .wx th,.wx td{text-align:left;padding:5px 4px;border-bottom:1px solid var(--line);}
+  .wx th{color:var(--muted);font-weight:700;}
+
+  footer{
+    padding:22px 16px calc(env(safe-area-inset-bottom) + 26px);
+    text-align:center;font-size:13px;color:var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Los Angeles → Erie</h1>
+  <div class="sub">Sat Oct 10 – Sun Oct 11 · I‑15 → I‑70 · overnight Grand Junction</div>
+</header>
+
+<nav>
+  <button class="on" data-p="route">Route</button>
+  <button data-p="dogs">Dog Walks</button>
+  <button data-p="food">Coffee &amp; Food</button>
+  <button data-p="sleep">Overnight</button>
+  <button data-p="stretch">Stretch</button>
+</nav>
+
+<main>
+
+<!-- ================= ROUTE ================= -->
+<section class="panel on" id="route">
+
+  <div class="heat">
+    <span class="label">Rain, not heat</span>
+    <p>Forecast refreshed Friday Oct 9, late afternoon. Saturday is the drier day almost everywhere on your route. Sunday looks dry over the Colorado passes after snow in Saturday's forecast for Silverthorne.</p>
+    <table class="wx">
+      <tr><th>Place</th><th>Sat</th><th>Sun</th></tr>
+      <tr><td>Las Vegas</td><td>88° · 25%</td><td>70° · 85%</td></tr>
+      <tr><td>Washington UT</td><td>82° · 30%</td><td>70° · 75%</td></tr>
+      <tr><td>Richfield</td><td>70° · 20%</td><td>64° · 45%</td></tr>
+      <tr><td>Green River</td><td>77° · 45%</td><td>71° · 45%</td></tr>
+      <tr><td>Grand Junction</td><td>72° · 30%</td><td>71° · 30%</td></tr>
+      <tr><td>Silverthorne</td><td>58° · 45% snow</td><td>61° · 15%</td></tr>
+    </table>
+  </div>
+
+  <div class="callout">
+    <span class="label">Recheck before leaving</span>
+    Flood watches and winter advisories still could not be confirmed on Friday. Check before bed and again Sunday morning.
+    <ul>
+      <li><a href="https://www.cotrip.org">COtrip</a> — Colorado I‑70 road conditions, Vail Pass, Eisenhower Tunnel</li>
+      <li><a href="https://www.udottraffic.utah.gov">UDOT Traffic</a> — Utah I‑15 and I‑70</li>
+      <li><a href="https://www.weather.gov">weather.gov</a> — alerts by location</li>
+    </ul>
+  </div>
+
+  <div class="day">Day 1 · Saturday · LA → Grand Junction · 776 mi</div>
+
+  <div class="callout">
+    <span class="label">Your ABRP plan</span>
+    Leave 5:30 AM. Six charging stops, 2 h 7 min of charging, arrive Grand Junction 7:28 PM Mountain. Times below are from your plan and are local to each stop. Sunset is about 6:50 PM in Green River, so the last 100 miles run into dusk and dark.
+  </div>
+
+  <div class="town">
+    <h2>1 · Yermo, CA</h2>
+    <p class="tz">Plan: arrive 7:21 AM · leave 7:52 AM · 28 min charge · Pacific</p>
+
+    <div class="card charger">
+      <p class="name">Yermo Supercharger, Sunrise Canyon Rd</p>
+      <p class="meta">Planned stop · rated 3.2 · 143 reviews</p>
+      <p class="flag">No good dog walk here. Reviewers report no usable restrooms, the taco shop closed, and trash around the lot.</p>
+      <p class="desc">Plenty of stalls. On-leash relief break only.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+Sunrise+Canyon+Rd+Yermo+CA">Open in Maps</a>
+    </div>
+
+    <details open>
+      <summary><span class="tag t-note">Swap</span> Alternative charger, 4 miles earlier <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card charger">
+          <p class="name">Yermo Supercharger at EddieWorld</p>
+          <p class="meta">36017 Calico Rd · rated 4.4 · 167 reviews</p>
+          <p class="desc">EddieWorld (4.5, 8,204 reviews) opens 6:00 AM: restrooms, coffee, food to go. Still no grass or park, and one charger reviewer reports trash and needles on the ground. Better for you, not better for the dog.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+36017+Calico+Rd+Yermo+CA">Open in Maps</a>
+        </div>
+        <div class="skip"><b>Note on the swap:</b> it is about 4 miles before the planned stop, so you arrive with slightly more charge and need about 1% more before leaving to reach North Las Vegas at the same 10%.</div>
+        <div class="skip"><b>No walk found in this window.</b> Dana Park in Barstow opens at 8:00 AM, after you pass. The first real walk is the next stop.</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="town">
+    <h2>2 · North Las Vegas, NV</h2>
+    <p class="tz">Plan: arrive 9:51 AM · leave 10:18 AM · 23 min charge · Pacific · Sat 88°, 25% rain</p>
+
+    <div class="card charger">
+      <p class="name">North Las Vegas Supercharger, E Lake Mead Blvd</p>
+      <p class="meta">Planned stop · rated 4.3 · 350 kW stalls</p>
+      <p class="flag">No good dog walk here. The three closest parks all have reviews describing encampments, trash or safety problems.</p>
+      <p class="desc">Sits on the island in the middle of Lake Mead Blvd; turn left into it from the left lane. Starbucks next door.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+E+Lake+Mead+Blvd+North+Las+Vegas+NV">Open in Maps</a>
+    </div>
+
+    <details open>
+      <summary><span class="tag t-note">Swap</span> Alternative charger with a real walk, 3 miles further <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card charger">
+          <p class="name">North Las Vegas Supercharger, E Craig Rd</p>
+          <p class="meta">2575 E Craig Rd · rated 4.7 · 250 kW</p>
+          <p class="desc">Corner of Craig and Losee, behind Del Taco, Starbucks alongside. One reviewer found every stall taken late on a weeknight.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+2575+E+Craig+Rd+North+Las+Vegas+NV">Open in Maps</a>
+        </div>
+        <div class="card dog">
+          <p class="name">Craig Ranch Regional Park <span class="star">★</span></p>
+          <p class="meta">4.6 · 7,351 reviews · 628 W Craig Rd · ~1.9 mi west of the Craig Rd charger</p>
+          <p class="hours"><strong>5:00 AM – 11:00 PM</strong> Saturday</p>
+          <p class="desc">Very large park with open lawns and paths. Reviewers mention a dog park on site; the rest is regular park.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Craig+Ranch+Regional+Park+North+Las+Vegas+NV">Open in Maps</a>
+        </div>
+        <div class="skip"><b>Note on the swap:</b> about 3 miles past the planned stop, so add a minute or two of charge at Yermo. The park is a 1.9-mile drive each way from the charger, so it adds roughly 10 minutes of driving plus the walk.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag t-food">Food</span> Quick, at the chargers <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="skip"><b>Starbucks</b> is beside both chargers. <b>Del Taco</b> is beside the Craig Rd one. No independent coffee turned up within a mile of either.</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="town">
+    <h2>3 · Washington, UT — lunch</h2>
+    <p class="tz">Plan: arrive 12:56 PM · leave 1:22 PM · 22 min charge · Mountain, clocks jump ahead an hour · Sat 82°, 30% rain</p>
+
+    <div class="card charger">
+      <p class="name">Washington Supercharger, Red Cliffs Dr</p>
+      <p class="meta">Planned stop · 956 W Red Cliffs Dr · rated 4.4</p>
+      <p class="desc">Behind Costa Vida. A reviewer reports demolition debris blocking one of the turn-ins.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+956+W+Red+Cliffs+Dr+Washington+UT">Open in Maps</a>
+    </div>
+
+    <details open>
+      <summary><span class="tag t-dog">Dog</span> Walk, 0.7 mi from the charger <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card dog">
+          <p class="name">Nisson Park <span class="star">★</span></p>
+          <p class="meta">4.5 · 513 reviews · 30 S 200 W, Washington</p>
+          <p class="hours"><strong>6:00 AM – 10:00 PM</strong> Saturday</p>
+          <p class="desc">Shade trees, walking paths, benches and tables. Reviews do not mention dogs either way.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Nisson+Park+Washington+UT">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span class="tag t-food">Food</span> Lunch within a block of the charger <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card food">
+          <p class="name">Costa Vida Fresh Mexican Grill</p>
+          <p class="meta">4.1 · 1,392 reviews · 944 W Red Cliffs Dr · in front of the charger</p>
+          <p class="hours"><strong>10:30 AM – 10:00 PM</strong> Saturday</p>
+          <p class="desc">Burritos and salads, counter service, has a drive-through.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Costa+Vida+944+W+Red+Cliffs+Dr+Washington+UT">Open in Maps</a>
+        </div>
+        <div class="card food">
+          <p class="name">In-N-Out Burger</p>
+          <p class="meta">4.6 · 8,876 reviews · 832 W Telegraph St</p>
+          <p class="hours"><strong>10:30 AM – 1:30 AM</strong> Saturday</p>
+          <p class="flag">A reviewer skipped it because it was too busy at lunch.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=In-N-Out+Burger+832+W+Telegraph+St+Washington+UT">Open in Maps</a>
+        </div>
+        <div class="skip"><b>Starbucks</b> is next door at 880 W Red Cliffs Dr. The independent coffee picks are in downtown St. George, 10+ minutes away, and close at 3 PM.</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="town">
+    <h2>4 · Beaver, UT</h2>
+    <p class="tz">Plan: arrive 2:36 PM · leave 2:48 PM · 9 min charge · Mountain</p>
+
+    <div class="card charger">
+      <p class="name">Beaver Supercharger, 525 W</p>
+      <p class="meta">Planned stop · 1780 S 525 W · rated 4.7 · 34 stalls</p>
+      <p class="desc">Nine minutes, so no walk planned. A reviewer notes there are places for pets to go at the site.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+1780+S+525+W+Beaver+UT">Open in Maps</a>
+    </div>
+
+    <div class="card coffee">
+      <p class="name">Beans &amp; Brews Coffee House</p>
+      <p class="meta">4.4 · 1816 S 525 W · inside the ring of chargers</p>
+      <p class="hours"><strong>6:00 AM – 7:00 PM</strong> Saturday</p>
+      <p class="desc">Regional chain. Reviewers call out the restrooms as clean.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Beans+and+Brews+1816+S+525+W+Beaver+UT">Open in Maps</a>
+    </div>
+
+    <details>
+      <summary><span class="tag t-coffee">Coffee</span> Better cup, 1.4 mi off plan <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card coffee">
+          <p class="name">Robinson Roast Coffee Co.</p>
+          <p class="meta">4.8 · 648 reviews · 335 S Main St</p>
+          <p class="hours"><strong>6:00 AM – 4:00 PM</strong> Saturday</p>
+          <p class="desc">Independent coffee and sandwiches. Too far for a 9-minute stop unless you extend it.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Robinson+Roast+Coffee+Beaver+UT">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="town">
+    <h2>5 · Richfield, UT</h2>
+    <p class="tz">Plan: arrive 3:35 PM · leave 4:04 PM · 24 min charge · Mountain · Sat 70°, 20% rain</p>
+
+    <div class="heat">
+      <span class="label">Last services for 108 miles</span>
+      <p>Salina to Green River has no services. On this schedule you cross it in daylight.</p>
+    </div>
+
+    <div class="card charger">
+      <p class="name">Richfield Supercharger, South</p>
+      <p class="meta">Planned stop · 1050 W 1250 S · 16 stalls, 250 kW</p>
+      <p class="flag">No dog walk next to it. The nearest park, Rotary Park, does not allow dogs.</p>
+      <p class="desc">Wendy's shares the lot (6:30 AM – midnight). Restrooms in the Phillips 66.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+1050+W+1250+S+Richfield+UT">Open in Maps</a>
+    </div>
+
+    <details open>
+      <summary><span class="tag t-dog">Dog</span> Keep the charger, drive to a park <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card dog">
+          <p class="name">Richfield Lion's Park</p>
+          <p class="meta">4.4 · 263 reviews · 600 W 400 N · ~1.6 mi north of the charger</p>
+          <p class="hours"><strong>9:00 AM – 8:00 PM</strong> Saturday</p>
+          <p class="desc">Large trees, well-kept grass, clean restrooms. A reviewer calls it the shadiest, greenest park in town.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Richfield+Lions+Park+600+W+400+N+Richfield+UT">Open in Maps</a>
+        </div>
+        <div class="skip"><b>Or skip the walk here.</b> Green River is the next stop and has a trail at the charger.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag t-note">Swap</span> Alternative charger with a park 0.3 mi away <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card charger">
+          <p class="name">Richfield Supercharger, North</p>
+          <p class="meta">20 W 1400 N, at the Holiday Inn Express · 4 stalls, 150 kW</p>
+          <p class="flag">Slower and often busy per reviews. Expect a longer charge than the planned 24 minutes.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+20+W+1400+N+Richfield+UT">Open in Maps</a>
+        </div>
+        <div class="card dog">
+          <p class="name">Centennial Park</p>
+          <p class="meta">4.2 · 1139 N Centennial Pk Dr</p>
+          <p class="hours"><strong>Open 24 hours</strong></p>
+          <p class="desc">Open grass, covered tables, restrooms. I‑70 travelers with dogs use it.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Centennial+Park+Richfield+UT">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag t-food">Food</span> If you need a snack <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="skip"><b>Wendy's</b> is at the charger. <b>Katie's Specialty Coffee</b> next door lists a 4:00 PM Saturday opening, which is when you leave. <b>The Ideal Dairy</b> (4.6, 490 S Main, sandwiches and ice cream, open to 9 PM) is 1.2 miles into town.</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="town">
+    <h2>6 · Green River, UT</h2>
+    <p class="tz">Plan: arrive 5:43 PM · leave 6:09 PM · 21 min charge · Mountain · Sat 77°, 45% rain</p>
+
+    <div class="callout">
+      <span class="label">Two chargers on Main St</span>
+      Your plan says "Main St", and both Green River sites are on E Main, 0.4 miles apart. I could not confirm which one ABRP means. The museum site is the one with the walk.
+    </div>
+
+    <div class="card charger">
+      <p class="name">Green River Supercharger, Museum</p>
+      <p class="meta">1765 E Main St · 8 stalls, 150 kW</p>
+      <p class="desc">On the river. A reviewer describes a trail along the river for walking a dog while charging, plus covered picnic tables. You arrive before sunset, so the lighting complaint does not apply.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+1765+E+Main+St+Green+River+UT">Open in Maps</a>
+    </div>
+
+    <div class="card charger">
+      <p class="name">Green River Supercharger, Sinclair</p>
+      <p class="meta">1185 E Main St · 16 stalls, newer and faster</p>
+      <p class="flag">Gravel lot, no grass. Charge here only if the museum site is full or slow.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+1185+E+Main+St+Green+River+UT">Open in Maps</a>
+    </div>
+
+    <details open>
+      <summary><span class="tag t-food">Food</span> Dinner to go, or wait for Grand Junction <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card food">
+          <p class="name">Tacos La Pasadita <span class="star">★</span></p>
+          <p class="meta">4.6 · 2,153 reviews · 215 E Main St · ~1 mi west of the museum charger</p>
+          <p class="hours"><strong>8:30 AM – 8:30 PM</strong> Saturday</p>
+          <p class="flag">A reviewer had to wait in line.</p>
+          <p class="desc">Taco-truck style with counter ordering.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tacos+La+Pasadita+Green+River+UT">Open in Maps</a>
+        </div>
+        <div class="card food">
+          <p class="name">El Charro Loco</p>
+          <p class="meta">4.5 · 1035 E Main St · ~0.5 mi from the museum charger</p>
+          <p class="hours"><strong>11:00 AM – 10:00 PM</strong> Saturday</p>
+          <p class="desc">Sit-down Mexican. A reviewer notes a 3% card surcharge.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=El+Charro+Loco+Green+River+UT">Open in Maps</a>
+        </div>
+        <div class="card food">
+          <p class="name">Blimpie</p>
+          <p class="meta">4.2 · 780 E Main St · inside the gas station and grocery</p>
+          <p class="hours"><strong>8:00 AM – 8:00 PM</strong> Saturday</p>
+          <p class="desc">Subs. The fastest option.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Blimpie+780+E+Main+St+Green+River+UT">Open in Maps</a>
+        </div>
+        <div class="skip"><b>Tamarisk</b> is across the road from the museum charger, but it is sit-down and a Saturday reviewer waited 30+ minutes for a table.</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="town">
+    <h2>Grand Junction, CO — overnight</h2>
+    <p class="tz">Plan: arrive 7:28 PM with 15% · Mountain · Sat 72°, 30% rain</p>
+
+    <div class="card charger">
+      <p class="name">Grand Junction Supercharger, Patterson Rd</p>
+      <p class="meta">2699 Patterson Rd · newer V4 stalls · under 2 mi from the Horizon Dr hotels</p>
+      <p class="desc">You arrive low, so charge tonight or first thing Sunday. A small strip of grass only. One reviewer got very slow speeds.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+2699+Patterson+Rd+Grand+Junction+CO">Open in Maps</a>
+    </div>
+
+    <details open>
+      <summary><span class="tag t-food">Food</span> Dinner near the Horizon Dr hotels <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card food">
+          <p class="name">Oliver's Restaurant &amp; Bar</p>
+          <p class="meta">4.7 · 89 reviews · 2790 Crossroads Blvd</p>
+          <p class="hours"><strong>4:00 PM – 9:30 PM</strong> Saturday</p>
+          <p class="desc">Indian and American menu inside a hotel. Generous portions per reviews.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Olivers+Restaurant+2790+Crossroads+Blvd+Grand+Junction+CO">Open in Maps</a>
+        </div>
+        <div class="card food">
+          <p class="name">Freddy's Frozen Custard &amp; Steakburgers</p>
+          <p class="meta">4.0 · 2,042 reviews · 737 Horizon Dr</p>
+          <p class="hours"><strong>10:30 AM – 11:00 PM</strong> Saturday</p>
+          <p class="flag">Recent reviews report slow takeout and cold burgers.</p>
+          <p class="desc">Fast food, open latest.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Freddys+737+Horizon+Dr+Grand+Junction+CO">Open in Maps</a>
+        </div>
+        <div class="card food">
+          <p class="name">Yoshi Sushi</p>
+          <p class="meta">4.9 · 100 reviews · 2695 Patterson Rd · beside the Patterson Rd charger</p>
+          <p class="hours"><strong>11:00 AM – 8:00 PM</strong> Saturday</p>
+          <p class="flag">Closes 30 minutes after your planned arrival.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Yoshi+Sushi+2695+Patterson+Rd+Grand+Junction+CO">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+
+    <div class="skip"><b>Hotels</b> are in the Overnight tab. <b>Green River</b> and <b>Richfield</b> are listed there as fallbacks if the day runs long.</div>
+  </div>
+
+  <div class="day">Day 2 · Sunday · Grand Junction → Erie · ~265 mi</div>
+
+  <div class="callout">
+    <span class="label">Sunday on I‑70</span>
+    <ul>
+      <li>Eastbound traffic from the mountains toward Denver builds Sunday afternoon. An earlier start gets through the Eisenhower Tunnel ahead of more of it.</li>
+      <li>Colorado's traction law covers I‑70 between Dotsero and Morrison from September through May. AWD with adequate tread meets it.</li>
+      <li>Silverthorne had snow in Saturday's forecast. Check COtrip for Vail Pass and the tunnel before leaving Glenwood Springs.</li>
+    </ul>
+  </div>
+
+  <!-- GRAND JUNCTION -->
+  <div class="town">
+    <h2>Grand Junction, morning</h2>
+    <p class="tz">Mountain time · Sun 71°, 30% rain</p>
+
+    <details open>
+      <summary><span class="tag t-dog">Dog</span> Morning walk before the drive <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card dog">
+          <p class="name">Canyon View Park <span class="star">★</span></p>
+          <p class="meta">4.7 · 2,427 reviews · 730 24 Rd · at I‑70, west side of town</p>
+          <p class="hours"><strong>5:00 AM – 11:00 PM</strong> daily</p>
+          <p class="desc">Large park with a pond, quiet areas, good restrooms. About 4 miles west of the Horizon Dr hotels, so it is a backtrack.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Canyon+View+Park+Grand+Junction+CO">Open in Maps</a>
+        </div>
+        <div class="card dog">
+          <p class="name">Long Family Memorial Park</p>
+          <p class="meta">4.6 · 991 reviews · 3117 F Rd · east side, toward Clifton</p>
+          <p class="hours"><strong>5:00 AM – 11:00 PM</strong> daily</p>
+          <p class="desc">A reviewer calls it a wonderful park to walk the dog: views, shade, duck pond. On the way out of town eastbound.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Long+Family+Memorial+Park+Grand+Junction+CO">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span class="tag t-coffee">Coffee</span> Sunday hours are short <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card coffee">
+          <p class="name">Monumental Coffee Co <span class="star">★</span></p>
+          <p class="meta">4.9 · 575 32 Rd, Clifton · east side, on the way out</p>
+          <p class="hours"><strong>7:00 AM – 1:00 PM</strong> Sunday</p>
+          <p class="desc">House-made syrups, breakfast burritos, croissants. Limited seating.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Monumental+Coffee+Co+Clifton+CO">Open in Maps</a>
+        </div>
+        <div class="card coffee">
+          <p class="name">Colorado Craft Coffee and Beer House</p>
+          <p class="meta">5.0 · 402 reviews · 1144 N 12th St</p>
+          <p class="hours"><strong>8:00 AM – 12:00 PM</strong> Sunday</p>
+          <p class="desc">Rotating Colorado roasters.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Colorado+Craft+Coffee+and+Beer+House+Grand+Junction+CO">Open in Maps</a>
+        </div>
+        <div class="skip"><b>Starbucks</b> at 702 Horizon Dr opens 4:30 AM if you leave before the independents open. Four Winds and Colorado Legacy Roasters are closed Sunday.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- GLENWOOD -->
+  <div class="town">
+    <h2>Glenwood Springs, CO</h2>
+    <p class="tz">Mountain time · ~90 mi from Grand Junction</p>
+
+    <div class="card charger">
+      <p class="name">Glenwood Springs Supercharger</p>
+      <p class="meta">125 Wulfsohn Rd, Glenwood Meadows</p>
+      <p class="flag">Two reviewers found stalls blocked by hotel guests' gas cars on Sunday mornings.</p>
+      <p class="desc">A short walk to Target and shops. If it is blocked, Rifle is 25 miles west and Edwards is further east.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+125+Wulfsohn+Rd+Glenwood+Springs+CO">Open in Maps</a>
+    </div>
+
+    <details open>
+      <summary><span class="tag t-dog">Dog</span> Best walk of Day 2 <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card dog">
+          <p class="name">Two Rivers Park <span class="star">★</span></p>
+          <p class="meta">4.7 · 973 reviews · 740 Devereux Rd · ~0.4 mi from the charger</p>
+          <p class="hours"><strong>6:00 AM – 10:00 PM</strong> daily</p>
+          <p class="desc">Where the Colorado and Roaring Fork meet. Walking paths, grass, restrooms, water fountains. Reviewers call it dog friendly.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Two+Rivers+Park+Glenwood+Springs+CO">Open in Maps</a>
+        </div>
+        <div class="card dog">
+          <p class="name">Grizzly Creek Rest Area</p>
+          <p class="meta">4.8 · 2,733 reviews · I‑70 in Glenwood Canyon, a few miles east</p>
+          <p class="hours"><strong>Open 24 hours</strong></p>
+          <p class="desc">Paved river path through the rest area, easy off and back on. No charger. A second stop or a substitute.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Grizzly+Creek+Rest+Area+Glenwood+Springs+CO">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span class="tag t-coffee">Coffee</span> All open Sunday <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card coffee">
+          <p class="name">Wild Coffee <span class="star">★</span></p>
+          <p class="meta">4.6 · 402 7th St #120, downtown</p>
+          <p class="hours"><strong>6:00 AM – 3:00 PM</strong> Sunday</p>
+          <p class="desc">Single-origin beans on the shelf, large baked goods. A reviewer who tried every shop in town ranked it first.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Wild+Coffee+Glenwood+Springs+CO">Open in Maps</a>
+        </div>
+        <div class="card coffee">
+          <p class="name">Deja Brew</p>
+          <p class="meta">4.6 · 651 reviews · 1101 Grand Ave</p>
+          <p class="hours"><strong>7:00 AM – 4:00 PM</strong> Sunday</p>
+          <p class="desc">Outdoor seating, quiche and breakfast burritos. Reviewers describe it as dog friendly, with pup cups.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Deja+Brew+Glenwood+Springs+CO">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag t-food">Food</span> Early lunch <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card food">
+          <p class="name">Underbelly Burger Co.</p>
+          <p class="meta">4.7 · 45 Market St · ~0.2 mi from the charger</p>
+          <p class="hours"><strong>11:00 AM – 9:00 PM</strong> Sunday</p>
+          <p class="desc">Burgers and a fried chicken sandwich reviewers single out. Small, gets packed. Online ordering for pickup.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Underbelly+Burger+Co+Glenwood+Springs+CO">Open in Maps</a>
+        </div>
+        <div class="card food">
+          <p class="name">Sweet Coloradough</p>
+          <p class="meta">4.8 · 2,539 reviews · 2430 S Glen Ave · south of downtown</p>
+          <p class="hours"><strong>6:00 AM – 2:00 PM</strong> Sunday</p>
+          <p class="desc">Donuts, cronuts, breakfast burritos and sandwiches. Weekend line. A few seats out front.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Sweet+Coloradough+Glenwood+Springs+CO">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- SILVERTHORNE -->
+  <div class="town">
+    <h2>Silverthorne, CO</h2>
+    <p class="tz">Mountain time · elev. ~9,000 ft · after Vail Pass, before the tunnel · Sun 59°, 15%</p>
+
+    <div class="card charger">
+      <p class="name">Silverthorne Supercharger, Rainbow Dr</p>
+      <p class="meta">246 Rainbow Dr, at the outlets · 12 stalls</p>
+      <p class="desc">Reviewers report waits and slow stalls at busy times. Rainbow Park and Red Buffalo are both a short walk.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+246+Rainbow+Dr+Silverthorne+CO">Open in Maps</a>
+    </div>
+
+    <div class="card charger">
+      <p class="name">Silverthorne Supercharger, Ruby Ranch Rd</p>
+      <p class="meta">101 Ruby Ranch Rd, at the Maverik · 250 kW</p>
+      <p class="desc">Faster. A reviewer with a small dog notes grass beside the stalls.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+101+Ruby+Ranch+Rd+Silverthorne+CO">Open in Maps</a>
+    </div>
+
+    <details open>
+      <summary><span class="tag t-dog">Dog</span> Last walk <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card dog">
+          <p class="name">Rainbow Park</p>
+          <p class="meta">4.8 · 653 reviews · 430 Rainbow Dr · ~0.3 mi from the Rainbow Dr charger</p>
+          <p class="hours"><strong>6:00 AM – 8:00 PM</strong> daily</p>
+          <p class="desc">Big open field, walking path, Blue River trail alongside, restrooms.</p>
+          <p class="flag">Two reviewers mention off-leash dogs in the field.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Rainbow+Park+Silverthorne+CO">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag t-coffee">Coffee</span> &amp; lunch on the Blue River <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card coffee">
+          <p class="name">Red Buffalo Coffee &amp; Tea</p>
+          <p class="meta">4.7 · 1,023 reviews · 358 Blue River Pkwy</p>
+          <p class="hours"><strong>7:00 AM – 4:00 PM</strong> Sunday</p>
+          <p class="desc">House-made syrups, riverside seating out back. Line out the door at peak.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Red+Buffalo+Coffee+Silverthorne+CO">Open in Maps</a>
+        </div>
+        <div class="card food">
+          <p class="name">Enza's Delicatessen</p>
+          <p class="meta">4.4 · 358 Blue River Pkwy, same plaza</p>
+          <p class="hours"><strong>7:00 AM – 4:00 PM</strong> Sunday</p>
+          <p class="desc">Sandwiches and bowls, outdoor tables over the river. One reviewer had a long wait.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Enza%27s+Delicatessen+Silverthorne+CO">Open in Maps</a>
+        </div>
+        <div class="card coffee">
+          <p class="name">House of Vibes Coffee and Curio</p>
+          <p class="meta">4.8 · 706 reviews · 191 Blue River Pkwy</p>
+          <p class="hours"><strong>7:00 AM – 4:00 PM</strong> Sunday</p>
+          <p class="desc">Small shop, paninis and breakfast biscuits, gluten-free options.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=House+of+Vibes+Coffee+Silverthorne+CO">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- IDAHO SPRINGS -->
+  <div class="town">
+    <h2>Idaho Springs, CO</h2>
+    <p class="tz">Mountain time · after the tunnel · optional</p>
+
+    <details>
+      <summary><span class="tag t-note">Optional</span> A place to wait out traffic <span class="chev">›</span></summary>
+      <div class="body">
+        <div class="card charger">
+          <p class="name">Idaho Springs Supercharger</p>
+          <p class="meta">1319 Miner St, behind the Maverik · 8 stalls, 250 kW</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+1319+Miner+St+Idaho+Springs+CO">Open in Maps</a>
+        </div>
+        <div class="card dog">
+          <p class="name">Charlie Tayler Water Wheel walk</p>
+          <p class="meta">4.6 · a short walk from the charger, under the I‑70 bridge</p>
+          <p class="hours"><strong>Open 24 hours</strong></p>
+          <p class="desc">Paved path to the water wheel and falls on Clear Creek. Reviewers call it dog friendly. Google's driving directions to it are reported as wrong, so walk from Water St parking.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=Charlie+Tayler+Water+Wheel+Idaho+Springs+CO">Open in Maps</a>
+        </div>
+        <div class="card coffee">
+          <p class="name">The Frothy Cup</p>
+          <p class="meta">4.7 · 1,147 reviews · 1510 Miner St</p>
+          <p class="hours"><strong>7:00 AM – 6:00 PM</strong> Sunday</p>
+          <p class="desc">Rotating drink menu, burritos, baked goods. Waits can be long.</p>
+          <a class="map" href="https://www.google.com/maps/search/?api=1&query=The+Frothy+Cup+Idaho+Springs+CO">Open in Maps</a>
+        </div>
+      </div>
+    </details>
+
+    <div class="card">
+      <p class="name">Erie, CO 80516</p>
+      <p class="desc">Arrive. Sun 75°, dry.</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=Erie+CO+80516">Open in Maps</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================= DOGS ================= -->
+<section class="panel" id="dogs">
+
+  <div class="callout">
+    <span class="label">This trip</span>
+    Highs run 58–88°, so pavement heat is not a constraint at the hours you pass. Stops are in the order of your ABRP plan. Two of the six planned chargers have no usable walk nearby; the swaps are marked.
+  </div>
+
+  <div class="day">Day 1 · Saturday</div>
+
+  <div class="skip"><b>Yermo, 7:21 AM:</b> no walk found at either Yermo charger. Relief break only.</div>
+
+  <div class="card dog">
+    <p class="name">Craig Ranch Regional Park <span class="star">★</span></p>
+    <p class="meta">North Las Vegas, NV · 4.6 · ~1.9 mi from the Craig Rd charger (swap)</p>
+    <p class="hours"><strong>5:00 AM – 11:00 PM</strong></p>
+    <p class="desc">Very large, open lawns and paths. Needs the charger swap; nothing usable near the planned Lake Mead stop.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Craig+Ranch+Regional+Park+North+Las+Vegas+NV">Open in Maps</a>
+  </div>
+
+  <div class="card dog">
+    <p class="name">Nisson Park <span class="star">★</span></p>
+    <p class="meta">Washington, UT · 4.5 · 0.7 mi from the planned charger</p>
+    <p class="hours"><strong>6:00 AM – 10:00 PM</strong></p>
+    <p class="desc">Shade trees and walking paths.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Nisson+Park+Washington+UT">Open in Maps</a>
+  </div>
+
+  <div class="skip"><b>Beaver, 2:36 PM:</b> 9-minute stop. Reviewer notes places for pets at the charger.</div>
+
+  <div class="card dog">
+    <p class="name">Richfield Lion's Park</p>
+    <p class="meta">Richfield, UT · 4.4 · ~1.6 mi from the planned charger</p>
+    <p class="hours"><strong>9:00 AM – 8:00 PM</strong></p>
+    <p class="desc">Large trees, good grass, restrooms. Optional, since Green River is next.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Richfield+Lions+Park+600+W+400+N+Richfield+UT">Open in Maps</a>
+  </div>
+
+  <div class="card dog">
+    <p class="name">Centennial Park</p>
+    <p class="meta">Richfield, UT · 4.2 · 0.3 mi from the north charger (swap)</p>
+    <p class="hours"><strong>Open 24 hours</strong></p>
+    <p class="desc">Open grass, covered tables, restrooms.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Centennial+Park+Richfield+UT">Open in Maps</a>
+  </div>
+
+  <div class="card dog">
+    <p class="name">River trail at the museum charger <span class="star">★</span></p>
+    <p class="meta">Green River, UT · at 1765 E Main St</p>
+    <p class="desc">Described by charger reviewers, not a separate listing. Covered picnic tables.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=John+Wesley+Powell+River+History+Museum+Green+River+UT">Open in Maps</a>
+  </div>
+
+  <div class="day">Day 2 · Sunday</div>
+
+  <div class="card dog">
+    <p class="name">Canyon View Park <span class="star">★</span></p>
+    <p class="meta">Grand Junction, CO · 4.7 · at I‑70, west side</p>
+    <p class="hours"><strong>5:00 AM – 11:00 PM</strong></p>
+    <p class="desc">Large park, pond, good restrooms. A backtrack from Horizon Dr.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Canyon+View+Park+Grand+Junction+CO">Open in Maps</a>
+  </div>
+
+  <div class="card dog">
+    <p class="name">Long Family Memorial Park</p>
+    <p class="meta">Grand Junction, CO · 4.6 · east side, toward Clifton</p>
+    <p class="hours"><strong>5:00 AM – 11:00 PM</strong></p>
+    <p class="desc">Shade, duck pond, views. On the way out eastbound.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Long+Family+Memorial+Park+Grand+Junction+CO">Open in Maps</a>
+  </div>
+
+  <div class="card dog">
+    <p class="name">Two Rivers Park <span class="star">★</span></p>
+    <p class="meta">Glenwood Springs, CO · 4.7 · ~0.4 mi from charger</p>
+    <p class="hours"><strong>6:00 AM – 10:00 PM</strong></p>
+    <p class="desc">River confluence, paths, grass, restrooms.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Two+Rivers+Park+Glenwood+Springs+CO">Open in Maps</a>
+  </div>
+
+  <div class="card dog">
+    <p class="name">Grizzly Creek Rest Area</p>
+    <p class="meta">Glenwood Canyon, CO · 4.8 · no charger</p>
+    <p class="hours"><strong>Open 24 hours</strong></p>
+    <p class="desc">Paved path along the Colorado River.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Grizzly+Creek+Rest+Area+Glenwood+Springs+CO">Open in Maps</a>
+  </div>
+
+  <div class="card dog">
+    <p class="name">Rainbow Park</p>
+    <p class="meta">Silverthorne, CO · 4.8 · ~0.3 mi from Rainbow Dr charger</p>
+    <p class="hours"><strong>6:00 AM – 8:00 PM</strong></p>
+    <p class="desc">Open field, Blue River trail. Off-leash dogs reported.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Rainbow+Park+Silverthorne+CO">Open in Maps</a>
+  </div>
+
+  <div class="card dog">
+    <p class="name">Charlie Tayler Water Wheel walk</p>
+    <p class="meta">Idaho Springs, CO · 4.6 · near the charger</p>
+    <p class="desc">Paved creekside path to the wheel and falls.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Charlie+Tayler+Water+Wheel+Idaho+Springs+CO">Open in Maps</a>
+  </div>
+
+  <div class="skip">
+    <b>Left out on purpose:</b> Rotary Park in Richfield (no dogs). Valley View Park, Joe Kneip Park and Freedom Park near the Lake Mead charger (safety and cleanliness complaints in reviews).
+  </div>
+
+</section>
+
+<!-- ================= FOOD ================= -->
+<section class="panel" id="food">
+
+  <div class="callout">
+    <span class="label">Quick and convenient</span>
+    Picks are at or within about a mile of each planned charger. Lunch lines up with the Washington stop at 12:56 PM. Dinner is either to go from Green River at 5:43 PM or in Grand Junction after 7:28 PM.
+  </div>
+
+  <div class="day">Day 1 · Saturday</div>
+
+  <div class="card food">
+    <p class="name">EddieWorld</p>
+    <p class="meta">Yermo, CA · 4.5 · at the swap charger · coffee, food to go, restrooms</p>
+    <p class="hours"><strong>6:00 AM – 12:00 AM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=EddieWorld+36017+Calico+Rd+Yermo+CA">Open in Maps</a>
+  </div>
+
+  <div class="skip"><b>North Las Vegas, 9:51 AM:</b> Starbucks beside both chargers, Del Taco beside the Craig Rd one.</div>
+
+  <div class="card food">
+    <p class="name">Costa Vida Fresh Mexican Grill <span class="star">★</span></p>
+    <p class="meta">Washington, UT · 4.1 · in front of the charger · lunch</p>
+    <p class="hours"><strong>10:30 AM – 10:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Costa+Vida+944+W+Red+Cliffs+Dr+Washington+UT">Open in Maps</a>
+  </div>
+
+  <div class="card food">
+    <p class="name">In-N-Out Burger</p>
+    <p class="meta">Washington, UT · 4.6 · a block from the charger</p>
+    <p class="hours"><strong>10:30 AM – 1:30 AM</strong></p>
+    <p class="flag">Can be busy at lunch.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=In-N-Out+Burger+832+W+Telegraph+St+Washington+UT">Open in Maps</a>
+  </div>
+
+  <div class="card coffee">
+    <p class="name">Beans &amp; Brews Coffee House</p>
+    <p class="meta">Beaver, UT · 4.4 · at the charger</p>
+    <p class="hours"><strong>6:00 AM – 7:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Beans+and+Brews+1816+S+525+W+Beaver+UT">Open in Maps</a>
+  </div>
+
+  <div class="card coffee">
+    <p class="name">Robinson Roast Coffee Co.</p>
+    <p class="meta">Beaver, UT · 4.8 · 1.4 mi off plan</p>
+    <p class="hours"><strong>6:00 AM – 4:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Robinson+Roast+Coffee+Beaver+UT">Open in Maps</a>
+  </div>
+
+  <div class="skip"><b>Richfield, 3:35 PM:</b> Wendy's at the charger. The Ideal Dairy (4.6) is 1.2 miles into town.</div>
+
+  <div class="card food">
+    <p class="name">Tacos La Pasadita <span class="star">★</span></p>
+    <p class="meta">Green River, UT · 4.6 · ~1 mi from the museum charger</p>
+    <p class="hours"><strong>8:30 AM – 8:30 PM</strong></p>
+    <p class="flag">Lines reported.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tacos+La+Pasadita+Green+River+UT">Open in Maps</a>
+  </div>
+
+  <div class="card food">
+    <p class="name">Blimpie</p>
+    <p class="meta">Green River, UT · 4.2 · inside the gas station · fastest</p>
+    <p class="hours"><strong>8:00 AM – 8:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Blimpie+780+E+Main+St+Green+River+UT">Open in Maps</a>
+  </div>
+
+  <div class="card food">
+    <p class="name">El Charro Loco</p>
+    <p class="meta">Green River, UT · 4.5 · sit-down Mexican</p>
+    <p class="hours"><strong>11:00 AM – 10:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=El+Charro+Loco+Green+River+UT">Open in Maps</a>
+  </div>
+
+  <div class="card food">
+    <p class="name">Oliver's Restaurant &amp; Bar</p>
+    <p class="meta">Grand Junction, CO · 4.7 · near the Horizon Dr hotels</p>
+    <p class="hours"><strong>4:00 PM – 9:30 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Olivers+Restaurant+2790+Crossroads+Blvd+Grand+Junction+CO">Open in Maps</a>
+  </div>
+
+  <div class="card food">
+    <p class="name">Freddy's Frozen Custard &amp; Steakburgers</p>
+    <p class="meta">Grand Junction, CO · 4.0 · 737 Horizon Dr</p>
+    <p class="hours"><strong>10:30 AM – 11:00 PM</strong></p>
+    <p class="flag">Slow takeout in recent reviews.</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Freddys+737+Horizon+Dr+Grand+Junction+CO">Open in Maps</a>
+  </div>
+
+  <div class="day">Day 2 · Sunday</div>
+
+  <div class="card coffee">
+    <p class="name">Monumental Coffee Co</p>
+    <p class="meta">Clifton / Grand Junction, CO · 4.9</p>
+    <p class="hours"><strong>7:00 AM – 1:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Monumental+Coffee+Co+Clifton+CO">Open in Maps</a>
+  </div>
+
+  <div class="card coffee">
+    <p class="name">Colorado Craft Coffee and Beer House</p>
+    <p class="meta">Grand Junction, CO · 5.0</p>
+    <p class="hours"><strong>8:00 AM – 12:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Colorado+Craft+Coffee+and+Beer+House+Grand+Junction+CO">Open in Maps</a>
+  </div>
+
+  <div class="card coffee">
+    <p class="name">Wild Coffee <span class="star">★</span></p>
+    <p class="meta">Glenwood Springs, CO · 4.6</p>
+    <p class="hours"><strong>6:00 AM – 3:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Wild+Coffee+Glenwood+Springs+CO">Open in Maps</a>
+  </div>
+
+  <div class="card coffee">
+    <p class="name">Deja Brew</p>
+    <p class="meta">Glenwood Springs, CO · 4.6 · dog-friendly patio per reviews</p>
+    <p class="hours"><strong>7:00 AM – 4:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Deja+Brew+Glenwood+Springs+CO">Open in Maps</a>
+  </div>
+
+  <div class="card food">
+    <p class="name">Underbelly Burger Co.</p>
+    <p class="meta">Glenwood Springs, CO · 4.7 · near the charger</p>
+    <p class="hours"><strong>11:00 AM – 9:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Underbelly+Burger+Co+Glenwood+Springs+CO">Open in Maps</a>
+  </div>
+
+  <div class="card food">
+    <p class="name">Sweet Coloradough</p>
+    <p class="meta">Glenwood Springs, CO · 4.8 · donuts, breakfast sandwiches</p>
+    <p class="hours"><strong>6:00 AM – 2:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Sweet+Coloradough+Glenwood+Springs+CO">Open in Maps</a>
+  </div>
+
+  <div class="card coffee">
+    <p class="name">Red Buffalo Coffee &amp; Tea</p>
+    <p class="meta">Silverthorne, CO · 4.7 · riverside seating</p>
+    <p class="hours"><strong>7:00 AM – 4:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Red+Buffalo+Coffee+Silverthorne+CO">Open in Maps</a>
+  </div>
+
+  <div class="card food">
+    <p class="name">Enza's Delicatessen</p>
+    <p class="meta">Silverthorne, CO · 4.4 · same plaza as Red Buffalo</p>
+    <p class="hours"><strong>7:00 AM – 4:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Enza%27s+Delicatessen+Silverthorne+CO">Open in Maps</a>
+  </div>
+
+  <div class="card coffee">
+    <p class="name">The Frothy Cup</p>
+    <p class="meta">Idaho Springs, CO · 4.7</p>
+    <p class="hours"><strong>7:00 AM – 6:00 PM</strong></p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=The+Frothy+Cup+Idaho+Springs+CO">Open in Maps</a>
+  </div>
+
+  <div class="card coffee closed">
+    <p class="name">Closed or off your schedule</p>
+    <p class="hours">Katie's (Richfield, opens 4 PM Sat as you leave, closed Sun) · Yoshi Sushi (Grand Junction, closes 8 PM Sat) · Four Winds Coffee and Colorado Legacy Roasters (Grand Junction, closed Sun) · FS Coffee Co and Cafe FeelLove (St. George, 10+ min off the Washington stop)</p>
+  </div>
+
+</section>
+
+<!-- ================= OVERNIGHT ================= -->
+<section class="panel" id="sleep">
+
+  <div class="callout">
+    <span class="label">Grand Junction planned, two fallbacks</span>
+    Rooms were not checked for Saturday availability or price. Pet policies are marked as either reported by reviewers or not verified. Call before booking, and ask about the pet fee.
+  </div>
+
+  <div class="day">Planned · Grand Junction, CO · 776 mi</div>
+
+  <div class="skip">
+    <b>Arrive 7:28 PM on your plan.</b> These cluster on Horizon Dr at I‑70. The Patterson Rd Supercharger is under 2 miles south.
+  </div>
+
+  <div class="card hotel">
+    <p class="name">La Quinta Inn &amp; Suites Grand Junction</p>
+    <p class="meta">4.3 · 1,417 reviews · 2761 Crossroads Blvd</p>
+    <p class="desc">A reviewer calls it a dog-friendly location. Housekeeping reviews are mixed, including one with two room changes.</p>
+    <p class="hours">Pets: <strong>reported by a reviewer</strong> · +1 970‑368‑5989</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=La+Quinta+Inn+Suites+Grand+Junction+CO">Open in Maps</a>
+  </div>
+
+  <div class="card hotel">
+    <p class="name">DoubleTree by Hilton Grand Junction</p>
+    <p class="meta">4.0 · 2,002 reviews · 743 Horizon Dr</p>
+    <p class="desc">Large grounds with green space a reviewer describes as good for dogs. $12 parking reported. Rooms described as dated by several reviewers.</p>
+    <p class="hours">Pets: <strong>not verified</strong> · +1 970‑241‑8888</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=DoubleTree+Grand+Junction+CO">Open in Maps</a>
+  </div>
+
+  <div class="card hotel">
+    <p class="name">Clarion Inn Grand Junction Airport</p>
+    <p class="meta">4.2 · 2,112 reviews · 755 Horizon Dr</p>
+    <p class="desc">Older property, spacious clean rooms, hot breakfast.</p>
+    <p class="hours">Pets: <strong>not verified</strong> · +1 970‑628‑3304</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Clarion+Inn+Grand+Junction+Airport+CO">Open in Maps</a>
+  </div>
+
+  <div class="card hotel closed">
+    <p class="name">Econo Lodge Grand Junction North</p>
+    <p class="hours"><strong>Has pet rooms, but</strong> a reviewer with dogs says the relief area is rock, foxtails and stickers, and they walked to a neighboring hotel's grass instead.</p>
+  </div>
+
+  <div class="day">Fallback · Green River, UT · ~675 mi</div>
+
+  <div class="card hotel">
+    <p class="name">First Choice Inn at the Swell <span class="star">★</span></p>
+    <p class="meta">4.4 · 1,601 reviews · 1845 E Main St</p>
+    <p class="desc">Next door to the museum Supercharger. Several reviewers stayed with dogs and describe a gated grassy area out back and an irrigated park behind the property. Building is dated, rooms reported clean. Breakfast included.</p>
+    <p class="hours">Pets: <strong>reported by multiple reviewers</strong> · +1 435‑564‑4439</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=First+Choice+Inn+at+the+Swell+Green+River+UT">Open in Maps</a>
+  </div>
+
+  <div class="card hotel">
+    <p class="name">River Terrace</p>
+    <p class="meta">4.6 · 592 reviews · 1740 E Main St</p>
+    <p class="desc">On the river beside Tamarisk, across the road from the museum charger. Large older rooms, garden-level rooms open onto a lawn. Made-to-order breakfast. One reviewer had a hot upstairs room with weak AC.</p>
+    <p class="hours">Pets: <strong>not verified</strong> · +1 435‑564‑3401</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=River+Terrace+Green+River+UT">Open in Maps</a>
+  </div>
+
+  <div class="card hotel">
+    <p class="name">Holiday Inn Express &amp; Suites Green River</p>
+    <p class="meta">4.6 · 765 reviews · 1050 W Main St</p>
+    <p class="desc">Newest of the group, west end of town, about 2 miles from the chargers.</p>
+    <p class="hours">Pets: <strong>not verified</strong> · +1 435‑564‑8444</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Holiday+Inn+Express+Green+River+UT">Open in Maps</a>
+  </div>
+
+  <details>
+    <summary><span class="tag t-hotel">More</span> Lower-rated backups <span class="chev">›</span></summary>
+    <div class="body">
+      <div class="skip">
+        <b>Americas Best Value Inn</b> (3.9, 2125 E Main) · <b>Super 8</b> (3.8, 1248 E Main) · <b>Motel 6</b> (3.5, 1860 E Main). Pet policies not verified. A Motel 6 reviewer found every other hotel in town full on the night they arrived.
+      </div>
+    </div>
+  </details>
+
+  <div class="day">Fallback · Richfield, UT · ~550 mi</div>
+
+  <div class="card hotel">
+    <p class="name">Holiday Inn Express &amp; Suites Richfield</p>
+    <p class="meta">4.5 · 768 reviews · 20 W 1400 N</p>
+    <p class="desc">The north Supercharger is in its lot. Centennial Park is about a third of a mile away for a morning walk.</p>
+    <p class="hours">Pets: <strong>not verified</strong> · +1 435‑896‑8552</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Holiday+Inn+Express+Richfield+UT">Open in Maps</a>
+  </div>
+
+  <div class="card hotel">
+    <p class="name">Comfort Inn Richfield I‑70</p>
+    <p class="meta">4.2 · 723 reviews · 1070 W 1250 S</p>
+    <p class="desc">Beside the larger, faster south Supercharger, right off I‑70. Comfortable beds, some maintenance complaints.</p>
+    <p class="hours">Pets: <strong>not verified</strong> · +1 435‑228‑4252</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Comfort+Inn+Richfield+UT">Open in Maps</a>
+  </div>
+
+  <div class="card hotel">
+    <p class="name">Ramada by Wyndham Richfield</p>
+    <p class="meta">4.0 · 407 reviews · 333 N Main St</p>
+    <p class="desc">Across the street from Richfield City Park. Recently renovated lobby, dated rooms.</p>
+    <p class="hours">Pets: <strong>not verified</strong> · +1 435‑896‑6476</p>
+    <a class="map" href="https://www.google.com/maps/search/?api=1&query=Ramada+Richfield+UT">Open in Maps</a>
+  </div>
+
+</section>
+
+<!-- ================= STRETCH ================= -->
+<section class="panel" id="stretch">
+
+  <div class="callout">
+    <span class="label">Read this parked, not while driving</span>
+    Only the "safe while moving" cards below are meant for behind the wheel — everything else is for red lights or actual stops. Pair breaks with your charging stops; that rhythm is already built in.
+  </div>
+
+  <details open>
+    <summary><span class="tag t-seat">Setup</span> Seat, once before you leave <span class="chev">›</span></summary>
+    <div class="body">
+      <div class="card seat">
+        <p class="name">Hips level with or just above knees</p>
+        <p class="desc">Raise seat height until you look slightly down at the wheel. Knees bent 20–30° — never locked straight, that strains the joint.</p>
+      </div>
+      <div class="card seat">
+        <p class="name">Tailbone all the way back</p>
+        <p class="desc">Scoot flush into the seat crease before adjusting anything else. No gap between low back and seat back.</p>
+      </div>
+      <div class="card seat">
+        <p class="name">Recline to 100–110°</p>
+        <p class="desc">Not bolt upright — 90° actually loads the discs more than a slight recline does.</p>
+      </div>
+      <div class="card seat">
+        <p class="name">Lumbar support at belt line</p>
+        <p class="desc">Fill the low-back curve with built-in support or a rolled towel. No pressure point, no gap.</p>
+      </div>
+      <div class="card seat">
+        <p class="name">Wheel 10–12" from chest, hands 9 &amp; 3</p>
+        <p class="desc">Elbows softly bent. Set mirrors after the seat — if you have to lean to see them, posture already slipped.</p>
+      </div>
+      <div class="skip">
+        <b>Knee note:</b> keep a two-finger gap between the front of the seat and the back of your knee, so the cushion isn't pressing into the knee pit on a long drive.
+      </div>
+    </div>
+  </details>
+
+  <details open>
+    <summary><span class="tag t-move">Moves</span> Safe while you're driving <span class="chev">›</span></summary>
+    <div class="body">
+      <div class="card move">
+        <p class="name">Pelvic tilts</p>
+        <p class="desc">Rock hips forward and back in the seat, slow and small.</p>
+        <span class="dose">10 reps</span>
+      </div>
+      <div class="card move">
+        <p class="name">Glute squeezes</p>
+        <p class="desc">Squeeze and hold — wakes up the hips on a long stretch.</p>
+        <span class="dose">Hold 5 sec × 10</span>
+      </div>
+      <div class="card move">
+        <p class="name">Shoulder blade squeezes</p>
+        <p class="desc">Pull shoulder blades together and down.</p>
+        <span class="dose">8 reps</span>
+      </div>
+      <div class="card move">
+        <p class="name">4–6 breathing</p>
+        <p class="desc">Inhale 4 counts, exhale 6 — relaxes low-back guarding.</p>
+        <span class="dose">A few rounds</span>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="tag t-move">Moves</span> Red light or fully stopped only <span class="chev">›</span></summary>
+    <div class="body">
+      <div class="card move">
+        <p class="name">Ankle circles</p>
+        <p class="desc">Lift heel off the floor, circle each ankle.</p>
+        <span class="dose">8 each direction</span>
+      </div>
+      <div class="card move">
+        <p class="name">Micro-recline shift</p>
+        <p class="desc">Nudge the backrest 2–3° so pressure moves to a new spot. Do this parked, not moving.</p>
+        <span class="dose">Once an hour</span>
+      </div>
+    </div>
+  </details>
+
+  <details open>
+    <summary><span class="tag t-stretch">Stretch</span> At every stop, 5–10 min <span class="chev">›</span></summary>
+    <div class="body">
+      <div class="card stretch">
+        <p class="name">Standing back extension</p>
+        <p class="desc">Hands on low back, gently lean back and look up a few inches. Undoes the forward curl from sitting.</p>
+        <span class="dose">Hold 3–5 sec × 5</span>
+      </div>
+      <div class="card stretch">
+        <p class="name">Hip flexor stretch, door-assisted</p>
+        <p class="desc">Hold the open car door, step one foot back into a soft standing lunge. Back knee gently bent, not locked — tuck the tailbone under to feel it in the front hip.</p>
+        <span class="dose">Hold 20–30 sec each side</span>
+      </div>
+      <div class="card stretch">
+        <p class="name">Seated figure-4</p>
+        <p class="desc">Sit on the tailgate or seat edge, cross one ankle over the opposite knee, hinge forward slightly. Easier on arthritic knees than the standing version.</p>
+        <span class="dose">Hold 20–30 sec each side</span>
+      </div>
+      <div class="card stretch">
+        <p class="name">Hamstring stretch, heel on sill</p>
+        <p class="desc">Heel on the door sill or running board, knee soft — not locked — hinge forward from the hips with a flat back.</p>
+        <span class="dose">Hold 20–30 sec each side</span>
+      </div>
+      <div class="card stretch">
+        <p class="name">Walk it out</p>
+        <p class="desc">Flat, grassy ground if you can find it — the single best reset for hips, low back, and a restless mind. Pair with the dog's walk.</p>
+        <span class="dose">5–10 min, every stop</span>
+      </div>
+      <div class="card stretch">
+        <p class="name">Calf raises</p>
+        <p class="desc">Hand on the car for balance, rise onto the balls of both feet, lower slowly. Pumps blood through stiff feet and ankles without pounding the joints.</p>
+        <span class="dose">10–12 slow reps</span>
+      </div>
+      <div class="skip">
+        <b>Arthritis rule:</b> never force a stretch to a locked-straight knee or a deep bent-knee end range. Mild pulling is fine; sharp, pinching, or swelling-triggering pain means back off and try the seated version.
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="tag t-massage">Massage</span> Self-massage, no gear <span class="chev">›</span></summary>
+    <div class="body">
+      <div class="card massage">
+        <p class="name">Glute release against the car</p>
+        <p class="desc">Back up to the car, make a fist, lean your weight into the fleshy part of one glute. Small circles or slow rocking.</p>
+        <span class="dose">30–45 sec each side</span>
+      </div>
+      <div class="card massage">
+        <p class="name">Low-back release, standing</p>
+        <p class="desc">Two soft fists either side of the spine, just above the hip bones — never on the spine itself. Lean back and let your weight sink in, small figure-8s.</p>
+        <span class="dose">30–60 sec</span>
+      </div>
+      <div class="card massage">
+        <p class="name">Seated hip / piriformis dig</p>
+        <p class="desc">Seat edge, figure-4 position, thumb or knuckles into the meaty part of the glute near the hip crease — often the real source of "sciatica" tightness from driving.</p>
+        <span class="dose">45 sec each side</span>
+      </div>
+      <div class="card massage">
+        <p class="name">Foot knead, seated</p>
+        <p class="desc">Ankle crossed over the opposite knee, both thumbs pressing and kneading the arch and ball of the foot in small circles.</p>
+        <span class="dose">1 min each foot</span>
+      </div>
+      <div class="card massage">
+        <p class="name">Neck &amp; trap squeeze</p>
+        <p class="desc">Opposite hand reaches across, squeezes and kneads the muscle between neck and shoulder in slow pulses.</p>
+        <span class="dose">30 sec each side</span>
+      </div>
+      <div class="skip">
+        <b>Pressure rule:</b> aim for muscle that feels tight or "achy-good," never a joint line or bone. Sharp, numb, or tingly instead of achy means ease off — that's a nerve, not a knot.
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="tag t-note">Brain</span> For the restless brain <span class="chev">›</span></summary>
+    <div class="body">
+      <div class="callout">
+        <span class="label">Restlessness playbook</span>
+        <ul>
+          <li>Anchor breaks to Superchargers — you're already stopping every 1.5–2 hrs, that's your built-in movement cadence.</li>
+          <li>Set a 20-min silent "wiggle" chime for the in-seat moves above.</li>
+          <li>Keep hands busy safely: textured wheel cover, chewing gum.</li>
+          <li>Let the dog's walk be your walk too — same stop, same grass, double reset.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="tag t-watch">Watch</span> Before you go <span class="chev">›</span></summary>
+    <div class="body">
+      <div class="card">
+        <p class="name">Secrets to Driving Without Back, Neck, or Sciatic Pain</p>
+        <p class="meta">Bob &amp; Brad, Physical Therapists</p>
+        <a class="map" href="https://www.youtube.com/watch?v=YpnNvh5cpi8" target="_blank" rel="noopener">Watch</a>
+      </div>
+      <div class="card">
+        <p class="name">Stretches to Keep You Pain-Free During Long Drives</p>
+        <p class="meta">Airrosti — pit-stop stretch routine</p>
+        <a class="map" href="https://www.youtube.com/watch?v=haOUCTwFwbY" target="_blank" rel="noopener">Watch</a>
+      </div>
+      <div class="card">
+        <p class="name">Stretch Every Hip Muscle in 90 Seconds (Seated)</p>
+        <p class="meta">Bob &amp; Brad — good for a charger-stop bench</p>
+        <a class="map" href="https://www.youtube.com/watch?v=p3U3Ait9p_Y" target="_blank" rel="noopener">Watch</a>
+      </div>
+      <div class="card">
+        <p class="name">5 Quick Stretches When You Do Lots of Driving</p>
+        <p class="meta">2-minute rest-stop routine</p>
+        <a class="map" href="https://www.youtube.com/watch?v=RQ4J12dNqKY" target="_blank" rel="noopener">Watch</a>
+      </div>
+      <div class="card">
+        <p class="name">How to Stretch &amp; Exercise in the Car</p>
+        <p class="meta">In-seat moves for commuters &amp; road-trippers</p>
+        <a class="map" href="https://www.youtube.com/watch?v=MUwhBoTRmTQ" target="_blank" rel="noopener">Watch</a>
+      </div>
+      <div class="card">
+        <p class="name">How to Sit Pain-Free in Your Vehicle (write-up)</p>
+        <p class="meta">Bob &amp; Brad Sciatica Series — full seat-support breakdown</p>
+        <a class="map" href="https://www.bobandbrad.com/post/sciatica-series-33-how-to-sit-pain-free-in-your-vehicle-with-back-pain-sciatica" target="_blank" rel="noopener">Read</a>
+      </div>
+    </div>
+  </details>
+
+  <p style="font-size:12.5px;color:var(--muted);text-align:center;margin-top:6px;">General movement guidance, not a substitute for care from your own PT — especially with new numbness, tingling, or swelling.</p>
+
+</section>
+
+</main>
+
+<footer>
+  Ratings, hours and review notes from Google Maps, pulled Oct 8–9. Day 1 times and mileage from your ABRP plan.<br>Hours are as listed by each business — worth a call if it's a detour.<br>Safe driving.
+</footer>
+
+<script>
+  var btns = document.querySelectorAll('nav button');
+  var panels = document.querySelectorAll('.panel');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){x.classList.remove('on');});
+      panels.forEach(function(p){p.classList.remove('on');});
+      b.classList.add('on');
+      document.getElementById(b.dataset.p).classList.add('on');
+      window.scrollTo(0,0);
+    });
+  });
+</script>
+
+</body>
+</html>
