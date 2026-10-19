@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#7a4f6d">
+<title>Erie → LA · Oct 19–20</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#c1694f;
+    --plum:#7a4f6d;
+    --teal:#78c8b4;
+    --olive:#7d8c5c;
+    --cream:#f8f3ec;
+    --navy:#1e2a3a;
+    --ink:#2c2620;
+    --muted:#6f665c;
+    --line:#e4dbcf;
+    --card:#ffffff;
+    --desc:#4a423a;
+    --heatbg:#fdf0e9;
+    --calloutbg:#f1f3e9;
+    --dosebg:#eef1ea;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#17191d;
+      --ink:#ece6dc;
+      --muted:#a39a8e;
+      --line:#343a43;
+      --card:#21252b;
+      --desc:#cfc7bb;
+      --heatbg:#33231d;
+      --calloutbg:#252a20;
+      --dosebg:#2c3340;
+      --olive:#a3b37f;
+      --terracotta:#dd8469;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+      --cream:#17191d;
+      --ink:#ece6dc;
+      --muted:#a39a8e;
+      --line:#343a43;
+      --card:#21252b;
+      --desc:#cfc7bb;
+      --heatbg:#33231d;
+      --calloutbg:#252a20;
+      --dosebg:#2c3340;
+      --olive:#a3b37f;
+      --terracotta:#dd8469;
+      color-scheme:dark;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font:16px/1.55 "Atkinson Hyperlegible",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    padding-bottom:64px;
+    -webkit-text-size-adjust:100%;
+  }
+  header{
+    background:var(--plum);
+    color:#fff;
+    padding:20px 18px 18px;
+  }
+  header h1{margin:0;font-size:23px;line-height:1.25;letter-spacing:-.2px;}
+  header .sub{margin-top:6px;font-size:14px;opacity:.85;}
+
+  nav{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:50;
+    display:flex;
+    background:var(--navy);
+    box-shadow:0 2px 10px rgba(0,0,0,.18);
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  nav button{
+    flex:1 0 auto;
+    min-height:56px;
+    padding:0 16px;
+    background:none;border:0;
+    color:#a9b4c2;
+    font:inherit;font-size:14px;font-weight:700;
+    letter-spacing:.3px;
+    touch-action:manipulation;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;
+  }
+  nav button.on{color:#fff;border-bottom-color:var(--teal);}
+
+  main{padding:16px 16px 0;}
+  .panel{display:none;}
+  .panel.on{display:block;}
+
+  .day{
+    margin:26px 0 14px;
+    padding:10px 14px;
+    background:var(--plum);
+    color:#fff;
+    border-radius:10px;
+    font-family:var(--mono);
+    font-size:13px;font-weight:700;
+    letter-spacing:.8px;text-transform:uppercase;
+  }
+  .day:first-child{margin-top:0;}
+
+  .heat{
+    background:var(--heatbg);
+    border:1px solid var(--terracotta);
+    border-left:5px solid var(--terracotta);
+    border-radius:10px;
+    padding:13px 14px;
+    margin-bottom:18px;
+  }
+  .heat .label{color:var(--terracotta);display:block;margin-bottom:4px;font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;}
+  .heat p{margin:0;font-size:14.5px;}
+  .heat p + p{margin-top:8px;}
+
+  .town{margin-bottom:26px;}
+  .town > h2{margin:0 0 4px;font-size:19px;letter-spacing:-.2px;}
+  .town > .tz{margin:0 0 12px;font-family:var(--mono);font-size:12px;color:var(--muted);}
+
+  details{
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+    margin-bottom:10px;
+    overflow:hidden;
+  }
+  details[open]{box-shadow:0 1px 6px rgba(0,0,0,.05);}
+  summary{
+    min-height:56px;
+    display:flex;align-items:center;gap:10px;
+    padding:10px 14px;
+    font-weight:700;font-size:15.5px;
+    cursor:pointer;
+    touch-action:manipulation;
+    list-style:none;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary .chev{margin-left:auto;color:var(--muted);font-size:13px;transition:transform .18s;}
+  details[open] summary .chev{transform:rotate(90deg);}
+  .body{padding:0 14px 14px;}
+
+  .tag{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:10.5px;font-weight:700;
+    letter-spacing:.7px;text-transform:uppercase;
+    padding:3px 7px;border-radius:5px;
+    color:#fff;
+    flex:none;
+  }
+  .t-dog{background:#7d8c5c;}
+  .t-coffee{background:#c1694f;}
+  .t-food{background:#c1694f;}
+  .t-note{background:#7a4f6d;}
+  .t-hotel{background:#7a4f6d;}
+  .t-seat{background:#1e2a3a;}
+  .t-move{background:#78c8b4;color:#12332b;}
+  .t-stretch{background:#7d8c5c;}
+  .t-massage{background:#7a4f6d;}
+  .t-watch{background:#c1694f;}
+
+  .card{
+    border:1px solid var(--line);
+    border-left-width:5px;
+    border-radius:10px;
+    padding:12px 13px;
+    margin-bottom:10px;
+    background:var(--card);
+  }
+  .card.charger{background:#1e2a3a;border-color:#78c8b4;color:#e8eef3;}
+  .card.charger .name{color:#fff;}
+  .card.charger .meta{color:#78c8b4;}
+  .card.charger .desc{color:#c3ceda;}
+  .card.dog{border-left-color:var(--olive);}
+  .card.coffee,.card.food{border-left-color:var(--terracotta);}
+  .card.hotel{border-left-color:var(--plum);}
+  .card.closed{opacity:.55;border-left-color:var(--muted);}
+  .card.seat{border-left-color:#1e2a3a;}
+  .card.move{border-left-color:var(--teal);}
+  .card.stretch{border-left-color:var(--olive);}
+  .card.massage{border-left-color:var(--plum);}
+
+  .name{font-weight:700;font-size:16px;margin:0 0 3px;}
+  .meta{font-family:var(--mono);font-size:12px;color:var(--olive);font-weight:500;margin:0 0 5px;}
+  .hours{font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 6px;}
+  .hours strong{color:var(--ink);}
+  .desc{font-size:14.5px;margin:0 0 10px;color:var(--desc);}
+  .flag{font-size:13.5px;margin:0 0 10px;color:var(--terracotta);font-weight:700;}
+  .star{color:var(--terracotta);font-weight:700;}
+  .dose{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:11.5px;font-weight:700;
+    color:var(--ink);
+    background:var(--dosebg);
+    padding:3px 9px;
+    border-radius:20px;
+  }
+
+  a.map{
+    display:flex;align-items:center;justify-content:center;
+    min-height:44px;
+    border-radius:8px;
+    background:#78c8b4;
+    color:#12332b;
+    font-weight:700;font-size:14px;
+    text-decoration:none;
+    touch-action:manipulation;
+  }
+
+  .callout{
+    background:var(--calloutbg);
+    border:1px solid var(--olive);
+    border-radius:10px;
+    padding:12px 13px;
+    margin-bottom:16px;
+    font-size:14.5px;
+  }
+  .callout .label{color:var(--olive);font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;display:block;margin-bottom:4px;}
+  .callout ul{margin:8px 0 0;padding-left:18px;}
+  .callout li{margin-bottom:5px;}
+  .callout a{color:inherit;font-weight:700;}
+
+  .skip{
+    font-size:13.5px;color:var(--muted);
+    padding:10px 12px;
+    border:1px dashed var(--line);
+    border-radius:9px;
+    margin-bottom:10px;
+  }
+  .skip b{color:var(--ink);}
+
+  .wx{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;margin-top:8px;}
+  .wx th,.wx td{text-align:left;padding:5px 4px;border-bottom:1px solid var(--line);}
+  .wx th{color:var(--muted);font-weight:700;}
+  .wx td:first-child{white-space:nowrap;padding-right:10px;}
+
+  footer{
+    padding:22px 16px 26px;
+    text-align:center;font-size:13px;color:var(--muted);
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Erie → Los Angeles</h1>
+  <div class="sub">Mon Oct 19 – Tue Oct 20 · I‑70 → I‑15 · six night-stop options</div>
+</header>
+
+<nav>
+  <button class="on" data-p="route">Route</button>
+  <button data-p="dogs">Dog Walks</button>
+  <button data-p="food">Food</button>
+  <button data-p="sleep">Overnight</button>
+</nav>
+
+<main>
+<section class="panel on" id="route">
+
+  <div class="heat">
+    <span class="label">Weather</span>
+    <p>Dry for most of the route. The one live risk is <b>snow at the Eisenhower Tunnel and Vail Pass</b> (35% Monday, highs in the low 40s, lows near freezing) when you cross about 3:30–3:45 PM. Beaver and Cedar City have 40% rain odds Monday night. Tuesday is dry from Nevada on.</p>
+    <p>Daily forecast values only: highs, lows and the chance of precipitation. Wind and hourly detail were not available.</p>
+<div style="overflow-x:auto"><table class="wx">
+  <tr><th>Place</th><th>Mon high / low · chance</th><th>Tue</th></tr>
+  <tr><td>Nederland</td><td>53° / 36° · 10%</td><td>54° / 36° · 15%</td></tr>
+  <tr><td>Idaho Springs</td><td>55° / 37° · 10%</td><td>55° / 37° · 15%</td></tr>
+  <tr><td>Eisenhower Tunnel</td><td>43° / 33° · 35% snow</td><td>43° / 31° · 15% snow</td></tr>
+  <tr><td>Vail Pass</td><td>43° / 31° · 35% snow</td><td>44° / 30° · 15% snow</td></tr>
+  <tr><td>Glenwood Springs</td><td>61° / 42° · 20%</td><td>63° / 41° · 15%</td></tr>
+  <tr><td>Grand Junction</td><td>65° / 48° · 15%</td><td>70° / 47° · 15%</td></tr>
+  <tr><td>Green River UT</td><td>65° / 43° · 5%</td><td>71° / 46° · 0%</td></tr>
+  <tr><td>Salina</td><td>64° / 43° · 15%</td><td>69° / 45° · 15%</td></tr>
+  <tr><td>Richfield</td><td>64° / 45° · 20%</td><td>69° / 46° · 15%</td></tr>
+  <tr><td>Beaver</td><td>60° / 46° · 40%</td><td>67° / 46° · 15%</td></tr>
+  <tr><td>Cedar City</td><td>56° / 45° · 40%</td><td>62° / 43° · 15%</td></tr>
+  <tr><td>Moapa NV</td><td>81° / 62° · 0%</td><td>83° / 62° · 0%</td></tr>
+  <tr><td>Baker CA</td><td>85° / 58° · 0%</td><td>87° / 64° · 0%</td></tr>
+  <tr><td>Victorville</td><td>80° / 47° · 0%</td><td>78° / 56° · 0%</td></tr>
+  <tr><td>Los Angeles</td><td>83° / 62° · 0%</td><td>79° / 63° · 0%</td></tr>
+</table></div>
+  </div>
+
+  <div class="callout">
+    <span class="label">A wetter system follows you</span>
+    Wednesday and Thursday show rain at Grand Junction (65%, 75%), Green River (50%, 75%), Cedar City (35%, 70%), Moapa (15%, 70%), Victorville (15%, 65%) and Los Angeles (65% Wednesday), with 45% snow odds at Vail Pass Thursday. You are ahead of it if you keep moving.
+  </div>
+
+  <div class="callout">
+    <span class="label">Check before the first leg</span>
+    Official alerts could not be pulled from here. The plan's first leg is 72 miles from Berthoud to Idaho Springs, which fits a mountain road (Boulder Canyon and Nederland) better than I‑25 to I‑70. I cannot see the route in the spreadsheet, so open the plan link to confirm. Nederland is forecast at 53° with 10% precipitation.
+    <ul>
+      <li><a href="https://www.cotrip.org">COtrip</a> — I‑70 Vail Pass, Eisenhower Tunnel, mountain roads</li>
+      <li><a href="https://www.udottraffic.utah.gov">UDOT Traffic</a> — I‑70 and I‑15 in Utah</li>
+      <li><a href="https://www.nvroads.com">NVRoads</a> — I‑15 in Nevada</li>
+      <li><a href="https://quickmap.dot.ca.gov">Caltrans QuickMap</a> — I‑15 Baker to Cajon Pass</li>
+      <li><a href="https://www.weather.gov">weather.gov</a> — alerts by location, including wind</li>
+    </ul>
+  </div>
+
+<div class="day">Mon Oct 19 → Tue Oct 20 · Berthoud → Los Angeles · 1,058 mi</div>
+<div class="callout">
+  <span class="label">Your ABRP plan 9</span>
+  Leaves Berthoud 1:15 PM at 50%. Eight charging stops, 3 h 21 min of charging, 18 h 26 min total, arrives Los Angeles 6:41 AM Tuesday. Stop times run 3–5 minutes longer than the charge time. Times are local to each stop; from Moapa on they are Pacific. Sunset is about 6:26 PM at Parachute and 6:35 PM at Green River; it is fully dark by about 7:00 PM from the Utah line on.
+</div>
+<h3 style="margin:0 0 6px;font-size:16px">Plan stops</h3><div style="overflow-x:auto"><table class="wx">
+  <tr><th>Stop</th><th>Arrive</th><th>Leave</th><th>Charge</th><th>Battery</th></tr>
+  <tr><td>Idaho Springs CO</td><td>2:24 PM</td><td>3:06 PM</td><td>38 min</td><td>12 → 87%</td></tr>
+  <tr><td>Parachute CO</td><td>5:34 PM</td><td>6:09 PM</td><td>32 min</td><td>10 → 81%</td></tr>
+  <tr><td>Green River UT</td><td>8:01 PM</td><td>8:36 PM</td><td>30 min</td><td>10 → 79%</td></tr>
+  <tr><td>Richfield UT</td><td>10:12 PM</td><td>10:43 PM</td><td>25 min</td><td>10 → 73%</td></tr>
+  <tr><td>Cedar City UT</td><td>12:11 AM</td><td>12:31 AM</td><td>16 min</td><td>10 → 57%</td></tr>
+  <tr><td>Moapa NV (PT)</td><td>1:01 AM</td><td>1:31 AM</td><td>26 min</td><td>10 → 75%</td></tr>
+  <tr><td>Baker CA (PT)</td><td>3:27 AM</td><td>3:49 AM</td><td>18 min</td><td>10 → 62%</td></tr>
+  <tr><td>Victorville CA (PT)</td><td>5:10 AM</td><td>5:28 AM</td><td>14 min</td><td>10 → 53%</td></tr>
+  <tr><td>Los Angeles</td><td>6:41 AM</td><td></td><td></td><td>20%</td></tr>
+</table></div>
+<h3 style="margin:22px 0 6px;font-size:16px">Where your night-stop times land</h3>
+<div class="skip"><b>7:30 PM</b> falls about 30 miles into Utah, between Cisco and Thompson Springs. Nothing is there. <b>9:30 PM</b> falls near Emery in the San Rafael Swell, about 70 miles west of Green River. Nothing is there either. <b>11:30 PM</b> falls at Beaver. So each time has a town just before it and one just after, and the six options below are those towns.</div>
+<div style="overflow-x:auto"><table class="wx">
+  <tr><th>#</th><th>Mark</th><th>Stop</th><th>Arrive</th><th>Battery</th><th>Elev.</th></tr>
+  <tr><td>1</td><td>7:30 PM</td><td>Grand Junction CO</td><td>~6:43 PM</td><td>~59%</td><td>~4,600 ft</td></tr>
+  <tr><td>2</td><td>8:30 PM</td><td>Green River UT</td><td>8:01 PM</td><td>10%</td><td>~4,100 ft</td></tr>
+  <tr><td>3</td><td>9:30 PM</td><td>Salina UT</td><td>~9:56 PM</td><td>~22%</td><td>~5,100 ft</td></tr>
+  <tr><td>4</td><td>10:30 PM</td><td>Richfield UT</td><td>10:12 PM</td><td>10%</td><td>~5,300 ft</td></tr>
+  <tr><td>5</td><td>11:30 PM</td><td>Beaver UT</td><td>~11:27 PM</td><td>~42%</td><td>~5,900 ft</td></tr>
+  <tr><td>6</td><td>12:30 AM</td><td>Cedar City UT</td><td>12:11 AM</td><td>10%</td><td>~5,800 ft</td></tr>
+</table></div>
+<div class="skip">Grand Junction, Salina and Beaver are not charging stops on your plan. Their arrival time and battery are estimated by spreading each leg evenly by distance, so treat them as approximate. Elevations are from memory and approximate. Details for each are in the Overnight tab.</div>
+
+</section>
+
+<section class="panel" id="dogs">
+
+<div class="callout">
+  <span class="label">This trip</span>
+  Walks near each charger on your plan, in order. Regular parks come first; fenced off-leash areas sit inside the cards when they are the only option. Distances are straight-line from map coordinates. Dark falls around 6:30 PM, and many parks close between 5 and 9 PM, so each card shows Monday hours. Chargers with no usable walk are marked. Stops that are only night options are in the Overnight tab. Food and coffee are in the Food tab.
+</div>
+<div class="town">
+  <h2>Idaho Springs, CO</h2>
+  <p class="tz">Mon 2:24 PM · daylight</p>
+
+<div class="card charger">
+  <p class="name">Idaho Springs Supercharger</p>
+  <p class="meta">1319 Miner St · rated 4.6 · 67 reviews</p>
+  <p class="desc">Behind the Maverik store with clean restrooms, trash cans and food within a short walk. Eight stalls, 250 kW per a reviewer.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+1319+Miner+St+Idaho+Springs+CO">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Courtney Ryley Cooper Park <span class="star">★</span></p>
+  <p class="meta">4.6 · 441 reviews · 2350 Colorado Blvd · about 0.5 mi from the charger</p>
+  <p class="hours"><strong>Monday 8:00 AM – 5:00 PM</strong></p>
+  <p class="desc">Creekside lawn and benches. A reviewer calls it dog friendly with waste bags provided and says the restrooms are clean. No overnight parking.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Courtney+Ryley+Cooper+Park+Idaho+Springs+CO">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Charlie Tayler Water Wheel</p>
+  <p class="meta">4.6 · 330 reviews · about 0.2 mi from the charger</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Paved path to a waterfall and an 1893 wheel. Two reviewers say it is dog friendly. Maps puts the pin on the wrong hill; the walkway starts at the Water St lot and runs under the freeway bridge.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Charlie+Tayler+Water+Wheel+Idaho+Springs+CO">Open in Maps</a>
+</div>
+</div>
+<div class="town">
+  <h2>Parachute, CO</h2>
+  <p class="tz">Mon 5:34 PM · sunset about 6:26 PM</p>
+
+<div class="card charger">
+  <p class="name">Parachute Supercharger</p>
+  <p class="meta">Cardinal Way #28 · rated 4.5 · 40 reviews</p>
+  <p class="desc">At a Sinclair station with restrooms and a Domino's. A reviewer saw speeds stay under 90 kW, another saw 250 kW. A coffee shack is across the street.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+Cardinal+Way+Parachute+CO">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Parachute Dog Park <span class="star">★</span></p>
+  <p class="meta">4.0 · 22 reviews · 200 Co Rd 215 · about 0.35 mi from the charger</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Small fenced strip with green grass at the end of the rest stop, restrooms beside it. A reviewer says it is only big enough for a quick pit stop. Water fountain was not working for one visitor, and there is little shade. A charger reviewer also found grass behind the Sinclair.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Parachute+Dog+Park+Parachute+CO">Open in Maps</a>
+</div>
+<details>
+  <summary><span class="tag t-dog">Optional</span> Grizzly Creek Rest Area, Glenwood Canyon <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card dog">
+  <p class="name">Grizzly Creek Rest Area</p>
+  <p class="meta">4.8 · no charger · from earlier research</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Paved path along the Colorado River. You pass it around 4:40 PM, before Parachute, in daylight.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Grizzly+Creek+Rest+Area+Glenwood+Canyon+CO">Open in Maps</a>
+</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Green River, UT</h2>
+  <p class="tz">Mon 8:01 PM · dark</p>
+
+<div class="skip"><b>Which charger?</b> ABRP says "Green River, UT - Main St". There are two on Main St: <b>1765 E Main</b> (8 stalls, 150 kW, on the river by the museum) and <b>1185 E Main</b> (16 stalls, newer, beside a Sinclair, gravel lot). Check which one the car routes to. The river trail below belongs to 1765.</div>
+<div class="card charger">
+  <p class="name">Green River Supercharger, E Main St</p>
+  <p class="meta">1765 E Main · rated 4.4 · 116 reviews</p>
+  <p class="flag">A reviewer called the area "sketchy" and poorly lit at 11 PM on a Friday. After dark, keep to the lit part of the lot.</p>
+  <p class="desc">Covered picnic tables, a gazebo and outside restrooms that a reviewer found unlocked and clean. A restaurant is across the road.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+1765+E+Main+St+Green+River+UT">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">River trail at the museum charger <span class="star">★</span></p>
+  <p class="meta">Described by reviewers, not a separate listing</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">One reviewer: "Great little trail along the river to walk your dog while charging." Another calls it a great place for dog walking.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Green+River+UT+museum+river+trail">Open in Maps</a>
+</div>
+<details>
+  <summary><span class="tag t-dog">Alt</span> Park behind First Choice Inn, and Love's dog area <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card dog">
+  <p class="name">City park behind First Choice Inn at the Swell</p>
+  <p class="meta">Next door to the 1765 E Main charger</p>
+  <p class="desc">A reviewer describes an irrigated city park right behind the hotel for walking dogs. I could not find it as its own listing.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=First+Choice+Inn+at+the+Swell+Green+River+UT">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Love's Travel Stop dog area</p>
+  <p class="meta">4.2 · 896 reviews · 1810 W Main St · west end of town</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">A reviewer with dogs says the grass was a relief in the heat and the dog area made the stop easier. About 2 mi from the 1185 E Main charger, 2.5 mi from 1765.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Love%27s+Travel+Stop+1810+W+Main+St+Green+River+UT">Open in Maps</a>
+</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Richfield, UT</h2>
+  <p class="tz">Mon 10:12 PM · dark</p>
+
+<div class="card charger">
+  <p class="name">Richfield Supercharger (south)</p>
+  <p class="meta">Phillips 66 · 1050 W 1250 S · rated 4.8 · 17 reviews</p>
+  <p class="desc">Sixteen stalls at 250 kW per reviewers, one pull-through, restrooms inside the Phillips 66, a Wendy's next door.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+1050+W+1250+S+Richfield+UT">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Lawn at Comfort Inn, next door <span class="star">★</span></p>
+  <p class="meta">Comfort Inn Richfield I‑70 · 1070 W 1250 S</p>
+  <p class="desc">The hotel lists grassy areas for pets with waste bags. It sits on the same block as the charger. No park is within a short walk at night.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Comfort+Inn+Richfield+I-70+1070+W+1250+S">Open in Maps</a>
+</div>
+<details>
+  <summary><span class="tag t-dog">Daylight</span> Parks in town, farther from the charger <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card dog">
+  <p class="name">Centennial Park</p>
+  <p class="meta">4.2 · from earlier research · about 0.3 mi from the north charger, about 2.5 mi from this one</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Open grass, covered tables, restrooms. The north charger is the 4-stall one at Holiday Inn Express.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Centennial+Park+Richfield+UT">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Richfield Lion's Park</p>
+  <p class="meta">4.4 · about 1.6 mi from this charger · from earlier research</p>
+  <p class="hours"><strong>Hours not verified</strong></p>
+  <p class="desc">Large trees and good grass with restrooms. Not a night option.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Lions+Park+Richfield+UT">Open in Maps</a>
+</div>
+<div class="skip"><b>Left out:</b> Rotary Park in Richfield does not allow dogs.</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Cedar City, UT</h2>
+  <p class="tz">Tue 12:11 AM · dark</p>
+
+<div class="skip"><b>Which charger?</b> ABRP says only "Cedar City". Two exist: <b>S Main St #1065</b> (rated 3.0, 15 reviews) and <b>5249 W 3650 S</b> (rated 4.3, 133 reviews, about 6 mi southwest of town). ABRP does not say which, so check which one the car picks.</div>
+<div class="card charger">
+  <p class="name">Cedar City Supercharger, S Main St</p>
+  <p class="meta">S Main St #1065 · rated 3.0 · 15 reviews</p>
+  <p class="desc">Low rating and few reviews. Near the La Quinta and Wingate hotels.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+S+Main+St+Cedar+City+UT">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Grass behind La Quinta <span class="star">★</span></p>
+  <p class="meta">La Quinta Cedar City · 1377 S Main St · about 0.4 mi from the Main St charger</p>
+  <p class="desc">The hotel lists a grassy area at the back. A reviewer calls the hotel pet friendly and clean.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=La+Quinta+Inn+Suites+Cedar+City+1377+S+Main+St">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Love's Travel Stop dog park</p>
+  <p class="meta">4.5 · 11 reviews · 2645 Canyon Ranch Dr · north Cedar City, about 5 mi from the Main St charger</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Small fenced area, mostly grass, with benches, bags and a trash can, next to the store. Reviewers say it is clean and larger than most truck-stop dog areas.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Love%27s+Travel+Stop+2645+Canyon+Ranch+Dr+Cedar+City+UT">Open in Maps</a>
+</div>
+<details>
+  <summary><span class="tag t-dog">Morning</span> Park Discovery, closed at night <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card dog">
+  <p class="name">Park Discovery</p>
+  <p class="meta">4.6 · 648 reviews · 2077 W Royal Hunte Dr · about 0.8 mi from the charger</p>
+  <p class="hours"><strong>Monday 6:30 AM – 8:30 PM</strong></p>
+  <p class="desc">Big city park. Closed by the time you arrive, so only if you sleep in Cedar City and walk in the morning.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Park+Discovery+Cedar+City+UT">Open in Maps</a>
+</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Moapa, NV</h2>
+  <p class="tz">Tue 1:01 AM Pacific · dark</p>
+
+<div class="card charger">
+  <p class="name">Moapa Supercharger</p>
+  <p class="meta">2300 Glendale Blvd · rated 4.5 · 15 reviews</p>
+  <p class="flag">No walk found near this charger. Relief break only. A reviewer of the ampm at the charger mentions an outside table and a dog relief area.</p>
+  <p class="desc">A reviewer calls it newer and clean, in the middle of nowhere.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+2300+Glendale+Blvd+Moapa+NV">Open in Maps</a>
+</div>
+<details>
+  <summary><span class="tag t-dog">Alt</span> Love's dog area at Apex, 11 miles later <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card dog">
+  <p class="name">Love's dog park, Apex</p>
+  <p class="meta">4.0 · I‑15 exit 64 · no charger · from earlier research</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Listed by Love's and mentioned by a reviewer with dogs. Real grass versus turf was not confirmed. Moapa is exit 75, so this is 11 miles down the road.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Love%27s+Travel+Stop+Apex+NV+I-15+exit+64">Open in Maps</a>
+</div>
+<div class="skip"><b>Left out:</b> Overton Park (4.4, 24 hours, shade trees) is about 11 miles from the charger.</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Baker, CA</h2>
+  <p class="tz">Tue 3:27 AM Pacific · dark</p>
+
+<div class="card charger">
+  <p class="name">Baker Supercharger, Mojave Pointe Rd</p>
+  <p class="meta">56383 Mojave Pointe Rd · rated 4.3 · 26 reviews</p>
+  <p class="desc">Newest Baker site, V4, on the same road as Castañedas Mexican Food (Google hours 7 AM – 1 AM, so closed when you arrive). A reviewer says it is well lit; another says it feels isolated.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+56383+Mojave+Pointe+Rd+Baker+CA">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Chet Huffman Park <span class="star">★</span></p>
+  <p class="meta">4.4 · 25 reviews · 73730 Baker Blvd · about 0.5 mi from the charger</p>
+  <p class="hours"><strong>Hours not listed</strong></p>
+  <p class="desc">A reviewer on a Vegas road trip: it was the one place in Baker with grass for their dogs, since everything else is dirt and gravel. Restrooms; lighting not verified.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Chet+Huffman+Park+Baker+CA">Open in Maps</a>
+</div>
+<div class="skip">The older Baker Blvd Supercharger (71808 Baker Blvd, rated 4.5, 737 reviews) has a small dog area per one reviewer, with grass under repair and mostly dirt that day.</div>
+</div>
+<div class="town">
+  <h2>Victorville, CA</h2>
+  <p class="tz">Tue 5:10 AM Pacific · dark, sunrise 6:58 AM</p>
+
+<div class="card charger">
+  <p class="name">Victorville Supercharger, Roy Rogers Dr</p>
+  <p class="meta">15617 Roy Rogers Dr · rated 4.9 · 22 reviews</p>
+  <p class="flag">No walk is open at this hour. Hook Park (about 0.7 mi) opens at 10 AM, Village Park at 8 AM, and the 24-hour parks nearby either are not near or have encampments per reviewers. Relief break only; do the real walk at Baker.</p>
+  <p class="desc">In the Home Depot lot with food and restrooms nearby. Reviewers call it clean and safe.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+15617+Roy+Rogers+Dr+Victorville+CA">Open in Maps</a>
+</div>
+</div>
+
+</section>
+
+<section class="panel" id="food">
+
+<div class="callout">
+  <span class="label">How to use this tab</span>
+  Food and coffee at each stop on your plan, in order, with what is open when you arrive. Hours are what Google lists for Monday, or Tuesday after midnight, and late-night hours change without notice, so check the listing before a detour. Distances are straight-line from the charger. Morning coffee and breakfast are under each night-stop town, for the stops where you might sleep. <b>Open restaurants thin out fast after Richfield.</b> After that, what is open is truck stops and gas stations, Cedar City’s two 24-hour fast-food places, and at Victorville a Starbucks and a 24-hour Denny’s.
+</div>
+<h3 style="margin:0 0 6px;font-size:16px">Open when you arrive</h3><div style="overflow-x:auto"><table class="wx">
+  <tr><th>Stop</th><th>Arrive</th><th>Open then</th></tr>
+  <tr><td>Idaho Springs CO</td><td>2:24 PM</td><td>Frothy Cup, Edelweiss, Two Brothers Deli (closes 3 PM), Beau Jo’s, MTN Prime</td></tr>
+  <tr><td>Parachute CO</td><td>5:34 PM</td><td>Thunder Burger (to 8 PM), Nalini’s (to 7), El Tapatío (to 10). The Coffee Shack closed at noon</td></tr>
+  <tr><td>Grand Junction CO</td><td>~6:43 PM</td><td>Many, to 9–10 PM</td></tr>
+  <tr><td>Green River UT</td><td>8:01 PM</td><td>Tamarisk (to 9 PM), El Charro Loco (to 10)</td></tr>
+  <tr><td>Salina UT</td><td>~9:56 PM</td><td>Denny’s (to midnight)</td></tr>
+  <tr><td>Richfield UT</td><td>10:12 PM</td><td>Wendy’s at the charger (to midnight), Taco Bell (to 11)</td></tr>
+  <tr><td>Beaver UT</td><td>~11:27 PM</td><td>Truck stops only: Flying J, Ernie’s, Fast Stop (24 h)</td></tr>
+  <tr><td>Cedar City UT</td><td>12:11 AM</td><td>McDonald’s and Rita’s Taco Shop (24 h)</td></tr>
+  <tr><td>Moapa NV (PT)</td><td>1:01 AM</td><td>The ampm at the charger (24 h)</td></tr>
+  <tr><td>Baker CA (PT)</td><td>3:27 AM</td><td>Shell, Country Store 76 (24 h)</td></tr>
+  <tr><td>Victorville CA (PT)</td><td>5:10 AM</td><td>Starbucks at the charger (opens 4 AM)</td></tr>
+</table></div>
+<div class="skip">Grand Junction, Salina and Beaver arrival times are the estimates from the Route tab.</div>
+<div class="town">
+  <h2>Idaho Springs, CO</h2>
+  <p class="tz">Mon 2:24 PM · daylight · 38 min stop</p>
+
+<div class="card coffee">
+  <p class="name">The Frothy Cup <span class="star">★</span></p>
+  <p class="meta">Coffee · 4.7 · 1,152 reviews · 1510 Miner St · 0.08 mi from the charger</p>
+  <p class="hours"><strong>Monday 7:00 AM – 6:00 PM</strong></p>
+  <p class="desc">Reviewers praise the rotating coffee menu and the oat milk iced caramel macchiato.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=The+Frothy+Cup+1510+Miner+St+Idaho+Springs+CO">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Two Brothers Deli</p>
+  <p class="meta">Deli and sandwiches · 4.4 · 891 reviews · 1424 Miner St · 0.04 mi</p>
+  <p class="hours"><strong>Monday 9:00 AM – 3:00 PM</strong></p>
+  <p class="desc">Closes 36 minutes after you arrive.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Two+Brothers+Deli+1424+Miner+St+Idaho+Springs+CO">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Beau Jo’s</p>
+  <p class="meta">Pizza · 4.6 · 11,759 reviews · 1517 Miner St · 0.09 mi</p>
+  <p class="hours"><strong>Monday 11:00 AM – 8:00 PM</strong></p>
+  <p class="desc">Sit-down pizza restaurant.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Beau+Jos+Pizza+1517+Miner+St+Idaho+Springs+CO">Open in Maps</a>
+</div>
+<div class="card coffee">
+  <p class="name">Edelweiss European Pastry Shop</p>
+  <p class="meta">Pastry and coffee · 4.7 · 265 reviews · 1520 Miner St · 0.10 mi</p>
+  <p class="hours"><strong>Monday 8:00 AM – 6:00 PM</strong></p>
+  <p class="desc">Pastry shop that also serves coffee.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Edelweiss+European+Pastry+Shop+1520+Miner+St+Idaho+Springs+CO">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">MTN Prime</p>
+  <p class="meta">Steakhouse · 4.5 · 2,401 reviews · 1600 Miner St · 0.13 mi</p>
+  <p class="hours"><strong>Monday 11:00 AM – 10:00 PM</strong></p>
+  <p class="desc">Sit-down American restaurant.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=MTN+Prime+1600+Miner+St+Idaho+Springs+CO">Open in Maps</a>
+</div>
+<div class="skip"><b>Closes just before you arrive:</b> Main Street Restaurant (4.7, 1,739 reviews, 1518 Miner St) closes at 2:30 PM, six minutes after you arrive. Reviewers also mention restrooms and snacks at the Maverik behind the charger.</div>
+<details>
+  <summary><span class="tag t-food">Alt</span> Smokin Yard’s BBQ, with a patio <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card food">
+  <p class="name">Smokin Yard’s BBQ</p>
+  <p class="meta">BBQ · 4.7 · 3,651 reviews · 2736 Colorado Blvd · 0.9 mi from the charger</p>
+  <p class="hours"><strong>Monday 11:00 AM – 8:00 PM</strong></p>
+  <p class="desc">One reviewer says there is a dog-friendly patio out back. About a mile from the charger, so this is a drive.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Smokin+Yards+BBQ+2736+Colorado+Blvd+Idaho+Springs+CO">Open in Maps</a>
+</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Parachute, CO</h2>
+  <p class="tz">Mon 5:34 PM · sunset about 6:26 PM · 32 min stop</p>
+
+<div class="card food">
+  <p class="name">Thunder Burger <span class="star">★</span></p>
+  <p class="meta">Burgers · 4.8 · 174 reviews · 28 Cardinal Way · 0.04 mi from the charger</p>
+  <p class="hours"><strong>Monday 11:00 AM – 8:00 PM</strong></p>
+  <p class="desc">Listed on the charger’s own street. Closes in about 2.5 hours.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Thunder+Burger+28+Cardinal+Way+Parachute+CO">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Nalini’s Restaurant</p>
+  <p class="meta">Mexican · 4.7 · 309 reviews · 257 E 1st St · 0.26 mi</p>
+  <p class="hours"><strong>Monday 7:00 AM – 7:00 PM</strong></p>
+  <p class="desc">Sit-down Mexican restaurant. One reviewer calls the atmosphere basic.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Nalinis+Restaurant+257+E+1st+St+Parachute+CO">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">El Tapatío</p>
+  <p class="meta">Mexican · 4.3 · 804 reviews · 393 E 2nd St · 0.29 mi</p>
+  <p class="hours"><strong>Monday 10:00 AM – 10:00 PM</strong></p>
+  <p class="desc">Open latest of the sit-down options here.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=El+Tapatio+393+E+2nd+St+Parachute+CO">Open in Maps</a>
+</div>
+<div class="skip"><b>Closed by then:</b> The Coffee Shack (4.7, 272 reviews, 258 S Rail Rd Ave) is across the street and charger reviewers recommend it, but it closes at noon. A reviewer also mentions a Domino’s attached to the Sinclair at the charger; I did not check its hours.</div>
+</div>
+<div class="town">
+  <h2>Grand Junction, CO</h2>
+  <p class="tz">Mon ~6:43 PM · dark by about 7 PM · estimate</p>
+
+<div class="skip"><b>Arrive ~6:43 PM.</b> Two chargers and a hotel strip at exit 31, so options are grouped by where you charge or sleep.</div>
+<h3 style="margin:10px 0 6px;font-size:15px">At the chargers</h3>
+<div class="card food">
+  <p class="name">Teriyaki Madness</p>
+  <p class="meta">Asian · 3.9 · 22 reviews · 2691 Patterson Rd · 0.08 mi from the Patterson Rd charger</p>
+  <p class="hours"><strong>Monday 10:00 AM – 9:00 PM</strong></p>
+  <p class="desc">In the same strip as the newer charger. Few reviews.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Teriyaki+Madness+2691+Patterson+Rd+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Boston’s Pizza Restaurant & Sports Bar</p>
+  <p class="meta">Pizza and bar · 4.1 · 1,784 reviews · 2404 Patterson Rd · 0.34 mi from the US‑6 charger</p>
+  <p class="hours"><strong>Monday 11:00 AM – 10:00 PM</strong></p>
+  <p class="desc">Sit-down. Open latest of the options near the older charger.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Bostons+Pizza+2404+Patterson+Rd+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Ginger Oriental Restaurant</p>
+  <p class="meta">Asian · 4.4 · 796 reviews · 2381 Patterson Rd · 0.46 mi from the US‑6 charger</p>
+  <p class="hours"><strong>Monday 11:00 AM – 9:00 PM</strong></p>
+  <p class="desc">Sit-down restaurant near the older charger.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Ginger+Oriental+Restaurant+2381+Patterson+Rd+Grand+Junction+CO">Open in Maps</a>
+</div>
+<h3 style="margin:14px 0 6px;font-size:15px">Near the hotels, exit 31</h3>
+<div class="card food">
+  <p class="name">Oliver’s Restaurant & Bar <span class="star">★</span></p>
+  <p class="meta">Indian and American · 4.7 · 89 reviews · 2790 Crossroads Blvd</p>
+  <p class="hours"><strong>Monday 4:00 – 9:30 PM</strong></p>
+  <p class="desc">On the same street as La Quinta (2761 Crossroads Blvd). Fewer reviews, high rating.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Olivers+Restaurant+Bar+2790+Crossroads+Blvd+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Enzo’s Ristorante Italiano</p>
+  <p class="meta">Italian · 4.3 · 1,513 reviews · 707 Horizon Dr</p>
+  <p class="hours"><strong>Monday 4:00 – 9:00 PM</strong></p>
+  <p class="desc">Sit-down Italian with a bar, on Horizon Dr with the Clarion and DoubleTree.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Enzos+Ristorante+Italiano+707+Horizon+Dr+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="skip">Also on the strip: Grand Valley Grill (4.0, 46 reviews, 2751 Crossroads Blvd, 5–9 PM) and The Bistro (3.9, 28 reviews, 765 Horizon Dr, 5–10 PM). Ratings are lower.</div>
+<details>
+  <summary><span class="tag t-food">Alt</span> Great Greek and Base Camp Beer Works <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card food">
+  <p class="name">The Great Greek Mediterranean Grill</p>
+  <p class="meta">Mediterranean · 4.4 · 618 reviews · 2566 Patterson Rd Unit B · about 1.4 mi from either charger</p>
+  <p class="hours"><strong>Monday 11:00 AM – 8:00 PM</strong></p>
+  <p class="desc">Reviewers mention patio seating. Closes 77 minutes after you arrive.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=The+Great+Greek+Mediterranean+Grill+2566+Patterson+Rd+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Base Camp Beer Works</p>
+  <p class="meta">Brewpub · 4.8 · 347 reviews · 2575 US‑6 & 50 Unit C · 1.9 mi from the US‑6 charger</p>
+  <p class="hours"><strong>Monday 11:00 AM – 9:00 PM</strong></p>
+  <p class="desc">A reviewer describes a large shaded patio. I did not find a dog policy.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Base+Camp+Beer+Works+2575+US-6+Grand+Junction+CO">Open in Maps</a>
+</div>
+  </div>
+</details>
+<details>
+  <summary><span class="tag t-coffee">Morning</span> Coffee and breakfast on Horizon Dr <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card coffee">
+  <p class="name">Starbucks</p>
+  <p class="meta">Coffee · 4.1 · 111 reviews · 702 Horizon Dr</p>
+  <p class="hours"><strong>Tuesday 4:30 AM – 8:00 PM</strong></p>
+  <p class="desc">Earliest opener on the strip.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Starbucks+702+Horizon+Dr+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="card coffee">
+  <p class="name">My Favorite Muffin</p>
+  <p class="meta">Bakery and breakfast · 4.4 · 439 reviews · 683 Horizon Dr #109</p>
+  <p class="hours"><strong>Tuesday 6:00 AM – 3:00 PM</strong></p>
+  <p class="desc">Bakery with breakfast sandwiches.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=My+Favorite+Muffin+683+Horizon+Dr+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="card coffee">
+  <p class="name">Citrolas Coffee Co.</p>
+  <p class="meta">Coffee · 3.9 · 10 reviews · 759 Horizon Dr Ste A</p>
+  <p class="hours"><strong>Tuesday 7:00 AM – 8:00 PM</strong></p>
+  <p class="desc">Few reviews.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Citrolas+Coffee+Co+759+Horizon+Dr+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="card coffee">
+  <p class="name">The Coffee Trader</p>
+  <p class="meta">Coffee and breakfast · 4.3 · 738 reviews · 2566 Patterson Rd Unit A</p>
+  <p class="hours"><strong>Tuesday 6:00 AM – 6:00 PM</strong></p>
+  <p class="desc">Reviewers mention a patio and a drive-thru. 1.4 mi from the Patterson Rd charger.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=The+Coffee+Trader+2566+Patterson+Rd+Grand+Junction+CO">Open in Maps</a>
+</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Green River, UT</h2>
+  <p class="tz">Mon 8:01 PM · dark · 30 min stop</p>
+
+<div class="card food">
+  <p class="name">Tamarisk Restaurant <span class="star">★</span></p>
+  <p class="meta">American · 4.5 · 4,828 reviews · 1710 E Main St · across the road, 0.09 mi from the 1765 E Main charger</p>
+  <p class="hours"><strong>Monday 7:00 AM – 9:00 PM</strong></p>
+  <p class="desc">A charger reviewer says good food and great coffee. Closes 24 minutes after the plan leaves at 8:36, so a sit-down meal is tight with a 30-minute charge.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tamarisk+Restaurant+1710+E+Main+St+Green+River+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">El Charro Loco</p>
+  <p class="meta">Mexican · 4.5 · 492 reviews · 1035 E Main St · 0.10 mi from the 1185 E Main charger, 0.51 mi from 1765</p>
+  <p class="hours"><strong>Monday 11:00 AM – 10:00 PM</strong></p>
+  <p class="desc">Open latest in town.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=El+Charro+Loco+Mexican+1035+E+Main+St+Green+River+UT">Open in Maps</a>
+</div>
+<div class="skip">A reviewer at the 1185 E Main charger says the Sinclair next to it has restrooms and snacks. A reviewer at the 1765 charger says there is no fast food within walking distance.</div>
+<details>
+  <summary><span class="tag t-food">Alt</span> Tacos La Pasadita, Ray’s Tavern, Chow Hound <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card food">
+  <p class="name">Tacos La Pasadita</p>
+  <p class="meta">Mexican, counter service · 4.6 · 2,158 reviews · 215 E Main St · 1.0 mi from 1765, 0.63 mi from 1185</p>
+  <p class="hours"><strong>Monday 8:30 AM – 8:30 PM</strong></p>
+  <p class="desc">Closes 29 minutes after you arrive.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tacos+La+Pasadita+215+E+Main+St+Green+River+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Ray’s Tavern</p>
+  <p class="meta">Burgers and bar · 4.6 · 2,757 reviews · 25 S Broadway · 1.3 mi from 1765</p>
+  <p class="hours"><strong>Monday 11:00 AM – 9:00 PM</strong></p>
+  <p class="desc">In the middle of town.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Rays+Tavern+25+S+Broadway+Green+River+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Chow Hound</p>
+  <p class="meta">Fast food and ice cream · 4.4 · 843 reviews · 30 E Main St · 1.2 mi from 1765</p>
+  <p class="hours"><strong>Monday 8:00 AM – 9:00 PM</strong></p>
+  <p class="desc">Pizza, fast food and ice cream.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Chow+Hound+30+E+Main+St+Green+River+UT">Open in Maps</a>
+</div>
+  </div>
+</details>
+<details>
+  <summary><span class="tag t-coffee">Morning</span> Coffee and breakfast on E Main St <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card food">
+  <p class="name">Tamarisk Restaurant</p>
+  <p class="meta">Breakfast · 4.5 · 1710 E Main St</p>
+  <p class="hours"><strong>Tuesday 7:00 AM – 9:00 PM</strong></p>
+  <p class="desc">Opens at 7. Same stretch of E Main St as both hotels in the Overnight tab.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tamarisk+Restaurant+1710+E+Main+St+Green+River+UT">Open in Maps</a>
+</div>
+<div class="card coffee">
+  <p class="name">Swell Coffee</p>
+  <p class="meta">Coffee · 4.3 · 109 reviews · 1710 E Main St</p>
+  <p class="hours"><strong>Tuesday 7:00 AM – 2:00 PM</strong></p>
+  <p class="desc">Same address as Tamarisk.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Swell+Coffee+1710+E+Main+St+Green+River+UT">Open in Maps</a>
+</div>
+<div class="card coffee">
+  <p class="name">Green River Coffee Co</p>
+  <p class="meta">Coffee · 4.1 · 595 reviews · 25 E Main St</p>
+  <p class="hours"><strong>Hours not listed</strong></p>
+  <p class="desc">About 1.2 mi toward town. Call or check the listing.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Green+River+Coffee+Co+25+E+Main+St+Green+River+UT">Open in Maps</a>
+</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Salina, UT</h2>
+  <p class="tz">Mon ~9:56 PM · dark · estimate</p>
+
+<div class="skip"><b>Arrive ~9:56 PM.</b> Not a Tesla stop; the charger here is Electrify America at 1915 S State St.</div>
+<div class="card food">
+  <p class="name">Denny’s <span class="star">★</span></p>
+  <p class="meta">Diner · 4.7 · 5,369 reviews · 1602 S State St · 0.30 mi from the Electrify America charger</p>
+  <p class="hours"><strong>Monday 6:00 AM – 12:00 AM</strong></p>
+  <p class="desc">The only sit-down place I found open at this hour. The Meltdown (3.1, 11 reviews) is listed at the same address with the same hours.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Dennys+1602+S+State+St+Salina+UT">Open in Maps</a>
+</div>
+<div class="skip"><b>Closed by then:</b> El Mexicano (4.1, 1535 S State St) and Lotsa Motsa Pizza (4.5, 1417 S State St) close at 9 PM; Mom’s Cafe (4.2, 1,427 reviews, 10 E Main St) closes at 7 PM. This matches the reviewer who found the town closed by 9.</div>
+<details>
+  <summary><span class="tag t-coffee">Morning</span> Coffee and breakfast near High Desert Inn <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card coffee">
+  <p class="name">Sevier Valley Coffee & Gifts <span class="star">★</span></p>
+  <p class="meta">Coffee · 4.8 · 186 reviews · 70 N State St</p>
+  <p class="hours"><strong>Tuesday 6:00 AM – 3:00 PM</strong></p>
+  <p class="desc">High Desert Inn is at 60 N State St, the same street.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Sevier+Valley+Coffee+Gifts+70+N+State+St+Salina+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Mom’s Cafe</p>
+  <p class="meta">Diner · 4.2 · 1,427 reviews · 10 E Main St</p>
+  <p class="hours"><strong>Tuesday 7:00 AM – 7:00 PM</strong></p>
+  <p class="desc">Breakfast diner in town.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Moms+Cafe+10+E+Main+St+Salina+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Denny’s</p>
+  <p class="meta">Diner · 1602 S State St</p>
+  <p class="hours"><strong>Tuesday 6:00 AM – 12:00 AM</strong></p>
+  <p class="desc">Opens at 6.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Dennys+1602+S+State+St+Salina+UT">Open in Maps</a>
+</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Richfield, UT</h2>
+  <p class="tz">Mon 10:12 PM · dark · 25 min stop</p>
+
+<div class="card food">
+  <p class="name">Wendy’s <span class="star">★</span></p>
+  <p class="meta">Fast food · 3.8 · 1,016 reviews · 1050 W 1250 S · at the charger, 0.02 mi</p>
+  <p class="hours"><strong>Monday 6:30 AM – 12:00 AM</strong></p>
+  <p class="desc">Listed at the charger’s own address. Same block as Comfort Inn.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Wendys+1050+W+1250+S+Richfield+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Taco Bell</p>
+  <p class="meta">Fast food · 3.1 · 557 reviews · 950 W 1250 S · 0.08 mi</p>
+  <p class="hours"><strong>Monday 10:00 AM – 11:00 PM</strong></p>
+  <p class="desc">Closes 48 minutes after you arrive.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Taco+Bell+950+W+1250+S+Richfield+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Domino’s</p>
+  <p class="meta">Pizza · 3.7 · 76 reviews · 178 W 1500 S · 0.83 mi</p>
+  <p class="hours"><strong>Monday 10:30 AM – 12:00 AM</strong></p>
+  <p class="desc">Open to midnight.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Dominos+178+W+1500+S+Richfield+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">McDonald’s</p>
+  <p class="meta">Fast food · 3.2 · 1,374 reviews · 1050 UT‑118 · 0.91 mi</p>
+  <p class="hours"><strong>Monday 5:00 AM – 11:00 PM</strong></p>
+  <p class="desc">Opens at 5 AM, which matters if you leave early.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=McDonalds+1050+UT-118+Richfield+UT">Open in Maps</a>
+</div>
+<details>
+  <summary><span class="tag t-coffee">Morning</span> Coffee and breakfast <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card coffee">
+  <p class="name">Katie’s Specialty Coffee, Sweets and Treats</p>
+  <p class="meta">Coffee · 4.4 · 73 reviews · 1170 S College Ave · 0.05 mi from the charger</p>
+  <p class="hours"><strong>Tuesday 8:00 AM – 8:00 PM</strong></p>
+  <p class="desc">Opens at 8.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Katies+Specialty+Coffee+1170+S+College+Ave+Richfield+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Little Wonder Cafe</p>
+  <p class="meta">Cafe and breakfast · 4.3 · 1,083 reviews · 101 N Main St · 1.6 mi</p>
+  <p class="hours"><strong>Tuesday 7:00 AM – 8:00 PM</strong></p>
+  <p class="desc">Breakfast cafe in town.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Little+Wonder+Cafe+101+N+Main+St+Richfield+UT">Open in Maps</a>
+</div>
+<div class="skip">Nomad & Gypsy Coffee Roasters (4.9, 99 reviews) is listed as closed both Monday and Tuesday.</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Beaver, UT</h2>
+  <p class="tz">Mon ~11:27 PM · dark · estimate</p>
+
+<div class="skip"><b>Arrive ~11:27 PM.</b> Every restaurant in Beaver is closed by then. The three 24-hour places are truck stops with stores; I did not verify hot food at any of them. Wendy’s at Richfield (10:12 PM, open to midnight) is the last verified hot food before Cedar City’s 24-hour places.</div>
+<div class="card food">
+  <p class="name">Flying J</p>
+  <p class="meta">Truck stop · 4.1 · 2,111 reviews · 653 W 1400 N · 0.26 mi from the north charger</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Nearest of the 24-hour places listed to the north charger.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Flying+J+653+W+1400+N+Beaver+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">FAST STOP</p>
+  <p class="meta">Gas station · 4.5 · 171 reviews · 1401 S Main St · 0.43 mi from the south charger</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Nearest of the 24-hour places listed to the south charger.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Fast+Stop+1401+S+Main+St+Beaver+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Ernie’s Truck Plaza</p>
+  <p class="meta">Truck stop · 4.3 · 141 reviews · 1035 N Main St · 0.56 mi from the north charger</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Third 24-hour option.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Ernies+Truck+Plaza+1035+N+Main+St+Beaver+UT">Open in Maps</a>
+</div>
+<div class="skip"><b>Closed by then:</b> Crazy Cow Café at the north charger (4.3, 2,408 reviews) closes at 9 PM; Timberline Restaurant at the south charger (4.5, 2,076 reviews) closes at 9; Dairy Queen closes at 9; Great India Dhaba (4.5) closes at 9.</div>
+<details>
+  <summary><span class="tag t-coffee">Morning</span> Coffee and breakfast at both chargers <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card food">
+  <p class="name">Crazy Cow Café <span class="star">★</span></p>
+  <p class="meta">Breakfast and family restaurant · 4.3 · 2,408 reviews · 314 W 1425 N · at the north charger</p>
+  <p class="hours"><strong>Tuesday 6:30 AM – 9:00 PM</strong></p>
+  <p class="desc">Reviewers describe the north charger as next to the Crazy Cow for eats and restrooms. Best Western Paradise Inn is about 0.1 mi from the charger.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Crazy+Cow+Cafe+314+W+1425+N+Beaver+UT">Open in Maps</a>
+</div>
+<div class="card coffee">
+  <p class="name">Beans & Brews Coffee House</p>
+  <p class="meta">Coffee · 4.4 · 204 reviews · 1816 S 525 W · at the south charger, 0.02 mi</p>
+  <p class="hours"><strong>Tuesday 6:00 AM – 6:00 PM</strong></p>
+  <p class="desc">Reviewers like the coffee and the grilled cheese. A reviewer used online ordering.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Beans+Brews+Coffee+House+1816+S+525+W+Beaver+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Timberline Restaurant</p>
+  <p class="meta">American · 4.5 · 2,076 reviews · 620 W 1800 S · 0.06 mi from the south charger</p>
+  <p class="hours"><strong>Tuesday 7:00 AM – 9:00 PM</strong></p>
+  <p class="desc">Opens at 7, next to Beans & Brews.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Timberline+Restaurant+620+W+1800+S+Beaver+UT">Open in Maps</a>
+</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Cedar City, UT</h2>
+  <p class="tz">Tue 12:11 AM · dark · 16 min stop</p>
+
+<div class="card food">
+  <p class="name">McDonald’s</p>
+  <p class="meta">Fast food · 2.5 · 362 reviews · 992 S Main St · 0.16 mi from the S Main St charger</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Nearest 24-hour food to the charger. Low rating.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=McDonalds+992+S+Main+St+Cedar+City+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Rita’s Taco Shop <span class="star">★</span></p>
+  <p class="meta">Mexican fast food · 4.1 · 783 reviews · 1098 W 200 N · 1.6 mi</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Better rated than the McDonald’s, but a 1.6 mi drive from the S Main charger.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Ritas+Taco+Shop+1098+W+200+N+Cedar+City+UT">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Maverik</p>
+  <p class="meta">Gas station · 4.2 · 133 reviews · 220 N Airport Rd · 1.8 mi</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Store food and coffee.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Maverik+220+N+Airport+Rd+Cedar+City+UT">Open in Maps</a>
+</div>
+<div class="skip"><b>Closed by then:</b> Culver’s (4.3, 2,012 reviews), next door to the S Main charger per a reviewer, closes at 10 PM. Love’s (4.2, 903 reviews, 2645 Canyon Ranch Dr, 24 hours) is 4.8 mi away and is the stop with the fenced dog area in the Dog Walks tab.</div>
+<details>
+  <summary><span class="tag t-coffee">Morning</span> Coffee and breakfast near La Quinta <span class="chev">›</span></summary>
+  <div class="body">
+<div class="card food">
+  <p class="name">Amber Kay’s Cafe <span class="star">★</span></p>
+  <p class="meta">Diner · 4.5 · 645 reviews · 1327 S Interstate Dr · 0.36 mi from the S Main charger</p>
+  <p class="hours"><strong>Tuesday 6:00 AM – 2:00 PM</strong></p>
+  <p class="desc">Nearest breakfast place to the S Main St charger among those listed.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Amber+Kays+Cafe+1327+S+Interstate+Dr+Cedar+City+UT">Open in Maps</a>
+</div>
+<div class="card coffee">
+  <p class="name">Beans & Brews Coffee House</p>
+  <p class="meta">Coffee · 4.7 · 189 reviews · 642 S Main St · 0.74 mi</p>
+  <p class="hours"><strong>Tuesday 6:00 AM – 6:00 PM</strong></p>
+  <p class="desc">Opens at 6.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Beans+Brews+Coffee+House+642+S+Main+St+Cedar+City+UT">Open in Maps</a>
+</div>
+<div class="card coffee">
+  <p class="name">Bristlecone</p>
+  <p class="meta">Coffee and breakfast · 4.8 · 334 reviews · 67 W Center St · 1.4 mi</p>
+  <p class="hours"><strong>Tuesday 6:00 AM – 3:00 PM</strong></p>
+  <p class="desc">Coffee shop with breakfast, in the downtown core.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Bristlecone+67+W+Center+St+Cedar+City+UT">Open in Maps</a>
+</div>
+<div class="card coffee">
+  <p class="name">The Grind Coffeehouse</p>
+  <p class="meta">Coffee · 4.6 · 1,232 reviews · 19 N Main St · 1.5 mi</p>
+  <p class="hours"><strong>Tuesday 7:00 AM – 5:00 PM</strong></p>
+  <p class="desc">One reviewer brought their dog inside while they worked there.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=The+Grind+Coffeehouse+19+N+Main+St+Cedar+City+UT">Open in Maps</a>
+</div>
+  </div>
+</details>
+</div>
+<div class="town">
+  <h2>Moapa, NV</h2>
+  <p class="tz">Tue 1:01 AM Pacific · dark · 26 min stop</p>
+
+<div class="card food">
+  <p class="name">ampm</p>
+  <p class="meta">Gas station and store · 3.6 · 75 reviews · 2300 Glendale Blvd · at the charger</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">The only thing open here. A reviewer mentions an outside table and a dog relief area.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=ampm+2300+Glendale+Blvd+Moapa+NV">Open in Maps</a>
+</div>
+<div class="skip"><b>Closed by then:</b> Chile Poblano Mexican Grill (4.8, 597 reviews) is inside the ampm but closes at 7 PM. Muddy River Bar & Grill closes at 6 PM.</div>
+</div>
+<div class="town">
+  <h2>Baker, CA</h2>
+  <p class="tz">Tue 3:27 AM Pacific · dark · 18 min stop</p>
+
+<div class="card food">
+  <p class="name">Shell</p>
+  <p class="meta">Gas station · 3.6 · 218 reviews · 72352 Baker Blvd · 0.15 mi from the charger</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Nearest 24-hour option to the Mojave Pointe Rd charger.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Shell+72352+Baker+Blvd+Baker+CA">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Country Store 76 <span class="star">★</span></p>
+  <p class="meta">Gas station · 4.3 · 987 reviews · 72137 Baker Blvd · 0.49 mi</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Better rated than the Shell.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Country+Store+76+72137+Baker+Blvd+Baker+CA">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Grewal Travel Center</p>
+  <p class="meta">Truck stop · 4.3 · 782 reviews · 72922 Baker Blvd · 0.79 mi</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Truck stop with a store.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Grewal+Travel+Center+72922+Baker+Blvd+Baker+CA">Open in Maps</a>
+</div>
+<div class="skip"><b>Closed by then:</b> Castañedas Mexican Food (4.6, 152 reviews) is at the charger, 56335 Mojave Pointe Rd. A charger reviewer called it a 24-hour restaurant, but Google lists 7 AM – 1 AM. Arby’s closes at 10 PM and Los Dos Toritos at 9 PM.</div>
+</div>
+<div class="town">
+  <h2>Victorville, CA</h2>
+  <p class="tz">Tue 5:10 AM Pacific · dark, sunrise 6:58 AM · 14 min stop</p>
+
+<div class="card coffee">
+  <p class="name">Starbucks <span class="star">★</span></p>
+  <p class="meta">Coffee · 4.2 · 1,279 reviews · 15617 Roy Rogers Dr · 0.04 mi from the charger</p>
+  <p class="hours"><strong>Tuesday 4:00 AM – 8:30 PM</strong></p>
+  <p class="desc">Listed at the charger’s address. Open when you arrive.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Starbucks+15617+Roy+Rogers+Dr+Victorville+CA">Open in Maps</a>
+</div>
+<div class="card food">
+  <p class="name">Denny’s</p>
+  <p class="meta">Diner · 4.0 · 3,245 reviews · 14244 Valley Center Dr · 0.80 mi</p>
+  <p class="hours"><strong>Open 24 hours</strong></p>
+  <p class="desc">Sit-down option if you want a meal. The Meltdown shares the address.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Dennys+14244+Valley+Center+Dr+Victorville+CA">Open in Maps</a>
+</div>
+<div class="skip"><b>Open after you leave:</b> The Corner Café (4.5, 839 reviews, next to the charger) opens at 8 AM; TG Cafe (4.8, 145 reviews, 14689 Valley Center Dr) opens at 6.</div>
+</div>
+
+</section>
+
+<section class="panel" id="sleep">
+
+<div class="callout">
+  <span class="label">How to use this tab</span>
+  Six options, one for each time mark and the stops between. Open the one that fits how you feel when you get there. Google data has no room prices or availability, so call. <b>Pet policies come from BringFido listings and can be out of date.</b> Your dog is part pit bull, so also ask each hotel about breed rules: Fairfield Inn Richfield lists a ban on pit bulls and Rottweilers. Weight limits matter at two places: Comfort Inn Richfield takes up to 35 lb and Holiday Inn Express Richfield up to 50 lb.
+</div>
+<details>
+  <summary><span class="tag t-hotel">7:30 PM</span> Grand Junction, CO <span class="chev">›</span></summary>
+  <div class="body">
+<div class="skip"><b>Arrive ~6:43 PM at ~59%.</b> Sunset 6:29 PM, dusk ends 6:56 PM. Forecast 65° / low 48°, 15% rain. Elevation ~4,600 ft. This is the nearest stop to your 7:30 mark, and the earliest. Hotels sit at I‑70 exit 31 (Horizon Dr), about 1.7 mi from the newer charger.</div>
+<div class="card charger">
+  <p class="name">Grand Junction Supercharger, Patterson Rd</p>
+  <p class="meta">2699 Patterson Rd · rated 4.0 · 7 reviews</p>
+  <p class="desc">Gen 4, opened Sept 2025, with a pull-through. In a strip mall with a brewhouse restroom. A reviewer saw a small strip of grass. One reviewer got only 28 kW, so watch the speed.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+2699+Patterson+Rd+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="card charger">
+  <p class="name">Grand Junction Supercharger, US‑6</p>
+  <p class="meta">2424 US‑6 · rated 4.1 · 128 reviews</p>
+  <p class="desc">Older V2 with paired stalls; reviewers saw 56–120 kW and a full lot. Food, Cabela's and Mesa Mall are walkable. Trash and some down stalls were reported.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+2424+US-6+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="card hotel">
+  <p class="name">La Quinta Inn & Suites Grand Junction <span class="star">★</span></p>
+  <p class="meta">4.3 · 1,421 reviews · 2761 Crossroads Blvd</p>
+  <p class="desc">Reviewers call it large and well maintained. One says dog-friendly and found hair on the sheets; another changed rooms twice for dirty bedding. Mixed on cleanliness.</p>
+  <p class="hours">Pets: <strong>2 pets, any size · $25/night, max $75 per stay · first two floors</strong> · +1 970-368-5989</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=La+Quinta+Inn+Suites+Grand+Junction+2761+Crossroads+Blvd">Open in Maps</a>
+</div>
+<div class="card hotel">
+  <p class="name">Clarion Inn Grand Junction Airport</p>
+  <p class="meta">4.2 · 2,115 reviews · 755 Horizon Dr</p>
+  <p class="desc">Reviewers call the rooms spacious and clean but aging, with indoor and outdoor pools. Large property.</p>
+  <p class="hours">Pets: <strong>2 dogs, any size · $10/night + $40 refundable deposit · designated rooms</strong> · +1 970-628-3304</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Clarion+Inn+Grand+Junction+755+Horizon+Dr">Open in Maps</a>
+</div>
+<div class="card hotel">
+  <p class="name">DoubleTree by Hilton Grand Junction</p>
+  <p class="meta">4.0 · 2,006 reviews · 743 Horizon Dr</p>
+  <p class="desc">A reviewer found clean rooms and a big green area for dogs; others call the rooms dated. $12 parking fee.</p>
+  <p class="hours">Pets: <strong>Not found on BringFido, call</strong> · +1 970-241-8888</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=DoubleTree+by+Hilton+Grand+Junction+743+Horizon+Dr">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Canyon View Park <span class="star">★</span></p>
+  <p class="meta">4.7 · 2,429 reviews · 730 24 Rd · about 1.4 mi from the US‑6 charger, about 3.7 mi from Horizon Dr</p>
+  <p class="hours"><strong>Monday 5:00 AM – 11:00 PM</strong></p>
+  <p class="desc">Pond, picnic areas, restrooms and a fenced dog run; a reviewer calls it very convenient to the freeway. The separate Canyon View Dog Park next door (4.4, 805 reviews, closes 9 PM) is mostly dirt with a section by the highway.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Canyon+View+Park+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Las Colonias Park</p>
+  <p class="meta">4.6 · 110 reviews · 1601 Riverfront Dr · about 2.5 mi from the Patterson charger</p>
+  <p class="hours"><strong>Monday 5:00 AM – 8:00 PM</strong></p>
+  <p class="desc">Riverside walking trail with fenced off-leash areas. One reviewer reports urine smell and transients. Closes at 8 PM.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Las+Colonias+Park+Grand+Junction+CO">Open in Maps</a>
+</div>
+<div class="skip"><b>Avoid:</b> Days Inn Grand Junction (2.9, reviewers report bugs and dirty bedding). Best Western Grande River in Clifton has a dog area but reviewers describe it as run down. In Fruita, the Bark Park (4.5, 7 AM – 7 PM) sits beside an IONNA charger, which is not a Tesla site.</div>
+  </div>
+</details>
+<details>
+  <summary><span class="tag t-hotel">8:30 PM</span> Green River, UT <span class="chev">›</span></summary>
+  <div class="body">
+<div class="skip"><b>Arrive 8:01 PM at 10%, leave 8:36 on the plan.</b> Forecast 65° / low 43°, 5% rain. Elevation ~4,100 ft. After this the next services are Salina, about 100 miles west, through the San Rafael Swell. Chargers and walks are in the Dog Walks tab.</div>
+<div class="card hotel">
+  <p class="name">First Choice Inn at the Swell <span class="star">★</span></p>
+  <p class="meta">4.4 · 1,612 reviews · 1845 E Main St · next door to the 1765 E Main charger</p>
+  <p class="desc">Reviewers confirm dogs: a gated grassy area out back with a mountain view, and an irrigated city park behind the property. Clean rooms, family run, a dated building.</p>
+  <p class="hours">Pets: <strong>2 pets, any size · $50/pet/night</strong> · +1 435-564-4439</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=First+Choice+Inn+at+the+Swell+1845+E+Main+St+Green+River+UT">Open in Maps</a>
+</div>
+<div class="card hotel">
+  <p class="name">River Terrace Green River</p>
+  <p class="meta">4.6 · 593 reviews · 1740 E Main St · next to the 1765 E Main charger</p>
+  <p class="desc">Reviewers call it very clean with large rooms, river-facing patios and a made-to-order breakfast, with a restaurant next door. One reviewer found the top-floor air conditioning off.</p>
+  <p class="hours">Pets: <strong>Not found, call and ask</strong> · +1 435-564-3401</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=River+Terrace+Green+River+1740+E+Main+St">Open in Maps</a>
+</div>
+<div class="skip"><b>Do not book:</b> Holiday Inn Express & Suites Green River (4.6) is the best rated here, but its BringFido page says it does not allow dogs.</div>
+  </div>
+</details>
+<details>
+  <summary><span class="tag t-hotel">9:30 PM</span> Salina, UT <span class="chev">›</span></summary>
+  <div class="body">
+<div class="skip"><b>Arrive ~9:56 PM at ~22%.</b> Forecast 64° / low 43°, 15% rain. Elevation ~5,100 ft. There is no Tesla Supercharger in Salina. The Richfield Supercharger is 19 miles west, which is about 10% of battery, so you would reach it near 11% if you do not charge here. The only charger in town is Electrify America (1915 S State St), which needs a CCS adapter on your Model Y; one reviewer found it unpowered in June 2025 and others charged fine. One reviewer found the town closed by 9 PM with only gas-station food left.</div>
+<div class="card hotel">
+  <p class="name">High Desert Inn <span class="star">★</span></p>
+  <p class="meta">4.8 · 264 reviews · 60 N State St</p>
+  <p class="desc">Family run. Reviewers call the rooms clean and updated, and one traveled with dogs and found a potty station on the grounds and a park to walk them. Quiet, in town, grocery store across the street.</p>
+  <p class="hours">Pets: <strong>2 dogs, any size · $20/pet/night + $100 refundable deposit · only four 2-queen rooms allow pets</strong> · +1 435-529-2120</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=High+Desert+Inn+60+N+State+St+Salina+UT">Open in Maps</a>
+</div>
+<div class="card hotel">
+  <p class="name">Super 8 by Wyndham Salina</p>
+  <p class="meta">4.4 · 1,212 reviews · 375 E 1620 S · about 0.3 mi from the Electrify America charger</p>
+  <p class="desc">Several reviewers say the rooms were very clean and the staff friendly; there is a Mexican restaurant next door. Pet relief area with waste bags.</p>
+  <p class="hours">Pets: <strong>2 pets, any size · $25/night first pet, $15 second · designated rooms</strong> · +1 435-529-7483</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Super+8+Salina+375+E+1620+S">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Dog area at the Electrify America site</p>
+  <p class="meta">1915 S State St</p>
+  <p class="desc">Two reviewers mention a dog park and views at this rest stop with a store. I could not find it as its own listing.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Electrify+America+1915+S+State+St+Salina+UT">Open in Maps</a>
+</div>
+<div class="skip"><b>Left out:</b> Econo Lodge and Quality Inn in Salina (3.4 and 3.7) have reviews describing soiled sheets and trash in rooms.</div>
+  </div>
+</details>
+<details>
+  <summary><span class="tag t-hotel">10:30 PM</span> Richfield, UT <span class="chev">›</span></summary>
+  <div class="body">
+<div class="skip"><b>Arrive 10:12 PM at 10%, leave 10:43 on the plan.</b> Forecast 64° / low 45°, 20% rain. Elevation ~5,300 ft. Least time lost: the plan charger and a hotel with an on-site Tesla destination charger are on the same block.</div>
+<div class="card hotel">
+  <p class="name">Comfort Inn Richfield I‑70 <span class="star">★</span></p>
+  <p class="meta">4.2 · 725 reviews · 1070 W 1250 S · next to the plan charger</p>
+  <p class="desc">Has a Tesla Destination Charger on site, grass for pets and waste bags. Pet rooms are two-queen rooms only; rooms with sofa beds do not take pets.</p>
+  <p class="hours">Pets: <strong>2 pets up to 35 lb · $20/dog/night</strong> · +1 435-228-4252</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Comfort+Inn+Richfield+I-70+1070+W+1250+S">Open in Maps</a>
+</div>
+<div class="card hotel">
+  <p class="name">Holiday Inn Express & Suites Richfield</p>
+  <p class="meta">4.5 · 769 reviews · 20 W 1400 N · at the north charger</p>
+  <p class="desc">Reviewers call the rooms clean and modern. The north charger beside it has only 4 stalls at 150 kW.</p>
+  <p class="hours">Pets: <strong>2 pets up to 50 lb · $20/pet/night · designated rooms</strong> · +1 435-896-8552</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Holiday+Inn+Express+Suites+Richfield+20+W+1400+N">Open in Maps</a>
+</div>
+<div class="card hotel">
+  <p class="name">Ramada by Wyndham Richfield</p>
+  <p class="meta">4.0 · 409 reviews · 333 N Main St</p>
+  <p class="desc">Rating and policy only; no review notes pulled.</p>
+  <p class="hours">Pets: <strong>2 pets, any size · $25/pet/night</strong> · +1 435-896-6476</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Ramada+Richfield+333+N+Main+St">Open in Maps</a>
+</div>
+<div class="skip"><b>Avoid:</b> Fairfield Inn & Suites Richfield lists a ban on pit bulls and Rottweilers. One Super 8 Richfield review reports a filthy bathroom.</div>
+  </div>
+</details>
+<details>
+  <summary><span class="tag t-hotel">11:30 PM</span> Beaver, UT <span class="chev">›</span></summary>
+  <div class="body">
+<div class="skip"><b>Arrive ~11:27 PM at ~42%.</b> Forecast 60° / low 46°, <b>40% rain</b>, the wettest night stop. Elevation ~5,900 ft. Beaver is not on your plan, so you would charge here before leaving; Cedar City is about 55 miles on.</div>
+<div class="card charger">
+  <p class="name">Beaver Supercharger, north</p>
+  <p class="meta">314 W 1425 N · rated 4.1 · 17 reviews · about 0.1 mi from Best Western Paradise Inn</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+314+W+1425+N+Beaver+UT">Open in Maps</a>
+</div>
+<div class="card charger">
+  <p class="name">Beaver Supercharger, south (Littlefield)</p>
+  <p class="meta">Littlefield Interchange · rated 4.7 · 118 reviews · about 0.3 mi from Comfort Inn & Suites</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Tesla+Supercharger+Littlefield+Interchange+Beaver+UT">Open in Maps</a>
+</div>
+<div class="card hotel">
+  <p class="name">Best Western Paradise Inn <span class="star">★</span></p>
+  <p class="meta">4.5 · 1,290 reviews · 1451 300 W</p>
+  <p class="desc">Highest rated in town, next to the north charger. BringFido notes grass in front of the hotel for relief.</p>
+  <p class="hours">Pets: <strong>2 pets up to 80 lb · $25/night</strong> · +1 435-438-2455</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Best+Western+Paradise+Inn+Beaver+UT">Open in Maps</a>
+</div>
+<div class="card hotel">
+  <p class="name">Comfort Inn & Suites Beaver I‑15</p>
+  <p class="meta">4.4 · 632 reviews · 1540 S Main St</p>
+  <p class="desc">Next to the south charger and the Beaver dog run.</p>
+  <p class="hours">Pets: <strong>2 dogs up to 80 lb · $25/pet/night · designated rooms · no cats</strong> · +1 435-438-6283</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Comfort+Inn+Suites+Beaver+1540+S+Main+St">Open in Maps</a>
+</div>
+<div class="card dog">
+  <p class="name">Beaver Dog Park</p>
+  <p class="meta">3.4 · 49 reviews · 1532 S Main St · about 0.1 mi from the south charger</p>
+  <p class="desc">A fenced gas-station run, not a park. Reviews disagree: one says a huge fenced run with tennis balls, others say no grass, a broken fence and a fire-ant mound. Use it for relief, on a leash.</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Beaver+Dog+Park+1532+S+Main+St+Beaver+UT">Open in Maps</a>
+</div>
+<div class="skip"><b>Avoid:</b> Motel 6 Beaver (3.4; a reviewer says it is not pet friendly) and Best Western Butch Cassidy Inn (a reviewer with pets got a room that smelled of flea powder).</div>
+  </div>
+</details>
+<details>
+  <summary><span class="tag t-hotel">12:30 AM</span> Cedar City, UT <span class="chev">›</span></summary>
+  <div class="body">
+<div class="skip"><b>Arrive 12:11 AM at 10%, leave 12:31 on the plan.</b> Forecast 56° / low 45°, <b>40% rain</b> Monday. Elevation ~5,800 ft. Late arrival, so call ahead and confirm someone is at the desk.</div>
+<div class="card hotel">
+  <p class="name">La Quinta Inn & Suites Cedar City <span class="star">★</span></p>
+  <p class="meta">4.2 · 1,340 reviews · 1377 S Main St · about 0.4 mi from the Main St charger</p>
+  <p class="desc">A reviewer calls it clean and pet friendly. Grassy area at the back; treats and waste bags at the desk.</p>
+  <p class="hours">Pets: <strong>2 pets, any size · $25/pet/night, max $75 per pet per stay · well-behaved pets may be left briefly</strong> · +1 435-865-0005</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=La+Quinta+Inn+Suites+Cedar+City+1377+S+Main+St">Open in Maps</a>
+</div>
+<div class="card hotel">
+  <p class="name">Holiday Inn Express & Suites Cedar City</p>
+  <p class="meta">4.3 · 887 reviews · 1555 S Old Hwy 91</p>
+  <p class="desc">Rating only; no review notes pulled.</p>
+  <p class="hours">Pets: <strong>Not found, call and ask</strong> · +1 435-865-7799</p>
+  <a class="map" href="https://www.google.com/maps/search/?api=1&query=Holiday+Inn+Express+Suites+Cedar+City+1555+S+Old+Hwy+91">Open in Maps</a>
+</div>
+<div class="skip">Dog walks and the two charger options are in the Dog Walks tab. <b>After Cedar City</b> the plan runs on through Moapa, Baker and Victorville with no other overnight options listed here.</div>
+  </div>
+</details>
+
+</section>
+
+</main>
+
+<footer>
+  Ratings, hours and review notes from Google Maps, pulled Oct 19. Pet policies from BringFido listings. Weather from a daily forecast lookup. Times and mileage from your ABRP plan 9.<br>Hours are as listed by each business. Call before you commit to a detour or a room.<br>Safe driving.
+</footer>
+
+<script>
+  var btns = document.querySelectorAll('nav button');
+  var panels = document.querySelectorAll('.panel');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){x.classList.remove('on');});
+      panels.forEach(function(p){p.classList.remove('on');});
+      b.classList.add('on');
+      document.getElementById(b.dataset.p).classList.add('on');
+      window.scrollTo(0,0);
+    });
+  });
+</script>
+</body>
+</html>
